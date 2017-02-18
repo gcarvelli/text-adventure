@@ -1,4 +1,5 @@
-import { Game, Player, Room, RoomMap } from "./Models";
+import { Game, Player, Room, RoomMap } from "../Models/Models";
+import { Loader } from "./Loader";
 
 export class Config {
     game: Game;
@@ -10,16 +11,17 @@ export class Config {
         this.player = new Player();
         this.player.name = "Gio";
         this.rooms = { };
+
+        let loader = new Loader();
+
         data.rooms.roomlist.forEach(element => {
-            let room = new Room();
-            room.id = element.id;
-            room.name = element.name;
-            room.description = element.description;
+            let room = loader.LoadRoom(element);
             this.rooms[room.id] = room;
         });
 
         // Set player start room
         this.player.location = this.rooms[data.rooms.startroom];
-
     }
+
+    
 }

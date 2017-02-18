@@ -4,14 +4,25 @@
         "version": "0.1.0"
     },
     "rooms": {
-        "startroom": "AAAA",
+        "startroom": "BOTTOM_OF_DRIVEWAY",
         "roomlist": [
             {
-                "id": "AAAA",
+                "id": "BOTTOM_OF_DRIVEWAY",
                 "name": "Bottom of Driveway",
-                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north. The walls are made of brick with white sidings. There is a large front yard with some trees and bushes."
+                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north. The walls are made of brick with white sidings. There is a large front yard with some trees and bushes.",
+                "items": [
+                    {
+                        "id": "MAILBOX",
+                        "name": "mailbox",
+                        "description": "The mailbox is locked."
+                    },
+                    {
+                        "id": "HOUSE_FAR",
+                        "name": "house",
+                        "description": "The house has brick walls with white sidings. The plants are thriving and the windows clean, but there is no sign of anyone living here."
+                    }
+                ]
             }
         ]
     }
-    
 }

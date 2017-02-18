@@ -16,20 +16,15 @@ export class Player {
 
     constructor();
 
-    constructor(name?: string) {
-        this.name = name;
+    constructor() {
         this.inventory = new Array<Item>();
     }
 }
 
 export class Item {
+    id: string;
     name: string;
     description: string;
-    
-    constructor(name: string, description: string) {
-        this.name = name;
-        this.description = description;
-    }
 }
 
 export class Room {
@@ -39,6 +34,9 @@ export class Room {
     moves: null;
     items: Item[];
 
+    constructor() {
+        this.items = new Array<Item>();
+    }
 }
 
 export interface RoomMap {

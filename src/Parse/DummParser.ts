@@ -6,9 +6,6 @@ export class DummParser implements IParser {
         com.command = commandString.toLowerCase();
         let tokens = com.command.split(/\s+/);
 
-        console.log(commandString);
-        console.log(tokens);
-
         if (tokens.length == 0) {
             return null;
         } else if (tokens[0] == "look" && tokens[1] == "at") {

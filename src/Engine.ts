@@ -1,6 +1,6 @@
 import { Player, RoomMap } from "./Models/Models";
 import { Command, CommandType, IParser } from "./Parse/IParser";
-import { Config } from "./Models/Config";
+import { Config } from "./Configuration/Config";
 
 export interface Output {
     Print(output: string);
@@ -15,7 +15,7 @@ export class Engine {
     private PrintHeader() {
         this.out.Print("House Explorer");
         this.out.Print("Version 0.1.0");
-        this.out.Print("");
+        this.out.Print(" ");
     }
 
     public Initialize(data: any, out: Output, parser: IParser) {
@@ -35,6 +35,7 @@ export class Engine {
     }
 
     public Apply(command: Command) {
+        this.out.Print(" ");
         switch (command.commandType) {
             case CommandType.LookAround:
                 this.out.Clear();
@@ -45,8 +46,15 @@ export class Engine {
                 if (command.args.length == 0) {
                     this.out.Print("Look at what?");
                 } else {
-                    // look at something
-                    this.out.Print("Maybe someday...");
+                    let itemName = command.args.join(" ");
+                    let matches = this.config.player.location.items.filter(function(item) {
+                        return item.name == itemName;
+                    });
+                    if (matches.length > 0) {
+                        this.out.Print(matches[0].description);
+                    } else {
+                        this.out.Print("Doesn't look like there's one of those around.");
+                    }
                 }
                 break;
             case CommandType.Unknown:
