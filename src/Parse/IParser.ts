@@ -4,7 +4,7 @@ export interface IParser {
 }
 
 export enum CommandType {
-    Unknown,
+    Custom,
     Move,
     LookAround,
     LookAt
@@ -13,9 +13,9 @@ export enum CommandType {
 export class Command {
     command: string;
     commandType: CommandType;
-    args: String[];
+    args: string[];
 
     constructor() {
-        this.args = new Array<String>();
+        this.args = new Array<string>();
     }
 }

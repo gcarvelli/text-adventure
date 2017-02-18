@@ -25,20 +25,37 @@ export class Item {
     id: string;
     name: string;
     description: string;
+    roomDescriptionAddition: string;
 }
 
 export class Room {
     id: string;
     name: string;
     description: string;
-    moves: null;
+    moves: MoveMap;
     items: Item[];
 
     constructor() {
+        this.moves = { };
         this.items = new Array<Item>();
+    }
+
+    public GetDescription(): string {
+        let desc = this.description;
+        this.items.forEach(item => {
+            if (item.roomDescriptionAddition) {
+                desc += " " + item.roomDescriptionAddition;
+            }
+        });
+
+        return desc;
     }
 }
 
 export interface RoomMap {
     [id: string]: Room;
+}
+
+export interface MoveMap {
+    [id: string]: string;
 }
