@@ -13,7 +13,7 @@ export class DummParser implements IParser {
             if (tokens.length >= 3) {
                 com.args.push(tokens.slice(2, tokens.length).join(" "));
             }
-        } else if (tokens[0] == "look") {
+        } else if (tokens[0] == "look" || tokens[0] == "clear") {
             com.commandType = CommandType.LookAround;
         } else if (tokens[0] == "inventory") {
             com.commandType = CommandType.Inventory;

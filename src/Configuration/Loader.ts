@@ -1,18 +1,24 @@
 import { Game, Item, Player, Room, RoomMap } from "../Models/Models";
 
 export class Loader {
-    public LoadGame(data: any): Game {
+    data: any;
+
+    constructor(data: any) {
+        this.data = data;
+    }
+
+    public LoadGame(): Game {
         let game = new Game();
-        game.name = data.name;
-        game.version = data.version;
+        game.name = this.data.name;
+        game.version = this.data.version;
 
         return game;
     }
 
-    public LoadPlayer(data: any): Player {
+    public LoadPlayer(): Player {
         let player = new Player();
-        if (data.items) {
-            data.items.forEach(item => {
+        if (this.data.items) {
+            this.data.items.forEach(item => {
                 player.inventory.push(this.LoadItem(item));
             });
         }
@@ -20,7 +26,17 @@ export class Loader {
         return player;
     }
 
-    public LoadRoom(data: any): Room {
+    public LoadRooms(): RoomMap {
+        let rooms = { };
+        this.data.rooms.roomlist.forEach(element => {
+            let room = this.LoadRoom(element);
+            rooms[room.id] = room;
+        });
+
+        return rooms;
+    }
+
+    private LoadRoom(data: any): Room {
         let room = new Room();
         room.id = data.id;
         room.name = data.name;
@@ -44,7 +60,7 @@ export class Loader {
         return room;
     }
 
-    public LoadItem(data: any): Item {
+    private LoadItem(data: any): Item {
         let item = new Item();
         item.id = data.id;
         item.name = data.name;

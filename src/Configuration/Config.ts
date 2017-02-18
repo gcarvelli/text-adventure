@@ -9,15 +9,11 @@ export class Config {
     constructor(data: any) {
         this.rooms = { };
 
-        let loader = new Loader();
+        let loader = new Loader(data);
 
-        this.game = loader.LoadGame(data.game);
-        this.player = loader.LoadPlayer(data.player);
-
-        data.rooms.roomlist.forEach(element => {
-            let room = loader.LoadRoom(element);
-            this.rooms[room.id] = room;
-        });
+        this.game = loader.LoadGame();
+        this.player = loader.LoadPlayer();
+        this.rooms = loader.LoadRooms();
 
         // Set player start room
         this.player.location = this.rooms[data.rooms.startroom];
