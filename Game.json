@@ -1,0 +1,17 @@
+{
+    "game": {
+        "name": "House Explorer",
+        "version": "0.1.0"
+    },
+    "rooms": {
+        "startroom": "AAAA",
+        "roomlist": [
+            {
+                "id": "AAAA",
+                "name": "Bottom of Driveway",
+                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north. The walls are made of brick with white sidings. There is a large front yard with some trees and bushes."
+            }
+        ]
+    }
+    
+}

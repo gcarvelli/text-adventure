@@ -1,0 +1,27 @@
+{
+  "name": "text-adventure",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "typings install",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --hot --inline --no-info --content-base ./build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^7.0.5",
+    "awesome-typescript-loader": "^3.0.4-rc.2",
+    "get-stdin": "^5.0.1",
+    "process": "^0.11.9",
+    "readline": "^1.3.0",
+    "source-map-loader": "^0.1.6",
+    "ts-loader": "^2.0.0",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.2.0",
+    "typings": "^2.1.0",
+    "webpack": "^2.2.1"
+  }
+}
