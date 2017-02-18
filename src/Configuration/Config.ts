@@ -1,22 +1,20 @@
 import { Game, Player, Room, RoomMap } from "../Models/Models";
-import { Loader } from "./Loader";
+import { ILoader } from "./ILoader";
 
 export class Config {
     game: Game;
     player: Player;
     rooms: RoomMap;
 
-    constructor(data: any) {
+    constructor(loader: ILoader) {
         this.rooms = { };
-
-        let loader = new Loader(data);
 
         this.game = loader.LoadGame();
         this.player = loader.LoadPlayer();
         this.rooms = loader.LoadRooms();
 
         // Set player start room
-        this.player.location = this.rooms[data.rooms.startroom];
+        this.player.location = this.rooms[loader.GetStartRoom()];
     }
 
     

@@ -1,8 +1,9 @@
 require('keyboardevent-key-polyfill').polyfill();
 
-import { Engine } from "./Engine";
 import * as data from "../Game.json";
+import { Engine } from "./Engine";
 import { DummParser } from "./Parse/DummParser";
+import { JSONLoader } from "./Configuration/JSONLoader";
 
 let engine = new Engine();
 
@@ -21,4 +22,4 @@ let out = {
     }
 }
 
-engine.Initialize(data, out, new DummParser());
+engine.Initialize(new JSONLoader(data), out, new DummParser());

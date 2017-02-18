@@ -1,9 +1,15 @@
+import { ILoader } from "./ILoader";
 import { Game, Item, Player, Room, RoomMap } from "../Models/Models";
 
-export class Loader {
+
+export class JSONLoader implements ILoader {
     data: any;
 
     constructor(data: any) {
+        this.data = data;
+    }
+
+    public Initialize(data: any) {
         this.data = data;
     }
 
@@ -34,6 +40,10 @@ export class Loader {
         });
 
         return rooms;
+    }
+
+    public GetStartRoom(): string {
+        return this.data.rooms.startroom;
     }
 
     private LoadRoom(data: any): Room {

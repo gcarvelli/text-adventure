@@ -1,6 +1,7 @@
 import { Player, Room, RoomMap } from "./Models/Models";
 import { Command, CommandType, IParser } from "./Parse/IParser";
 import { Config } from "./Configuration/Config";
+import { ILoader } from "./Configuration/ILoader";
 
 export interface Output {
     Print(output: string);
@@ -18,12 +19,12 @@ export class Engine {
         this.out.Print(" ");
     }
 
-    public Initialize(data: any, out: Output, parser: IParser) {
+    public Initialize(loader: ILoader, out: Output, parser: IParser) {
         this.out = out;
         this.parser = parser;
 
         // Load in all rooms
-        this.config = new Config(data);
+        this.config = new Config(loader);
 
         this.LookAround();
     }
