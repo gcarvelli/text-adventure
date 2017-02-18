@@ -3,6 +3,15 @@
         "name": "House Explorer",
         "version": "0.1.0"
     },
+    "player": {
+        "items": [
+            {
+                "id": "LOCKPICK",
+                "name": "lockpick",
+                "description": "This is a standard lockpick."
+            }
+        ]
+    },
     "rooms": {
         "startroom": "BOTTOM_OF_DRIVEWAY",
         "roomlist": [

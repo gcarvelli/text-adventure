@@ -53,6 +53,16 @@ export class Engine {
                     }
                 }
                 break;
+            case CommandType.Inventory:
+                this.out.Print("Inventory:");
+                if (this.config.player.inventory.length > 0) {
+                    this.config.player.inventory.forEach(item => {
+                        this.out.Print("\t" + item.name);
+                    });
+                } else {
+                    this.out.Print("There doesn't seem to be anything here.");
+                }
+                break;
             case CommandType.Custom:
                 if (command.args.length > 0) {
                     // Might be a move

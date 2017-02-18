@@ -1,6 +1,25 @@
 import { Game, Item, Player, Room, RoomMap } from "../Models/Models";
 
 export class Loader {
+    public LoadGame(data: any): Game {
+        let game = new Game();
+        game.name = data.name;
+        game.version = data.version;
+
+        return game;
+    }
+
+    public LoadPlayer(data: any): Player {
+        let player = new Player();
+        if (data.items) {
+            data.items.forEach(item => {
+                player.inventory.push(this.LoadItem(item));
+            });
+        }
+
+        return player;
+    }
+
     public LoadRoom(data: any): Room {
         let room = new Room();
         room.id = data.id;

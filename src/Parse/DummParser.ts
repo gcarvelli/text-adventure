@@ -15,6 +15,8 @@ export class DummParser implements IParser {
             }
         } else if (tokens[0] == "look") {
             com.commandType = CommandType.LookAround;
+        } else if (tokens[0] == "inventory") {
+            com.commandType = CommandType.Inventory;
         } else {
             com.commandType = CommandType.Custom;
             com.args = tokens;

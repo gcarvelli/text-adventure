@@ -7,7 +7,8 @@ export enum CommandType {
     Custom,
     Move,
     LookAround,
-    LookAt
+    LookAt,
+    Inventory
 }
 
 export class Command {

@@ -7,12 +7,12 @@ export class Config {
     rooms: RoomMap;
 
     constructor(data: any) {
-        this.game = new Game(data.game.name, data.game.version);
-        this.player = new Player();
-        this.player.name = "Gio";
         this.rooms = { };
 
         let loader = new Loader();
+
+        this.game = loader.LoadGame(data.game);
+        this.player = loader.LoadPlayer(data.player);
 
         data.rooms.roomlist.forEach(element => {
             let room = loader.LoadRoom(element);
