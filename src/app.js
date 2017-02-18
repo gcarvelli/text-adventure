@@ -1,3 +1,5 @@
+require('keyboardevent-key-polyfill').polyfill();
+
 import { Engine } from "./Engine";
 import * as data from "../Game.json";
 import { DummParser } from "./Parse/DummParser";
