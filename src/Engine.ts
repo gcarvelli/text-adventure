@@ -43,14 +43,26 @@ export class Engine {
                     this.out.Print("Look at what?");
                 } else {
                     let itemName = command.args.join(" ");
+
+                    // Check the room first
                     let matches = this.config.player.location.items.filter(function(item) {
                         return item.name == itemName;
                     });
                     if (matches.length > 0) {
                         this.out.Print(matches[0].description);
-                    } else {
-                        this.out.Print("Doesn't look like there's one of those around.");
+                        break;
                     }
+
+                    // Then check the player's inventory
+                    matches = this.config.player.inventory.filter(function(item) {
+                        return item.name == itemName;
+                    });
+                    if (matches.length > 0) {
+                        this.out.Print(matches[0].description);
+                        break;
+                    }
+
+                    this.out.Print("Doesn't look like there's one of those around.");
                 }
                 break;
             case CommandType.Inventory:
