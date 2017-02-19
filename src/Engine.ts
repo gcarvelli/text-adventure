@@ -76,13 +76,19 @@ export class Engine {
                     this.out.Print("There doesn't seem to be anything here.");
                 }
                 break;
+            case CommandType.Move:
+                if (this.config.player.location.moves[command.args[0]]) {
+                    this.MoveTo(command.args[0]);
+                    this.LookAround();
+                } else {
+                    this.out.Print("You can't go that way right now.");
+                }
+                break;
             case CommandType.Custom:
                 if (command.args.length > 0) {
                     // Might be a move
-                    console.log(this.config.player.location.moves);
                     if (command.args[0] in this.config.player.location.moves) {
-                        let newLocationID = this.config.player.location.moves[command.args[0]];
-                        this.config.player.location = this.config.rooms[newLocationID];
+                        this.MoveTo(command.args[0]);
                         this.LookAround();
                         break;
                     }
@@ -93,6 +99,11 @@ export class Engine {
                 this.out.Print("Well shucks, looks like I can't do that yet.");
                 break;
         }
+    }
+
+    private MoveTo(move: string) {
+        let newLocationID = this.config.player.location.moves[move];
+        this.config.player.location = this.config.rooms[newLocationID];
     }
 
     private LookAround() {

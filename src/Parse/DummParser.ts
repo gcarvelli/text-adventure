@@ -17,6 +17,9 @@ export class DummParser implements IParser {
             com.commandType = CommandType.LookAround;
         } else if (tokens[0] == "inventory") {
             com.commandType = CommandType.Inventory;
+        } else if (["north", "south", "east", "west"].indexOf(tokens[0]) != -1){
+            com.commandType = CommandType.Move;
+            com.args = tokens;
         } else {
             com.commandType = CommandType.Custom;
             com.args = tokens;
