@@ -23,8 +23,8 @@ export class JSONLoader implements ILoader {
 
     public LoadPlayer(): Player {
         let player = new Player();
-        if (this.data.items) {
-            this.data.items.forEach(item => {
+        if (this.data.player.items) {
+            this.data.player.items.forEach(item => {
                 player.inventory.push(this.LoadItem(item));
             });
         }
@@ -72,10 +72,21 @@ export class JSONLoader implements ILoader {
 
     private LoadItem(data: any): Item {
         let item = new Item();
-        item.id = data.id;
-        item.name = data.name;
-        item.description = data.description;
-        item.roomDescriptionAddition = data.room_description_addition;
+        let itemData;
+
+        if ((typeof data) == "string") {
+            let matches = this.data.items.filter(function(element) {
+                return element.id == data;
+            });
+            itemData = matches[0];
+        } else {
+            itemData = data;
+        }
+
+        item.id = itemData.id;
+        item.name = itemData.name;
+        item.description = itemData.description;
+        item.roomDescriptionAddition = itemData.room_description_addition;
         
         return item;
     }

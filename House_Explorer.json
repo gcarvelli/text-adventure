@@ -19,13 +19,7 @@
                 "id": "BOTTOM_OF_DRIVEWAY",
                 "name": "Bottom of Driveway",
                 "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north. The walls are made of brick with white sidings. There is a large front yard with some trees and bushes.",
-                "items": [
-                    {
-                        "id": "HOUSE_FAR",
-                        "name": "house",
-                        "description": "The house has brick walls with white sidings. The plants are thriving and the windows clean, but there is no sign of anyone living here."
-                    }
-                ],
+                "items": [ "HOUSE_FAR" ],
                 "moves": {
                     "north": "TOP_OF_DRIVEWAY"
                 }
@@ -34,28 +28,34 @@
                 "id": "TOP_OF_DRIVEWAY",
                 "name": "Top of Driveway",
                 "description": "You are now directly in front of the house. The driveway is full of cracks and the house looks abandoned. There is a path to the backyard to the north, as well as a mailbox next to the front door. A basketball hoop is mounted on the house.",
-                "items": [
-                    {
-                        "id": "MAILBOX",
-                        "name": "mailbox",
-                        "description": "The mailbox is locked."
-                    },
-                    {
-                        "id": "BASKETBALL",
-                        "name": "basketball",
-                        "description": "It is round and orange with bumps all over.",
-                        "room_description_addition": "A basketball sits dejectedly on the side of the driveway."
-                    },
-                    {
-                        "id": "HOUSE_NEAR",
-                        "name": "house",
-                        "description": "Even up close, the house looks pristine."
-                    }
-                ],
+                "items": [ "MAILBOX", "BASKETBALL", "HOUSE_NEAR" ],
                 "moves": {
                     "south": "BOTTOM_OF_DRIVEWAY"
                 }
             }
         ]
-    }
+    },
+    "items": [
+        {
+            "id": "HOUSE_FAR",
+            "name": "house",
+            "description": "The house has brick walls with white sidings. The plants are thriving and the windows clean, but there is no sign of anyone living here."
+        },
+        {
+            "id": "MAILBOX",
+            "name": "mailbox",
+            "description": "The mailbox is locked."
+        },
+        {
+            "id": "BASKETBALL",
+            "name": "basketball",
+            "description": "It is round and orange with bumps all over.",
+            "room_description_addition": "A basketball sits dejectedly on the side of the driveway."
+        },
+        {
+            "id": "HOUSE_NEAR",
+            "name": "house",
+            "description": "Even up close, the house looks pristine."
+        }
+    ]
 }

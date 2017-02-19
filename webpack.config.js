@@ -24,7 +24,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             { from: "*.html" },
-            { from: "Game.json" },
+            { from: "House_Explorer.json" },
             { from: "js/", to: "js/" },
             { from: "css/", to: "css/" },
         ])
