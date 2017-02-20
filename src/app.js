@@ -16,11 +16,13 @@ let terminal = $('#term').terminal(function(commandString) {
 
 let out = {
     Print: function(output) {
-        terminal.echo(output);
+        terminal.echo(output, {
+            keepWords: true
+        });
     },
     Clear: function() {
         terminal.clear();
     }
-}
+};
 
 engine.Initialize(new JSONLoader(data), out, new DummParser());
