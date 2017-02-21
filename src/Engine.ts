@@ -111,6 +111,9 @@ export class Engine {
                     this.out.Print("Drop what?");
                 }
                 break;
+            case CommandType.Help:
+                this.out.PrintLines(this.config.help);
+                break;
             case CommandType.Custom:
                 if (command.args.length > 0) {
                     // Might be a move

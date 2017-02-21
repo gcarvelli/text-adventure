@@ -30,6 +30,8 @@ export class DummParser implements IParser {
             if (tokens.length >= 2) {
                 com.args.push(tokens.slice(1, tokens.length).join(" "));
             }
+        } else if (this.StartsWith(tokens, "help")) {
+            com.commandType = CommandType.Help;
         } else {
             com.commandType = CommandType.Custom;
             com.args = tokens;

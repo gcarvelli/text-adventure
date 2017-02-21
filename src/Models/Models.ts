@@ -9,8 +9,6 @@ export class Player {
     inventory: Item[];
     location: Room;
 
-    constructor();
-
     constructor() {
         this.inventory = new Array<Item>();
     }

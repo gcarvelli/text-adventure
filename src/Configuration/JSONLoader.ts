@@ -46,6 +46,10 @@ export class JSONLoader implements ILoader {
         return this.data.rooms.startroom;
     }
 
+    public LoadHelp(): string[] {
+        return this.data.help;
+    }
+
     private LoadRoom(data: any): Room {
         let room = new Room();
         room.id = data.id;

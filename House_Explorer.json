@@ -77,5 +77,14 @@
             "name": "house",
             "description": "Even up close, the house looks pristine."
         }
+    ],
+    "help": [
+        "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
+        "  look                   Show the description of the current location.",
+        "  look at <thing>        Show the description of the <thing>.",
+        "  north/south/east/west  Move in that direction.",
+        "  inventory              List the items in your inventory.",
+        "  take                   Pick up an item.",
+        "  drop                   Drop an item."
     ]
 }

@@ -5,5 +5,6 @@ export interface ILoader {
     LoadGame(): Game;
     LoadPlayer(): Player;
     LoadRooms(): RoomMap;
+    LoadHelp(): string[];
     GetStartRoom(): string;
 }

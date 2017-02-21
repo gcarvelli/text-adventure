@@ -5,6 +5,7 @@ export class Config {
     game: Game;
     player: Player;
     rooms: RoomMap;
+    help: string[];
 
     constructor(loader: ILoader) {
         this.rooms = { };
@@ -12,6 +13,7 @@ export class Config {
         this.game = loader.LoadGame();
         this.player = loader.LoadPlayer();
         this.rooms = loader.LoadRooms();
+        this.help = loader.LoadHelp();
 
         // Set player start room
         this.player.location = this.rooms[loader.GetStartRoom()];
