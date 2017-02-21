@@ -21,7 +21,8 @@
                 "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north. The walls are made of brick with white sidings. There is a large front yard with some trees and bushes.",
                 "items": [ "HOUSE_FAR" ],
                 "moves": {
-                    "north": "TOP_OF_DRIVEWAY"
+                    "north": "TOP_OF_DRIVEWAY",
+                    "south": "STREET_3"
                 }
             },
             {
@@ -31,6 +32,23 @@
                 "items": [ "MAILBOX", "BASKETBALL", "HOUSE_NEAR" ],
                 "moves": {
                     "south": "BOTTOM_OF_DRIVEWAY"
+                }
+            },
+            {
+                "id": "STREET_3",
+                "name": "Street in Front of House",
+                "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
+                "moves": {
+                    "north": "BOTTOM_OF_DRIVEWAY",
+                    "south": "FOREST"
+                }
+            },
+            {
+                "id": "FOREST",
+                "name": "The Forest",
+                "description": "The trees around you are tall and thick. The ground is covered in fallen leaves and branches. It is quiet here.",
+                "moves": {
+                    "north": "STREET_3"
                 }
             }
         ]
