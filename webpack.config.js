@@ -25,7 +25,6 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: "*.html" },
             { from: "House_Explorer.json" },
-            { from: "js/", to: "js/" },
             { from: "css/", to: "css/" },
         ])
     ]
