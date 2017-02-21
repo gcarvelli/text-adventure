@@ -20,7 +20,7 @@ export class Item {
     id: string;
     name: string;
     description: string;
-    roomDescriptionAddition: string;
+    descriptionForRoom: string;
 }
 
 export class Room {
@@ -38,8 +38,8 @@ export class Room {
     public GetDescription(): string {
         let desc = this.description;
         this.items.forEach(item => {
-            if (item.roomDescriptionAddition) {
-                desc += " " + item.roomDescriptionAddition;
+            if (item.descriptionForRoom) {
+                desc += " " + item.descriptionForRoom;
             }
         });
 

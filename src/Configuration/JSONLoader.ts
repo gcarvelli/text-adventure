@@ -5,7 +5,7 @@ import { Game, Item, Player, Room, RoomMap } from "../Models/Models";
 export class JSONLoader implements ILoader {
     data: any;
 
-    constructor(data: any) {
+    constructor(data?: any) {
         this.data = data;
     }
 
@@ -86,7 +86,7 @@ export class JSONLoader implements ILoader {
         item.id = itemData.id;
         item.name = itemData.name;
         item.description = itemData.description;
-        item.roomDescriptionAddition = itemData.room_description_addition;
+        item.descriptionForRoom = itemData.description_for_room;
         
         return item;
     }

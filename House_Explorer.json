@@ -18,7 +18,7 @@
             {
                 "id": "BOTTOM_OF_DRIVEWAY",
                 "name": "Bottom of Driveway",
-                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north. The walls are made of brick with white sidings. There is a large front yard with some trees and bushes.",
+                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north with a large front yard with some trees and bushes.",
                 "items": [ "HOUSE_FAR" ],
                 "moves": {
                     "north": "TOP_OF_DRIVEWAY",
@@ -68,7 +68,7 @@
             "id": "BASKETBALL",
             "name": "basketball",
             "description": "It is round and orange with bumps all over.",
-            "room_description_addition": "A basketball sits dejectedly on the side of the driveway."
+            "description_for_room": "A basketball sits dejectedly on the side of the driveway."
         },
         {
             "id": "HOUSE_NEAR",
