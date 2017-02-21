@@ -2,9 +2,11 @@ import { Player, Room, RoomMap } from "./Models/Models";
 import { Command, CommandType, IParser } from "./Parse/IParser";
 import { Config } from "./Configuration/Config";
 import { ILoader } from "./Configuration/ILoader";
+import { Utilities } from "./Utilities/Utilities";
 
 export interface Output {
     Print(output: string);
+    PrintLines(output: string[]);
     Clear();
 }
 
@@ -27,6 +29,7 @@ export class Engine {
         this.config = new Config(loader);
 
         this.LookAround();
+        this.out.Print(" ");
     }
 
     public Execute(commandString: string) {
@@ -34,7 +37,6 @@ export class Engine {
     }
 
     public Apply(command: Command) {
-        this.out.Print(" ");
         switch (command.commandType) {
             case CommandType.LookAround:
                 this.LookAround();
@@ -46,20 +48,16 @@ export class Engine {
                     let itemName = command.args.join(" ");
 
                     // Check the room first
-                    let matches = this.config.player.location.items.filter(function(item) {
-                        return item.name == itemName;
-                    });
-                    if (matches.length > 0) {
-                        this.out.Print(matches[0].description);
+                    let item = Utilities.FindItemByName(this.config.player.location.items, itemName);
+                    if (item != null) {
+                        this.out.Print(item.description);
                         break;
                     }
 
                     // Then check the player's inventory
-                    matches = this.config.player.inventory.filter(function(item) {
-                        return item.name == itemName;
-                    });
-                    if (matches.length > 0) {
-                        this.out.Print(matches[0].description);
+                    item = Utilities.FindItemByName(this.config.player.inventory, itemName);
+                    if (item != null) {
+                        this.out.Print(item.description);
                         break;
                     }
 
@@ -84,6 +82,35 @@ export class Engine {
                     this.out.Print("You can't go that way right now.");
                 }
                 break;
+            case CommandType.TakeItem:
+                if (command.args.length > 0) {
+                    let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
+                    if (item != null) {
+                        this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
+                        this.config.player.inventory.push(item);
+                        this.out.Print("Took the " + item.name + ".");
+                    } else {
+                        this.out.Print("Doesn't look like there's one of those around.");
+                    }
+                } else {
+                    this.out.Print("Take what?");
+                }
+                break;
+            case CommandType.DropItem:
+                if (command.args.length > 0) {
+                    let item = Utilities.FindItemByName(this.config.player.inventory, command.args[0]);
+                    if (item != null) {
+                        this.config.player.inventory.splice(this.config.player.inventory.indexOf(item), 1);
+                        this.config.player.location.items.push(item);
+                        item.wasDropped = true;
+                        this.out.Print("Dropped the " + item.name + ".");
+                    } else {
+                        this.out.Print("You don't have one of those.");
+                    }
+                } else {
+                    this.out.Print("Drop what?");
+                }
+                break;
             case CommandType.Custom:
                 if (command.args.length > 0) {
                     // Might be a move
@@ -99,6 +126,7 @@ export class Engine {
                 this.out.Print("Well shucks, looks like I can't do that yet.");
                 break;
         }
+        this.out.Print(" ");
     }
 
     private MoveTo(move: string) {
@@ -110,6 +138,6 @@ export class Engine {
         this.out.Clear();
         this.PrintHeader();
         this.out.Print(" ");
-        this.out.Print(this.config.player.location.GetDescription());
+        this.out.PrintLines(this.config.player.location.GetDescription());
     }
 }

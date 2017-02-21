@@ -87,6 +87,7 @@ export class JSONLoader implements ILoader {
         item.name = itemData.name;
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
+        item.canTake = itemData.can_take;
         
         return item;
     }

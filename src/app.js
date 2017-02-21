@@ -20,6 +20,13 @@ let out = {
             keepWords: true
         });
     },
+    PrintLines: function(lines) {
+        lines.forEach(function(line) {
+            terminal.echo(line, {
+                keepWords: true
+            });
+        });
+    },
     Clear: function() {
         terminal.clear();
     }

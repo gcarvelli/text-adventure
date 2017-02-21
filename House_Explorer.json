@@ -8,7 +8,8 @@
             {
                 "id": "LOCKPICK",
                 "name": "lockpick",
-                "description": "This is a standard lockpick."
+                "description": "This is a standard lockpick.",
+                "can_take": true
             }
         ]
     },
@@ -68,7 +69,8 @@
             "id": "BASKETBALL",
             "name": "basketball",
             "description": "It is round and orange with bumps all over.",
-            "description_for_room": "A basketball sits dejectedly on the side of the driveway."
+            "description_for_room": "A basketball sits dejectedly on the side of the driveway.",
+            "can_take": true
         },
         {
             "id": "HOUSE_NEAR",

@@ -21,6 +21,8 @@ export class Item {
     name: string;
     description: string;
     descriptionForRoom: string;
+    canTake: boolean;
+    wasDropped: boolean;
 }
 
 export class Room {
@@ -35,11 +37,16 @@ export class Room {
         this.items = new Array<Item>();
     }
 
-    public GetDescription(): string {
-        let desc = this.description;
+    public GetDescription(): string[] {
+        let desc = new Array<string>();
+        desc.push(this.description);
         this.items.forEach(item => {
-            if (item.descriptionForRoom) {
-                desc += " " + item.descriptionForRoom;
+            if (!item.canTake && item.descriptionForRoom) {
+                desc[0] += " " + item.descriptionForRoom;
+            } else if (item.wasDropped) {
+                desc.push("  There is a " + item.name + " here.");
+            } else if (item.canTake) {
+                desc.push("  " + item.descriptionForRoom);
             }
         });
 
