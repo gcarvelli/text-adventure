@@ -84,7 +84,7 @@
         "  look at <thing>        Show the description of the <thing>.",
         "  north/south/east/west  Move in that direction.",
         "  inventory              List the items in your inventory.",
-        "  take                   Pick up an item.",
-        "  drop                   Drop an item."
+        "  take <item>            Add an item to your inventory.",
+        "  drop <item>            Remove an item from your inventory."
     ]
 }
