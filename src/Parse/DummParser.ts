@@ -11,7 +11,7 @@ export class DummParser implements IParser {
         } else if (this.StartsWith(tokens, "look", "at")) {
             com.commandType = CommandType.LookAt;
             if (tokens.length >= 3) {
-                com.args.push(tokens.slice(2, tokens.length).join(" "));
+                com.args.push(this.GetThing(tokens.slice(2, tokens.length)));
             }
         } else if (this.StartsWith(tokens, "l") || this.StartsWith(tokens, "look") || this.StartsWith(tokens, "clear")) {
             com.commandType = CommandType.LookAround;
@@ -23,12 +23,12 @@ export class DummParser implements IParser {
         } else if (this.StartsWith(tokens, "take")) {
             com.commandType = CommandType.TakeItem;
             if (tokens.length >= 2) {
-                com.args.push(tokens.slice(1, tokens.length).join(" "));
+                com.args.push(this.GetThing(tokens.slice(1, tokens.length)));
             }
         } else if (this.StartsWith(tokens, "drop")) {
             com.commandType = CommandType.DropItem;
             if (tokens.length >= 2) {
-                com.args.push(tokens.slice(1, tokens.length).join(" "));
+                com.args.push(this.GetThing(tokens.slice(1, tokens.length)));
             }
         } else if (this.StartsWith(tokens, "help")) {
             com.commandType = CommandType.Help;
@@ -47,5 +47,13 @@ export class DummParser implements IParser {
             }
         }
         return true;
+    }
+
+    private GetThing(args: string[]): string {
+        // Remove articles from the name
+        if (this.StartsWith(args, "the") || this.StartsWith(args, "a") || this.StartsWith(args, "an")) {
+            args = args.slice(1, args.length);
+        }
+        return args.join(" ");
     }
 }
