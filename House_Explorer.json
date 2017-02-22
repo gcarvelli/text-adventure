@@ -20,7 +20,7 @@
                 "id": "BOTTOM_OF_DRIVEWAY",
                 "name": "Bottom of Driveway",
                 "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north with a large front yard with some trees and bushes.",
-                "items": [ "HOUSE_FAR" ],
+                "items": [ "HOUSE_FAR", "HOUSE_YARD" ],
                 "moves": {
                     "north": "TOP_OF_DRIVEWAY",
                     "south": "STREET_3"
@@ -59,6 +59,10 @@
             "id": "HOUSE_FAR",
             "name": "house",
             "description": "The house has brick walls with white sidings. The plants are thriving and the windows clean, but there is no sign of anyone living here."
+        },
+        {
+            "id": "HOUSE_YARD",
+            "name": "yard"
         },
         {
             "id": "MAILBOX",

@@ -45,23 +45,17 @@ export class Engine {
                 if (command.args.length == 0) {
                     this.out.Print("Look at what?");
                 } else {
-                    let itemName = command.args.join(" ");
-
-                    // Check the room first
-                    let item = Utilities.FindItemByName(this.config.player.location.items, itemName);
-                    if (item != null) {
-                        this.out.Print(item.description);
-                        break;
+                    // Check the room first, then the player's inventory
+                    let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
+                    if (item == null) {
+                        item = Utilities.FindItemByName(this.config.player.inventory, command.args[0]);
                     }
 
-                    // Then check the player's inventory
-                    item = Utilities.FindItemByName(this.config.player.inventory, itemName);
                     if (item != null) {
-                        this.out.Print(item.description);
-                        break;
+                        this.out.Print(item.description ? item.description : "There's nothing special about the " + item.name + ".");
+                    } else {
+                        this.out.Print("Doesn't look like there's one of those around.");
                     }
-
-                    this.out.Print("Doesn't look like there's one of those around.");
                 }
                 break;
             case CommandType.Inventory:
