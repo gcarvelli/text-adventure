@@ -39,6 +39,7 @@
                 "id": "STREET_3",
                 "name": "Street in Front of House",
                 "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
+                "items": [ "STREET" ],
                 "moves": {
                     "north": "BOTTOM_OF_DRIVEWAY",
                     "south": "FOREST"
@@ -66,12 +67,10 @@
         },
         {
             "id": "MAILBOX",
-            "name": "mailbox",
             "description": "The mailbox is locked."
         },
         {
             "id": "BASKETBALL",
-            "name": "basketball",
             "description": "It is round and orange with bumps all over.",
             "description_for_room": "A basketball sits dejectedly on the side of the driveway.",
             "can_take": true
@@ -80,6 +79,9 @@
             "id": "HOUSE_NEAR",
             "name": "house",
             "description": "Even up close, the house looks pristine."
+        },
+        {
+            "id": "STREET"
         }
     ],
     "help": [
