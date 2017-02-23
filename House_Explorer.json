@@ -21,6 +21,7 @@
             "TOP_OF_DRIVEWAY": {
                 "name": "Top of Driveway",
                 "description": "You are now directly in front of the house. The driveway is full of cracks and the house looks abandoned. There is a path to the backyard to the north, as well as a mailbox next to the front door. A basketball hoop is mounted on the house.",
+                "basic_items": [ "driveway", "basketball hoop" ],
                 "items": [ "MAILBOX", "BASKETBALL", "HOUSE_NEAR" ],
                 "moves": {
                     "south": "BOTTOM_OF_DRIVEWAY"
@@ -29,7 +30,7 @@
             "STREET_3": {
                 "name": "Street in Front of House",
                 "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
-                "items": [ "STREET" ],
+                "basic_items": [ "street" ],
                 "moves": {
                     "north": "BOTTOM_OF_DRIVEWAY",
                     "south": "FOREST"
@@ -37,7 +38,9 @@
             },
             "FOREST": {
                 "name": "The Forest",
-                "description": "The trees around you are tall and thick. The ground is covered in fallen leaves and branches. It is quiet here.",
+                "description": "The trees around you are tall and thick. The ground is covered in fallen leaves and branches. The air is cool and calm.",
+                "basic_items": [ "leaves", "branches", "air" ],
+                "items": [ "FOREST_TREES" ],
                 "moves": {
                     "north": "STREET_3"
                 }
@@ -68,7 +71,10 @@
             "name": "house",
             "description": "Even up close, the house looks pristine."
         },
-        "STREET": { }
+        "FOREST_TREES": {
+            "name": "trees",
+            "description": "The trees tower up into the sky. Their branches stretch to form a canopy, blocking sunlight."
+        }
     },
     "help": [
         "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",

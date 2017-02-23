@@ -66,6 +66,14 @@ export class JSONLoader implements ILoader {
             });
         }
 
+        if (roomData.basic_items) {
+            roomData.basic_items.forEach(name => {
+                let item = new Item();
+                item.name = name;
+                room.items.push(item);
+            });
+        }
+
         if (roomData.moves) {
             // Read all the moves from the dictionary
             for (var move in roomData.moves) {
