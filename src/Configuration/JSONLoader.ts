@@ -34,10 +34,12 @@ export class JSONLoader implements ILoader {
 
     public LoadRooms(): RoomMap {
         let rooms = { };
-        this.data.rooms.roomlist.forEach(element => {
-            let room = this.LoadRoom(element);
-            rooms[room.id] = room;
-        });
+        for (let roomId in this.data.rooms.roomlist) {
+            if (this.data.rooms.roomlist.hasOwnProperty(roomId)) {
+                let room = this.LoadRoom(roomId);
+                rooms[roomId] = room;
+            }
+        }
 
         return rooms;
     }
@@ -50,23 +52,25 @@ export class JSONLoader implements ILoader {
         return this.data.help;
     }
 
-    private LoadRoom(data: any): Room {
+    private LoadRoom(id: string): Room {
         let room = new Room();
-        room.id = data.id;
-        room.name = data.name;
-        room.description = data.description;
+        let roomData = this.data.rooms.roomlist[id];
 
-        if (data.items) {
-            data.items.forEach(item => {
+        room.id = roomData.id;
+        room.name = roomData.name;
+        room.description = roomData.description;
+
+        if (roomData.items) {
+            roomData.items.forEach(item => {
                 room.items.push(this.LoadItem(item));
             });
         }
 
-        if (data.moves) {
+        if (roomData.moves) {
             // Read all the moves from the dictionary
-            for (var move in data.moves) {
-                if (data.moves.hasOwnProperty(move)) {
-                    room.moves[move] = data.moves[move];
+            for (var move in roomData.moves) {
+                if (roomData.moves.hasOwnProperty(move)) {
+                    room.moves[move] = roomData.moves[move];
                 }
             }
         }

@@ -8,9 +8,8 @@
     },
     "rooms": {
         "startroom": "BOTTOM_OF_DRIVEWAY",
-        "roomlist": [
-            {
-                "id": "BOTTOM_OF_DRIVEWAY",
+        "roomlist": {
+            "BOTTOM_OF_DRIVEWAY": {
                 "name": "Bottom of Driveway",
                 "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north with a large front yard with some trees and bushes.",
                 "items": [ "HOUSE_FAR", "HOUSE_YARD" ],
@@ -19,8 +18,7 @@
                     "south": "STREET_3"
                 }
             },
-            {
-                "id": "TOP_OF_DRIVEWAY",
+            "TOP_OF_DRIVEWAY": {
                 "name": "Top of Driveway",
                 "description": "You are now directly in front of the house. The driveway is full of cracks and the house looks abandoned. There is a path to the backyard to the north, as well as a mailbox next to the front door. A basketball hoop is mounted on the house.",
                 "items": [ "MAILBOX", "BASKETBALL", "HOUSE_NEAR" ],
@@ -28,8 +26,7 @@
                     "south": "BOTTOM_OF_DRIVEWAY"
                 }
             },
-            {
-                "id": "STREET_3",
+            "STREET_3": {
                 "name": "Street in Front of House",
                 "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
                 "items": [ "STREET" ],
@@ -38,15 +35,14 @@
                     "south": "FOREST"
                 }
             },
-            {
-                "id": "FOREST",
+            "FOREST": {
                 "name": "The Forest",
                 "description": "The trees around you are tall and thick. The ground is covered in fallen leaves and branches. It is quiet here.",
                 "moves": {
                     "north": "STREET_3"
                 }
             }
-        ]
+        }
     },
     "items": {
         "LOCKPICK": {
