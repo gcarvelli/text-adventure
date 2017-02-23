@@ -4,14 +4,7 @@
         "version": "0.1.0"
     },
     "player": {
-        "items": [
-            {
-                "id": "LOCKPICK",
-                "name": "lockpick",
-                "description": "This is a standard lockpick.",
-                "can_take": true
-            }
-        ]
+        "items": [ "LOCKPICK" ]
     },
     "rooms": {
         "startroom": "BOTTOM_OF_DRIVEWAY",
@@ -55,35 +48,32 @@
             }
         ]
     },
-    "items": [
-        {
-            "id": "HOUSE_FAR",
+    "items": {
+        "LOCKPICK": {
+            "description": "This is a standard lockpick.",
+            "can_take": true
+        },
+        "HOUSE_FAR": {
             "name": "house",
             "description": "The house has brick walls with white sidings. The plants are thriving and the windows clean, but there is no sign of anyone living here."
         },
-        {
-            "id": "HOUSE_YARD",
+        "HOUSE_YARD": {
             "name": "yard"
         },
-        {
-            "id": "MAILBOX",
+        "MAILBOX": {
             "description": "The mailbox is locked."
         },
-        {
-            "id": "BASKETBALL",
+        "BASKETBALL": {
             "description": "It is round and orange with bumps all over.",
             "description_for_room": "A basketball sits dejectedly on the side of the driveway.",
             "can_take": true
         },
-        {
-            "id": "HOUSE_NEAR",
+        "HOUSE_NEAR": {
             "name": "house",
             "description": "Even up close, the house looks pristine."
         },
-        {
-            "id": "STREET"
-        }
-    ],
+        "STREET": { }
+    },
     "help": [
         "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
         "  look                   Show the description of the current location.",

@@ -74,21 +74,12 @@ export class JSONLoader implements ILoader {
         return room;
     }
 
-    private LoadItem(data: any): Item {
+    private LoadItem(id: string): Item {
         let item = new Item();
-        let itemData;
+        let itemData = this.data.items[id];
 
-        if ((typeof data) == "string") {
-            let matches = this.data.items.filter(function(element) {
-                return element.id == data;
-            });
-            itemData = matches[0];
-        } else {
-            itemData = data;
-        }
-
-        item.id = itemData.id;
-        item.name = itemData.name ? itemData.name : itemData.id.toLowerCase();
+        item.id = id;
+        item.name = itemData.name ? itemData.name : id.toLowerCase();
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
         item.canTake = itemData.can_take;
