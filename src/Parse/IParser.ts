@@ -11,7 +11,9 @@ export enum CommandType {
     LookAt,
     Inventory,
     TakeItem,
-    DropItem
+    DropItem,
+    Open,
+    Close
 }
 
 export class Command {

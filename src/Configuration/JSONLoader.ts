@@ -95,6 +95,12 @@ export class JSONLoader implements ILoader {
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
         item.canTake = itemData.can_take;
+        item.canOpen = itemData.can_open;
+        if (item.canOpen && itemData.contains_items) {
+            itemData.contains_items.forEach(contentId => {
+                item.contents.push(this.LoadItem(contentId));
+            });
+        }
         
         return item;
     }

@@ -30,6 +30,16 @@ export class DummParser implements IParser {
             if (tokens.length >= 2) {
                 com.args.push(this.GetThing(tokens.slice(1, tokens.length)));
             }
+        } else if (this.StartsWith(tokens, "open")) {
+            com.commandType = CommandType.Open;
+            if (tokens.length >= 2) {
+                com.args.push(this.GetThing(tokens.slice(1, tokens.length)));
+            }
+        } else if (this.StartsWith(tokens, "close")) {
+            com.commandType = CommandType.Close;
+            if (tokens.length >= 2) {
+                com.args.push(this.GetThing(tokens.slice(1, tokens.length)));
+            }
         } else if (this.StartsWith(tokens, "help")) {
             com.commandType = CommandType.Help;
         } else {

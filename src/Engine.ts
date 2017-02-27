@@ -1,4 +1,4 @@
-import { Player, Room, RoomMap } from "./Models/Models";
+import { Player, Room, RoomMap, Item } from "./Models/Models";
 import { Command, CommandType, IParser } from "./Parse/IParser";
 import { Config } from "./Configuration/Config";
 import { ILoader } from "./Configuration/ILoader";
@@ -41,6 +41,7 @@ export class Engine {
             case CommandType.LookAround:
                 this.LookAround();
                 break;
+
             case CommandType.LookAt:
                 if (command.args.length == 0) {
                     this.out.Print("Look at what?");
@@ -52,12 +53,18 @@ export class Engine {
                     }
 
                     if (item != null) {
-                        this.out.Print(item.description ? item.description : "There's nothing special about the " + item.name + ".");
+                        if (item.canOpen) {
+                            this.out.Print(item.description + " The " + item.name + " is " +
+                                (item.isOpen ? "open." : "closed."));
+                        } else {
+                            this.out.Print(item.description ? item.description : "There's nothing special about the " + item.name + ".");
+                        }
                     } else {
                         this.out.Print("Doesn't look like there's one of those around.");
                     }
                 }
                 break;
+
             case CommandType.Inventory:
                 this.out.Print("Inventory:");
                 if (this.config.player.inventory.length > 0) {
@@ -68,6 +75,7 @@ export class Engine {
                     this.out.Print("There doesn't seem to be anything here.");
                 }
                 break;
+
             case CommandType.Move:
                 if (this.config.player.location.moves[command.args[0]]) {
                     this.MoveTo(command.args[0]);
@@ -76,20 +84,44 @@ export class Engine {
                     this.out.Print("You can't go that way right now.");
                 }
                 break;
+
             case CommandType.TakeItem:
                 if (command.args.length > 0) {
+                    // Try the room
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
                     if (item != null) {
                         this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
                         this.config.player.inventory.push(item);
                         this.out.Print("Took the " + item.name + ".");
-                    } else {
-                        this.out.Print("Doesn't look like there's one of those around.");
+                        break;
                     }
+
+                    // Try the contents of items in the room
+                    let parentItem: Item = null;
+                    for (let i = 0; i < this.config.player.location.items.length; i++) {
+                        let roomItem = this.config.player.location.items[i];
+                        if (roomItem.isOpen && roomItem.contents) {
+                            let possibleMatch = Utilities.FindItemByName(roomItem.contents, command.args[0]);
+                            if (possibleMatch != null) {
+                                parentItem = roomItem;
+                                item = possibleMatch;
+                                break;
+                            }
+                        }
+                    }
+                    if (item != null) {
+                        parentItem.contents.splice(parentItem.contents.indexOf(item), 1);
+                        this.config.player.inventory.push(item);
+                        this.out.Print("Took the " + item.name + ".");
+                        break;
+                    }
+
+                    this.out.Print("Doesn't look like there's one of those around.");
                 } else {
                     this.out.Print("Take what?");
                 }
                 break;
+
             case CommandType.DropItem:
                 if (command.args.length > 0) {
                     let item = Utilities.FindItemByName(this.config.player.inventory, command.args[0]);
@@ -105,9 +137,58 @@ export class Engine {
                     this.out.Print("Drop what?");
                 }
                 break;
+
+            case CommandType.Open:
+                if (command.args.length > 0) {
+                    let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
+                    if (item != null) {
+                        if (item.canOpen && !item.isOpen) {
+                            item.isOpen = true;
+                            if (item.contents.length > 0) {
+                                this.out.Print("You open the " + item.name + ", revealing:");
+                                item.contents.forEach(element => {
+                                    this.out.Print("  " + element.name);
+                                });
+                            } else {
+                                this.out.Print("You open the " + item.name + ".");
+                            }
+                        } else if (item.canOpen && item.isOpen) {
+                            this.out.Print("It's already open.");
+                        } else {
+                            this.out.Print("That can't be opened.");
+                        }
+                    } else {
+                        this.out.Print("Doesn't look like there's one of those around.");
+                    }
+                } else {
+                    this.out.Print("Open what?");
+                }
+                break;
+
+            case CommandType.Close:
+                if (command.args.length > 0) {
+                    let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
+                    if (item != null) {
+                        if (item.canOpen && item.isOpen) {
+                            item.isOpen = false;
+                            this.out.Print("You close the " + item.name + ".");
+                        } else if (item.canOpen && !item.isOpen) {
+                            this.out.Print("It's already closed.");
+                        } else {
+                            this.out.Print("That can't be closed.")
+                        }
+                    } else {
+                        this.out.Print("Doesn't look like there's one of those around.");
+                    }
+                } else {
+                    this.out.Print("Close what?");
+                }
+                break;
+
             case CommandType.Help:
                 this.out.PrintLines(this.config.help);
                 break;
+
             case CommandType.Custom:
                 if (command.args.length > 0) {
                     // Might be a move
@@ -119,6 +200,7 @@ export class Engine {
                 }
                 this.out.Print("Sorry, I didn't understand that.");
                 break;
+
             default:
                 this.out.Print("Well shucks, looks like I can't do that yet.");
                 break;

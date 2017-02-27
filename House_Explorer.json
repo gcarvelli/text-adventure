@@ -3,6 +3,15 @@
         "name": "House Explorer",
         "version": "0.2.0"
     },
+    "help": [
+        "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
+        "  look                   Show the description of the current location.",
+        "  look at <thing>        Show the description of the <thing>.",
+        "  north/south/east/west  Move in that direction.",
+        "  inventory              List the items in your inventory.",
+        "  take <item>            Add an item to your inventory.",
+        "  drop <item>            Remove an item from your inventory."
+    ],
     "player": {
         "items": [ "LOCKPICK" ]
     },
@@ -30,7 +39,7 @@
             "STREET_3": {
                 "name": "Street in Front of House",
                 "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
-                "basic_items": [ "street" ],
+                "basic_items": [ "street", "forest" ],
                 "moves": {
                     "north": "BOTTOM_OF_DRIVEWAY",
                     "south": "FOREST"
@@ -54,13 +63,19 @@
         },
         "HOUSE_FAR": {
             "name": "house",
-            "description": "The house has brick walls with white sidings. The plants are thriving and the windows clean, but there is no sign of anyone living here."
+            "description": "The house has brick walls with white sidings. The house looks decrepit and there is no sign of anyone living here."
         },
         "HOUSE_YARD": {
             "name": "yard"
         },
         "MAILBOX": {
-            "description": "The mailbox is locked."
+            "description": "This is a standard mailbox sitting on a wooden post.",
+            "can_open": true,
+            "contains_items": [ "LEAFLET" ]
+        },
+        "LEAFLET": {
+            "description": "Welcome to House Explorer! This is a small tech demo built on the text-adventure game engine.",
+            "can_take": true
         },
         "BASKETBALL": {
             "description": "It is round and orange with bumps all over.",
@@ -69,20 +84,11 @@
         },
         "HOUSE_NEAR": {
             "name": "house",
-            "description": "Even up close, the house looks pristine."
+            "description": "Several windows are boarded up, the rest are covered in grime. The bushes around the house are overgrown."
         },
         "FOREST_TREES": {
             "name": "trees",
             "description": "The trees tower up into the sky. Their branches stretch to form a canopy, blocking sunlight."
         }
-    },
-    "help": [
-        "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
-        "  look                   Show the description of the current location.",
-        "  look at <thing>        Show the description of the <thing>.",
-        "  north/south/east/west  Move in that direction.",
-        "  inventory              List the items in your inventory.",
-        "  take <item>            Add an item to your inventory.",
-        "  drop <item>            Remove an item from your inventory."
-    ]
+    }
 }
