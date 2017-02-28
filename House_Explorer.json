@@ -6,11 +6,12 @@
     "help": [
         "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
         "  look                   Show the description of the current location.",
-        "  look at <thing>        Show the description of the <thing>.",
+        "  look at <object>       Show the description of the <thing>.",
         "  north/south/east/west  Move in that direction.",
         "  inventory              List the items in your inventory.",
-        "  take <item>            Add an item to your inventory.",
-        "  drop <item>            Remove an item from your inventory."
+        "  take/drop <object>     Add or remove an item to your inventory.",
+        "  open/close <object>    Open or close an object",
+        "  "
     ],
     "player": {
         "items": [ "LOCKPICK" ]
