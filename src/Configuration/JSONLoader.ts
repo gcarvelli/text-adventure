@@ -69,7 +69,7 @@ export class JSONLoader implements ILoader {
         if (roomData.basic_items) {
             roomData.basic_items.forEach(name => {
                 let item = new Item();
-                item.name = name;
+                item.names = [ name ];
                 room.items.push(item);
             });
         }
@@ -91,7 +91,7 @@ export class JSONLoader implements ILoader {
         let itemData = this.data.items[id];
 
         item.id = id;
-        item.name = itemData.name ? itemData.name : id.toLowerCase();
+        item.names = itemData.name ? itemData.name.split(',') : [ id.toLowerCase() ];
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
         item.canTake = itemData.can_take;

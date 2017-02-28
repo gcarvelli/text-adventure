@@ -16,7 +16,7 @@ export class Player {
 
 export class Item {
     id: string;
-    name: string;
+    names: string[];
     description: string;
     descriptionForRoom: string;
 
@@ -29,6 +29,18 @@ export class Item {
 
     constructor() {
         this.contents = new Array<Item>();
+    }
+
+    public HasName(name: string): boolean {
+        let match = false;
+        this.names.forEach(val => {
+            if (val == name) match = true;
+        });
+        return match;
+    }
+
+    public GetName(): string {
+        return this.names[0];
     }
 }
 
@@ -49,11 +61,11 @@ export class Room {
         desc.push(this.description);
         this.items.forEach(item => {
             if (item.canOpen) {
-                desc.push("  There is a " + item.name + " here.");
+                desc.push("  There is a " + item.GetName() + " here.");
                 if (item.isOpen && item.contents && item.contents.length > 0) {
-                    desc.push("  The " + item.name + " contains:");
+                    desc.push("  The " + item.GetName() + " contains:");
                     item.contents.forEach(element => {
-                        desc.push("    " + element.name);
+                        desc.push("    " + element.GetName());
                     });
                 }
             }
@@ -61,7 +73,7 @@ export class Room {
             if (!item.canTake && item.descriptionForRoom) {
                 desc[0] += " " + item.descriptionForRoom;
             } else if (item.wasDropped) {
-                desc.push("  There is a " + item.name + " here.");
+                desc.push("  There is a " + item.GetName() + " here.");
             } else if (item.canTake) {
                 desc.push("  " + item.descriptionForRoom);
             }

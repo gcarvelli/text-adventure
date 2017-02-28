@@ -54,10 +54,10 @@ export class Engine {
 
                     if (item != null) {
                         if (item.canOpen) {
-                            this.out.Print(item.description + " The " + item.name + " is " +
+                            this.out.Print(item.description + " The " + item.GetName() + " is " +
                                 (item.isOpen ? "open." : "closed."));
                         } else {
-                            this.out.Print(item.description ? item.description : "There's nothing special about the " + item.name + ".");
+                            this.out.Print(item.description ? item.description : "There's nothing special about the " + item.GetName() + ".");
                         }
                     } else {
                         this.out.Print("Doesn't look like there's one of those around.");
@@ -69,7 +69,7 @@ export class Engine {
                 this.out.Print("Inventory:");
                 if (this.config.player.inventory.length > 0) {
                     this.config.player.inventory.forEach(item => {
-                        this.out.Print("\t" + item.name);
+                        this.out.Print("\t" + item.GetName());
                     });
                 } else {
                     this.out.Print("There doesn't seem to be anything here.");
@@ -92,7 +92,7 @@ export class Engine {
                     if (item != null) {
                         this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
                         this.config.player.inventory.push(item);
-                        this.out.Print("Took the " + item.name + ".");
+                        this.out.Print("Took the " + item.GetName() + ".");
                         break;
                     }
 
@@ -112,7 +112,7 @@ export class Engine {
                     if (item != null) {
                         parentItem.contents.splice(parentItem.contents.indexOf(item), 1);
                         this.config.player.inventory.push(item);
-                        this.out.Print("Took the " + item.name + ".");
+                        this.out.Print("Took the " + item.GetName() + ".");
                         break;
                     }
 
@@ -129,7 +129,7 @@ export class Engine {
                         this.config.player.inventory.splice(this.config.player.inventory.indexOf(item), 1);
                         this.config.player.location.items.push(item);
                         item.wasDropped = true;
-                        this.out.Print("Dropped the " + item.name + ".");
+                        this.out.Print("Dropped the " + item.GetName() + ".");
                     } else {
                         this.out.Print("You don't have one of those.");
                     }
@@ -145,12 +145,12 @@ export class Engine {
                         if (item.canOpen && !item.isOpen) {
                             item.isOpen = true;
                             if (item.contents.length > 0) {
-                                this.out.Print("You open the " + item.name + ", revealing:");
+                                this.out.Print("You open the " + item.GetName() + ", revealing:");
                                 item.contents.forEach(element => {
-                                    this.out.Print("  " + element.name);
+                                    this.out.Print("  " + element.GetName());
                                 });
                             } else {
-                                this.out.Print("You open the " + item.name + ".");
+                                this.out.Print("You open the " + item.GetName() + ".");
                             }
                         } else if (item.canOpen && item.isOpen) {
                             this.out.Print("It's already open.");
@@ -171,7 +171,7 @@ export class Engine {
                     if (item != null) {
                         if (item.canOpen && item.isOpen) {
                             item.isOpen = false;
-                            this.out.Print("You close the " + item.name + ".");
+                            this.out.Print("You close the " + item.GetName() + ".");
                         } else if (item.canOpen && !item.isOpen) {
                             this.out.Print("It's already closed.");
                         } else {

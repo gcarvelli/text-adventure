@@ -49,7 +49,7 @@
             "FOREST": {
                 "name": "The Forest",
                 "description": "The trees around you are tall and thick. The ground is covered in fallen leaves and branches. The air is cool and calm.",
-                "basic_items": [ "leaves", "branches", "air" ],
+                "basic_items": [ "leaves", "branches", "air", "ground" ],
                 "items": [ "FOREST_TREES" ],
                 "moves": {
                     "north": "STREET_3"
@@ -63,11 +63,11 @@
             "can_take": true
         },
         "HOUSE_FAR": {
-            "name": "house",
+            "name": "house,white house",
             "description": "The house has brick walls with white sidings. The house looks decrepit and there is no sign of anyone living here."
         },
         "HOUSE_YARD": {
-            "name": "yard"
+            "name": "yard,front yard"
         },
         "MAILBOX": {
             "description": "This is a standard mailbox sitting on a wooden post.",
@@ -84,7 +84,7 @@
             "can_take": true
         },
         "HOUSE_NEAR": {
-            "name": "house",
+            "name": "house,white house",
             "description": "Several windows are boarded up, the rest are covered in grime. The bushes around the house are overgrown."
         },
         "FOREST_TREES": {
