@@ -6,7 +6,7 @@
   "scripts": {
     "prepublish": "typings install",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --hot --inline --no-info --content-base ./build",
+    "start": "webpack-dev-server --hot --inline --no-info --port 8000 --content-base ./build",
     "php": "php -S localhost:8000 -t build/",
     "sync": "bash bin/sync.sh"
   },

@@ -4,8 +4,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: './src/app.js',
     output: {
-        path: './build',
-        filename: 'js/bundle.js'
+        path: path.join(__dirname, 'build/'),
+        filename: './js/bundle.js'
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
