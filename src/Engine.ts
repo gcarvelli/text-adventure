@@ -16,8 +16,8 @@ export class Engine {
     parser: IParser;
 
     private PrintHeader() {
-        this.out.Print("House Explorer");
-        this.out.Print("Version 0.1.0");
+        this.out.Print(this.config.game.name);
+        this.out.Print(this.config.game.version);
         this.out.Print(" ");
     }
 

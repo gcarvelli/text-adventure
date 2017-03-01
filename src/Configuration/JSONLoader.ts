@@ -15,8 +15,8 @@ export class JSONLoader implements ILoader {
 
     public LoadGame(): Game {
         let game = new Game();
-        game.name = this.data.name;
-        game.version = this.data.version;
+        game.name = this.data.game.name;
+        game.version = this.data.game.version;
 
         return game;
     }
