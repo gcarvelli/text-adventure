@@ -1,7 +1,7 @@
 {
     "game": {
         "name": "House Explorer",
-        "version": "0.2.0"
+        "version": "0.3.0"
     },
     "help": [
         "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",

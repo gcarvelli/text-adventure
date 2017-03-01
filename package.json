@@ -1,6 +1,6 @@
 {
   "name": "text-adventure",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A text-based game engine.",
   "main": "index.js",
   "scripts": {
