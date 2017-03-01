@@ -223,6 +223,8 @@ export class Engine {
         this.out.Clear();
         this.PrintHeader();
         this.out.Print(" ");
+        this.out.Print(this.config.player.location.name);
+        this.out.Print(" ");
         this.out.PrintLines(this.config.player.location.GetDescription());
     }
 }
