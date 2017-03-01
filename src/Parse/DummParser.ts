@@ -20,6 +20,15 @@ export class DummParser implements IParser {
         } else if (["north", "south", "east", "west"].indexOf(tokens[0]) != -1){
             com.commandType = CommandType.Move;
             com.args = tokens;
+        } else if (["n", "s", "e", "w"].indexOf(tokens[0]) != -1) {
+            com.commandType = CommandType.Move;
+            switch (tokens[0]) {
+                case "n": tokens[0] = "north"; break;
+                case "s": tokens[0] = "south"; break;
+                case "e": tokens[0] = "east"; break;
+                case "w": tokens[0] = "west"; break;
+            }
+            com.args = tokens;
         } else if (this.StartsWith(tokens, "take")) {
             com.commandType = CommandType.TakeItem;
             if (tokens.length >= 2) {
