@@ -89,10 +89,13 @@ export class Engine {
                 if (command.args.length > 0) {
                     // Try the room
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
-                    if (item != null) {
+                    if (item != null && item.canTake) {
                         this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
                         this.config.player.inventory.push(item);
                         this.out.Print("Took the " + item.GetName() + ".");
+                        break;
+                    } else if (item != null) {
+                        this.out.Print("That can't be taken.");
                         break;
                     }
 
@@ -109,10 +112,13 @@ export class Engine {
                             }
                         }
                     }
-                    if (item != null) {
+                    if (item != null && item.canTake) {
                         parentItem.contents.splice(parentItem.contents.indexOf(item), 1);
                         this.config.player.inventory.push(item);
                         this.out.Print("Took the " + item.GetName() + ".");
+                        break;
+                    } else if (item != null) {
+                        this.out.Print("That can't be taken.");
                         break;
                     }
 
