@@ -17,6 +17,11 @@ export class Utilities {
                     return con.HasName(name);
                 }));
             }
+            if (item.subItems && item.subItems.length > 0) {
+                matches.push.apply(matches, item.subItems.filter(con => {
+                    return con.HasName(name);
+                }));
+            }
         });
         if (matches.length > 0) {
             return matches[0];

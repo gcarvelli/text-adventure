@@ -25,7 +25,7 @@
                 "items": [ "HOUSE_FAR", "HOUSE_YARD" ],
                 "moves": {
                     "north": "TOP_OF_DRIVEWAY",
-                    "south": "STREET_3"
+                    "south": "STREET_1"
                 }
             },
             "TOP_OF_DRIVEWAY": {
@@ -37,22 +37,42 @@
                     "south": "BOTTOM_OF_DRIVEWAY"
                 }
             },
-            "STREET_3": {
+            "STREET_1": {
                 "name": "Street in Front of House",
                 "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
                 "basic_items": [ "street", "forest" ],
                 "moves": {
                     "north": "BOTTOM_OF_DRIVEWAY",
-                    "south": "FOREST"
+                    "south": "FOREST_1"
                 }
             },
-            "FOREST": {
+            "FOREST_1": {
                 "name": "The Forest",
-                "description": "The trees around you are tall and thick. The ground is covered in fallen leaves and branches. The air is cool and calm.",
+                "description": "The trees around you are tall and thick. The ground is dry and covered in fallen leaves and branches. The air is cool and calm. The street is to your north, and the forest continues to the south.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
                 "items": [ "FOREST_TREES" ],
                 "moves": {
-                    "north": "STREET_3"
+                    "north": "STREET_1",
+                    "south": "FOREST_2"
+                }
+            },
+            "FOREST_2": {
+                "name": "The Forest",
+                "description": "The canopy grows thicker, blocking out more sunlight. The forest continues to the north and there is a clearing further to the south.",
+                "basic_items": [ "leaves", "branches", "air", "ground" ],
+                "items": [ "FOREST_TREES" ],
+                "moves": {
+                    "north": "FOREST_1",
+                    "south": "CLEARING"
+                }
+            },
+            "CLEARING": {
+                "name": "A Clearing",
+                "description": "You enter a small clearing in the forest. The trees around you cast dancing shadows on the grassy ground.",
+                "basic_items": [ "sky" ],
+                "npcs": [ "FRED_THE_TYROMANCER" ],
+                "moves": {
+                    "north": "FOREST_2"
                 }
             }
         }
@@ -90,6 +110,19 @@
         "FOREST_TREES": {
             "name": "trees",
             "description": "The trees tower up into the sky. Their branches stretch to form a canopy, blocking sunlight."
+        },
+        "FRED_GOUDA": {
+            "name": "gouda,cheese",
+            "description": "The slice of aged cheese gives off a soft, tangy aroma and appears to be half-eaten."
+        }
+    },
+    "npcs": {
+        "FRED_THE_TYROMANCER": {
+            "name": "wizard,man",
+            "description": "The wizard is leaning on a tree, seemingly lost in thought. He is wearing a long purple robe and has a slice of Gouda in his hand. He seems harmless enough.",
+            "description_for_room": "A wizard is here. He pays no attention to your arrival.",
+            "basic_items": [ "robe" ],
+            "items": [ "FRED_GOUDA" ]
         }
     }
 }

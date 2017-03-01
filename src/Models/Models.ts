@@ -26,9 +26,11 @@ export class Item {
     canOpen: boolean;
     isOpen: boolean;
     contents: Item[];
+    subItems: Item[]
 
     constructor() {
         this.contents = new Array<Item>();
+        this.subItems = new Array<Item>();
     }
 
     public HasName(name: string): boolean {
@@ -68,9 +70,9 @@ export class Room {
                         desc.push("    " + element.GetName());
                     });
                 }
-            }
-
-            if (!item.canTake && item.descriptionForRoom) {
+            } else if (item instanceof NPC) {
+                desc.push("  There is a " + item.GetName() + " here.");
+            } else if (!item.canTake && item.descriptionForRoom) {
                 desc[0] += " " + item.descriptionForRoom;
             } else if (item.wasDropped) {
                 desc.push("  There is a " + item.GetName() + " here.");
@@ -82,6 +84,8 @@ export class Room {
         return desc;
     }
 }
+
+export class NPC extends Item { }
 
 export interface RoomMap {
     [id: string]: Room;

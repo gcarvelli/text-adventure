@@ -1,5 +1,5 @@
 import { ILoader } from "./ILoader";
-import { Game, Item, Player, Room, RoomMap } from "../Models/Models";
+import { Game, Item, Player, Room, RoomMap, NPC } from "../Models/Models";
 
 
 export class JSONLoader implements ILoader {
@@ -66,6 +66,12 @@ export class JSONLoader implements ILoader {
             });
         }
 
+        if (roomData.npcs) {
+            roomData.npcs.forEach(npc => {
+                room.items.push(this.LoadNPC(npc));
+            });
+        }
+
         if (roomData.basic_items) {
             roomData.basic_items.forEach(name => {
                 let item = new Item();
@@ -91,7 +97,23 @@ export class JSONLoader implements ILoader {
         let itemData = this.data.items[id];
 
         item.id = id;
-        item.names = itemData.name ? itemData.name.split(',') : [ id.toLowerCase() ];
+        this.LoadItemInto(item, itemData);
+
+        return item;
+    }
+
+    private LoadNPC(id: string): NPC {
+        let npc = new NPC();
+        let npcData = this.data.npcs[id];
+
+        npc.id = id;
+        this.LoadItemInto(npc, npcData);
+
+        return npc;
+    }
+
+    private LoadItemInto(item: Item, itemData: any): void {
+        item.names = itemData.name ? itemData.name.split(',') : [ item.id.toLowerCase() ];
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
         item.canTake = itemData.can_take;
@@ -101,7 +123,17 @@ export class JSONLoader implements ILoader {
                 item.contents.push(this.LoadItem(contentId));
             });
         }
-        
-        return item;
+        if (itemData.basic_items) {
+            itemData.basic_items.forEach(name => {
+                let subItem = new Item();
+                subItem.names = [ name ];
+                item.subItems.push(subItem);
+            });
+        }
+        if (itemData.items) {
+            itemData.items.forEach(subItemId => {
+                item.subItems.push(this.LoadItem(subItemId));
+            });
+        }
     }
 }
