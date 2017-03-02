@@ -1,3 +1,4 @@
+import { NPCDialog } from "./Dialog";
 
 export class Game {
     name: string;
@@ -85,7 +86,9 @@ export class Room {
     }
 }
 
-export class NPC extends Item { }
+export class NPC extends Item {
+    dialog: NPCDialog;
+}
 
 export interface RoomMap {
     [id: string]: Room;

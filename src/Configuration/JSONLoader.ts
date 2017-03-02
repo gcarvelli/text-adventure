@@ -1,6 +1,9 @@
 import { ILoader } from "./ILoader";
+import { Config } from "./Config";
 import { Game, Item, Player, Room, RoomMap, NPC } from "../Models/Models";
-
+import { DialogTreeMap, DialogTree, DialogOption, NPCDialog } from "../Models/Dialog";
+import { Effect } from "../Models/Effects";
+import * as Effects from "../Models/Effects";
 
 export class JSONLoader implements ILoader {
     data: any;
@@ -109,6 +112,12 @@ export class JSONLoader implements ILoader {
         npc.id = id;
         this.LoadItemInto(npc, npcData);
 
+        if (npcData.dialog) {
+            npc.dialog = new NPCDialog();
+            npc.dialog.greeting = npcData.dialog.greeting;
+            npc.dialog.startTree = npcData.dialog.start_tree;
+        }
+
         return npc;
     }
 
@@ -135,5 +144,47 @@ export class JSONLoader implements ILoader {
                 item.subItems.push(this.LoadItem(subItemId));
             });
         }
+    }
+
+    public LoadDialogTrees(config: Config): DialogTreeMap {
+        let map: DialogTreeMap = { };
+
+        if (this.data.dialog_trees) {
+            for (let dialogTreeId in this.data.dialog_trees) {
+                if (this.data.dialog_trees.hasOwnProperty(dialogTreeId)) {
+                    let tree = new DialogTree();
+                    let treeData = this.data.dialog_trees[dialogTreeId];
+                    tree.id = dialogTreeId;
+                    treeData.forEach(optionData => {
+                        tree.options.push(this.LoadDialogOption(config, optionData));
+                    });
+                    map[tree.id] = tree;
+                }
+            }
+        }
+
+        return map;
+    }
+
+    private LoadDialogOption(config: Config, optionData: any) : DialogOption {
+        let option = new DialogOption();
+        option.choice = optionData.choice;
+        option.response = optionData.response;
+        if (optionData.effects) {
+            optionData.effects.forEach(effectData => {
+                option.effects.push(this.LoadEffect(config, effectData));
+            });
+        }
+        return option;
+    }
+
+    private LoadEffect(config: Config, effectData: any): Effect {
+        switch (effectData.type) {
+            case "add_dialog_option":
+                let effect = new Effects.AddDialogOptionEffect(config, effectData.target_tree,
+                    this.LoadDialogOption(config, effectData.dialog_option));
+                return effect;
+        }
+        return null;
     }
 }

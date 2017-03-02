@@ -1,4 +1,5 @@
 import { IParser, Command, CommandType } from "./IParser";
+import { Mode } from "../Engine";
 
 export class DummParser implements IParser {
     Parse(commandString: string): Command {
@@ -49,6 +50,14 @@ export class DummParser implements IParser {
             if (tokens.length >= 2) {
                 com.args.push(this.GetThing(tokens.slice(1, tokens.length)));
             }
+        } else if (this.StartsWith(tokens, "talk", "to")) {
+            com.commandType = CommandType.TalkTo;
+            if (tokens.length >= 3) {
+                com.args.push(this.GetThing(tokens.slice(2, tokens.length)));
+            }
+        } else if (!isNaN(parseInt(tokens[0]))) {
+            com.commandType = CommandType.DialogOption;
+            com.args = tokens;
         } else if (this.StartsWith(tokens, "help")) {
             com.commandType = CommandType.Help;
         } else {

@@ -1,4 +1,4 @@
-import { Player, Room, RoomMap, Item } from "./Models/Models";
+import { Player, Room, RoomMap, Item, NPC } from "./Models/Models";
 import { Command, CommandType, IParser } from "./Parse/IParser";
 import { Config } from "./Configuration/Config";
 import { ILoader } from "./Configuration/ILoader";
@@ -10,10 +10,17 @@ export interface Output {
     Clear();
 }
 
+export enum Mode {
+    Explore,
+    Dialog
+}
+
 export class Engine {
     out: Output;
     config: Config;
     parser: IParser;
+    mode: Mode;
+    talkingTo: NPC;
 
     private PrintHeader() {
         this.out.Print(this.config.game.name);
@@ -24,6 +31,7 @@ export class Engine {
     public Initialize(loader: ILoader, out: Output, parser: IParser) {
         this.out = out;
         this.parser = parser;
+        this.mode = Mode.Explore;
 
         // Load in all rooms
         this.config = new Config(loader);
@@ -33,10 +41,18 @@ export class Engine {
     }
 
     public Execute(commandString: string) {
-        this.Apply(this.parser.Parse(commandString));
+        switch (this.mode) {
+            case Mode.Explore:
+                this.ApplyExploreCommand(this.parser.Parse(commandString));
+                break;
+            case Mode.Dialog:
+                this.ApplyDialogCommand(this.parser.Parse(commandString));
+                break;
+        }
+        this.out.Print(" ");
     }
 
-    public Apply(command: Command) {
+    private ApplyExploreCommand(command: Command) {
         switch (command.commandType) {
             case CommandType.LookAround:
                 this.LookAround();
@@ -191,6 +207,28 @@ export class Engine {
                 }
                 break;
 
+            case CommandType.TalkTo:
+                if (command.args.length > 0) {
+                    let npc = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
+                    if (npc != null && npc instanceof NPC) {
+                        if (npc.dialog) {
+                            this.mode = Mode.Dialog;
+                            this.talkingTo = npc;
+
+                            this.PrintDialogTree(npc);
+                        } else {
+                            this.out.Print("They don't seem like the talking type.");
+                        }
+                    } else if (npc != null) {
+                        this.out.Print("Your attempt at conversation goes unnoticed.");
+                    } else {
+                        this.out.Print("Doesn't look like they're here.");
+                    }
+                } else {
+                    this.out.Print("Talk to whom?")
+                }
+                break;
+
             case CommandType.Help:
                 this.out.PrintLines(this.config.help);
                 break;
@@ -211,7 +249,47 @@ export class Engine {
                 this.out.Print("Well shucks, looks like I can't do that yet.");
                 break;
         }
-        this.out.Print(" ");
+    }
+
+    private ApplyDialogCommand(command: Command) {
+        switch (command.commandType) {
+            case CommandType.DialogOption:
+                if (command.args.length != 0) {
+                    let choice = parseInt(command.args[0]);
+                    let tree = this.config.dialogTrees[this.talkingTo.dialog.startTree];
+                    if (choice != NaN && choice > 0 && choice <= tree.options.length + 1) {
+                        if (choice == tree.options.length + 1) {
+                            // leave
+                            this.mode = Mode.Explore;
+                            this.talkingTo = null;
+                            this.LookAround();
+                        } else {
+                            let option = tree.options[choice - 1];
+                            option.hasBeenChosen = true;
+                            option.RunEffects();
+                            this.PrintDialogTree(this.talkingTo, option.response);
+                            this.out.Print(" ");
+                        }
+                    } else {
+                        this.out.Print("You decide to say nothing.");
+                    }
+                } else {
+                    this.out.Print("You decide to say nothing.");
+                }
+                break;
+
+            case CommandType.Custom:
+                this.out.Print("Sorry, I didn't understand that.");
+                break;
+
+            case CommandType.Help:
+                this.out.Print("Choose what to say by entering in the corresponding number.");
+                break;
+
+            default:
+                this.out.Print("You can't do that right now.");
+                break;
+        }
     }
 
     private MoveTo(move: string) {
@@ -226,5 +304,27 @@ export class Engine {
         this.out.Print(this.config.player.location.name);
         this.out.Print(" ");
         this.out.PrintLines(this.config.player.location.GetDescription());
+    }
+
+    private PrintDialogTree(npc: NPC, response?: string) {
+        let tree = this.config.dialogTrees[npc.dialog.startTree];
+
+        this.out.Clear();
+        this.PrintHeader();
+        this.out.Print(npc.GetName());
+        this.out.Print(" ");
+
+        if (response) {
+            this.out.Print(response);
+        } else {
+            this.out.Print(npc.dialog.greeting);
+        }
+
+        this.out.Print(" ");
+
+        for (let i = 0; i < tree.options.length; i++) {
+            this.out.Print((i + 1) + " -> " + tree.options[i].choice);
+        }
+        this.out.Print((tree.options.length + 1) + " -> leave");
     }
 }

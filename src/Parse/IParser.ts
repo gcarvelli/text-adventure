@@ -1,3 +1,4 @@
+import { Mode } from "../Engine";
 
 export interface IParser {
     Parse(commandString: string): Command;
@@ -13,7 +14,9 @@ export enum CommandType {
     TakeItem,
     DropItem,
     Open,
-    Close
+    Close,
+    TalkTo,
+    DialogOption
 }
 
 export class Command {
