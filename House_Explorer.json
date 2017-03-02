@@ -17,7 +17,7 @@
         "items": [ "LOCKPICK" ]
     },
     "rooms": {
-        "startroom": "CLEARING",
+        "startroom": "BOTTOM_OF_DRIVEWAY",
         "roomlist": {
             "BOTTOM_OF_DRIVEWAY": {
                 "name": "Bottom of Driveway",
@@ -88,7 +88,7 @@
             "description": "The house has brick walls with white sidings. The house looks decrepit and there is no sign of anyone living here."
         },
         "HOUSE_YARD": {
-            "name": "yard,front yard"
+            "keywords": "yard,front yard"
         },
         "MAILBOX": {
             "description": "This is a standard mailbox sitting on a wooden post.",
@@ -105,21 +105,22 @@
             "can_take": true
         },
         "HOUSE_NEAR": {
-            "name": "house,white house",
+            "keywords": "house,white house",
             "description": "Several windows are boarded up, the rest are covered in grime. The bushes around the house are overgrown."
         },
         "FOREST_TREES": {
-            "name": "trees",
+            "keywords": "trees",
             "description": "The trees tower up into the sky. Their branches stretch to form a canopy, blocking sunlight."
         },
         "FRED_GOUDA": {
-            "name": "gouda,cheese",
+            "keywords": "gouda,cheese",
             "description": "The slice of aged cheese gives off a soft, tangy aroma and appears to be half-eaten."
         }
     },
     "npcs": {
         "FRED_THE_TYROMANCER": {
-            "name": "wizard,man",
+            "name": "Wizard",
+            "keywords": "wizard,man",
             "description": "The wizard is leaning on a tree, seemingly lost in thought. He is wearing a long purple robe and has a slice of Gouda in his hand. He seems harmless enough.",
             "description_for_room": "A wizard is here. He pays no attention to your arrival.",
             "basic_items": [ "robe" ],

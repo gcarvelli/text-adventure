@@ -78,7 +78,7 @@ export class JSONLoader implements ILoader {
         if (roomData.basic_items) {
             roomData.basic_items.forEach(name => {
                 let item = new Item();
-                item.names = [ name ];
+                item.keywords = [ name ];
                 room.items.push(item);
             });
         }
@@ -122,7 +122,8 @@ export class JSONLoader implements ILoader {
     }
 
     private LoadItemInto(item: Item, itemData: any): void {
-        item.names = itemData.name ? itemData.name.split(',') : [ item.id.toLowerCase() ];
+        item.keywords = itemData.keywords ? itemData.keywords.split(',') : [ item.id.toLowerCase() ];
+        item.name = itemData.name ? itemData.name : item.keywords[0];
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
         item.canTake = itemData.can_take;
@@ -135,7 +136,7 @@ export class JSONLoader implements ILoader {
         if (itemData.basic_items) {
             itemData.basic_items.forEach(name => {
                 let subItem = new Item();
-                subItem.names = [ name ];
+                subItem.keywords = [ name ];
                 item.subItems.push(subItem);
             });
         }

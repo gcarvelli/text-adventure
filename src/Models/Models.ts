@@ -17,7 +17,8 @@ export class Player {
 
 export class Item {
     id: string;
-    names: string[];
+    name: string;
+    keywords: string[];
     description: string;
     descriptionForRoom: string;
 
@@ -34,16 +35,16 @@ export class Item {
         this.subItems = new Array<Item>();
     }
 
-    public HasName(name: string): boolean {
+    public HasKeyword(name: string): boolean {
         let match = false;
-        this.names.forEach(val => {
+        this.keywords.forEach(val => {
             if (val == name) match = true;
         });
         return match;
     }
 
     public GetName(): string {
-        return this.names[0];
+        return this.name;
     }
 }
 
