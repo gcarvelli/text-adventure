@@ -32,4 +32,6 @@ let out = {
     }
 };
 
-engine.Initialize(new JSONLoader(data), out, new DummParser());
+let loader = new JSONLoader();
+loader.Initialize(data);
+engine.Initialize(loader, out, new DummParser());

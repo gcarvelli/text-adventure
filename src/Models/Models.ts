@@ -98,3 +98,7 @@ export interface RoomMap {
 export interface MoveMap {
     [id: string]: string;
 }
+
+export interface ItemMap {
+    [id: string]: Item
+}

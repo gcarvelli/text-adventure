@@ -7,52 +7,64 @@ import * as Effects from "../Models/Effects";
 
 export class JSONLoader implements ILoader {
     data: any;
-
-    constructor(data?: any) {
-        this.data = data;
-    }
+    config: Config;
 
     public Initialize(data: any) {
         this.data = data;
     }
 
-    public LoadGame(): Game {
-        let game = new Game();
-        game.name = this.data.game.name;
-        game.version = this.data.game.version;
+    public LoadConfig(): Config {
+        this.config = new Config();
 
-        return game;
+        this.config.rooms = { };
+
+        this.LoadGame();
+        this.LoadItems();
+        this.LoadPlayer();
+        this.LoadRooms();
+        this.LoadDialogTrees();
+        this.LoadHelp();
+
+        // Set player start room
+        this.config.player.location = this.config.rooms[this.data.rooms.startroom];
+
+        return this.config;
     }
 
-    public LoadPlayer(): Player {
-        let player = new Player();
+    public LoadGame() {
+        this.config.game = new Game();
+        this.config.game.name = this.data.game.name;
+        this.config.game.version = this.data.game.version;
+    }
+
+    public LoadPlayer() {
+        this.config.player = new Player();
         if (this.data.player.items) {
-            this.data.player.items.forEach(item => {
-                player.inventory.push(this.LoadItem(item));
+            this.data.player.items.forEach(itemId => {
+                this.config.player.inventory.push(this.config.items[itemId]);
             });
         }
-
-        return player;
     }
 
-    public LoadRooms(): RoomMap {
-        let rooms = { };
+    public LoadRooms() {
         for (let roomId in this.data.rooms.roomlist) {
             if (this.data.rooms.roomlist.hasOwnProperty(roomId)) {
                 let room = this.LoadRoom(roomId);
-                rooms[roomId] = room;
+                this.config.rooms[roomId] = room;
             }
         }
-
-        return rooms;
     }
 
-    public GetStartRoom(): string {
-        return this.data.rooms.startroom;
+    private LoadHelp() {
+        this.config.help = this.data.help;
     }
 
-    public LoadHelp(): string[] {
-        return this.data.help;
+    private LoadItems() {
+        for (let itemId in this.data.items) {
+            if (this.data.items.hasOwnProperty(itemId)) {
+                this.config.items[itemId] = this.LoadItem(itemId);
+            }
+        }
     }
 
     private LoadRoom(id: string): Room {
@@ -147,9 +159,7 @@ export class JSONLoader implements ILoader {
         }
     }
 
-    public LoadDialogTrees(config: Config): DialogTreeMap {
-        let map: DialogTreeMap = { };
-
+    public LoadDialogTrees() {
         if (this.data.dialog_trees) {
             for (let dialogTreeId in this.data.dialog_trees) {
                 if (this.data.dialog_trees.hasOwnProperty(dialogTreeId)) {
@@ -157,14 +167,12 @@ export class JSONLoader implements ILoader {
                     let treeData = this.data.dialog_trees[dialogTreeId];
                     tree.id = dialogTreeId;
                     treeData.forEach(optionData => {
-                        tree.options.push(this.LoadDialogOption(config, optionData));
+                        tree.options.push(this.LoadDialogOption(this.config, optionData));
                     });
-                    map[tree.id] = tree;
+                    this.config.dialogTrees[tree.id] = tree;
                 }
             }
         }
-
-        return map;
     }
 
     private LoadDialogOption(config: Config, optionData: any) : DialogOption {

@@ -34,7 +34,7 @@ export class Engine {
         this.mode = Mode.Explore;
 
         // Load in all rooms
-        this.config = new Config(loader);
+        this.config = loader.LoadConfig();
 
         this.LookAround();
         this.out.Print(" ");
