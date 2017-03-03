@@ -1,4 +1,4 @@
-import { Mode } from "../Engine";
+import { Mode } from "../Engine/Engine";
 
 export interface IParser {
     Parse(commandString: string): Command;

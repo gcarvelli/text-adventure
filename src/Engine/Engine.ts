@@ -1,8 +1,8 @@
-import { Player, Room, RoomMap, Item, NPC } from "./Models/Models";
-import { Command, CommandType, IParser } from "./Parse/IParser";
-import { Config } from "./Configuration/Config";
-import { ILoader } from "./Configuration/ILoader";
-import { Utilities } from "./Utilities/Utilities";
+import { Player, Room, RoomMap, Item, NPC } from "../Models/Models";
+import { Command, CommandType, IParser } from "../Parse/IParser";
+import { Config } from "../Configuration/Config";
+import { ILoader } from "../Configuration/ILoader";
+import { Utilities } from "../Utilities/Utilities";
 
 export interface Output {
     Print(output: string);
