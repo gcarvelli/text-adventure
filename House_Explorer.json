@@ -135,7 +135,19 @@
         "FRED_1": [
             {
                 "choice": "What is your name?",
-                "response": "I am a man of many names, but most recently I've been going by Fred."
+                "response": "I am a man of many names, but most recently I've been going by Fred.",
+                "effects": [
+                    {
+                        "type": "change_name",
+                        "target_item": "FRED_THE_TYROMANCER",
+                        "name": "Fred"
+                    },
+                    {
+                        "type": "change_description_for_room",
+                        "target_item": "FRED_THE_TYROMANCER",
+                        "description_for_room": "Fred the Tyromancer is here, leaning against a tree."
+                    }
+                ]
             },
             {
                 "choice": "Can you teach me some spells?",

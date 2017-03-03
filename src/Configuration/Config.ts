@@ -1,4 +1,4 @@
-import { Game, Player, RoomMap, ItemMap } from "../Models/Models";
+import { Game, Player, RoomMap, ItemMap, NPCMap } from "../Models/Models";
 import { DialogTreeMap } from "../Models/Dialog";
 
 export class Config {
@@ -8,11 +8,17 @@ export class Config {
     dialogTrees: DialogTreeMap;
     help: string[];
     items: ItemMap;
+    npcs: NPCMap;
 
     constructor() {
         this.rooms = { };
         this.dialogTrees = { };
         this.help = new Array<string>();
         this.items = { };
+        this.npcs = { };
+    }
+
+    public GetItem(id: string) {
+        return this.items.hasOwnProperty(id) ? this.items[id] : this.npcs[id];
     }
 }

@@ -73,7 +73,8 @@ export class Room {
                     });
                 }
             } else if (item instanceof NPC) {
-                desc.push("  There is a " + item.GetName() + " here.");
+                desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
+                "There is a " + item.GetName() + " here."));
             } else if (!item.canTake && item.descriptionForRoom) {
                 desc[0] += " " + item.descriptionForRoom;
             } else if (item.wasDropped) {
@@ -101,4 +102,8 @@ export interface MoveMap {
 
 export interface ItemMap {
     [id: string]: Item
+}
+
+export interface NPCMap {
+    [id: string]: NPC
 }

@@ -20,6 +20,7 @@ export class JSONLoader implements ILoader {
 
         this.LoadGame();
         this.LoadItems();
+        this.LoadNPCs();
         this.LoadPlayer();
         this.LoadRooms();
         this.LoadDialogTrees();
@@ -60,9 +61,60 @@ export class JSONLoader implements ILoader {
     }
 
     private LoadItems() {
+        // Load in all the items
         for (let itemId in this.data.items) {
             if (this.data.items.hasOwnProperty(itemId)) {
                 this.config.items[itemId] = this.LoadItem(itemId);
+            }
+        }
+
+        for (let itemId in this.config.items) {
+            let item = this.config.items[itemId];
+            let itemData = this.data.items[itemId];
+
+            // Make connections for items inside other items
+            if (this.config.items.hasOwnProperty(itemId)) {
+                if (item.canOpen && itemData.contains_items) {
+                    itemData.contains_items.forEach(contentId => {
+                        item.contents.push(this.config.items[contentId]);
+                    });
+                }
+            }
+
+            // Make connections for subItems
+            if (itemData.items) {
+                itemData.items.forEach(subItemId => {
+                    item.subItems.push(this.config.items[subItemId]);
+                });
+            }
+        }
+    }
+
+    private LoadNPCs() {
+        for (let npcId in this.data.npcs) {
+            if (this.data.npcs.hasOwnProperty(npcId)) {
+                this.config.npcs[npcId] = this.LoadNPC(npcId);
+            }
+        }
+
+        for (let npcId in this.config.npcs) {
+            let npc = this.config.npcs[npcId];
+            let npcData = this.data.npcs[npcId];
+
+            // Make connections for items inside other items
+            if (this.config.npcs.hasOwnProperty(npcId)) {
+                if (npc.canOpen && npcData.contains_items) {
+                    npcData.contains_items.forEach(contentId => {
+                        npc.contents.push(this.config.items[contentId]);
+                    });
+                }
+            }
+
+            // Make connections for subItems
+            if (npcData.items) {
+                npcData.items.forEach(subItemId => {
+                    npc.subItems.push(this.config.items[subItemId]);
+                });
             }
         }
     }
@@ -77,19 +129,20 @@ export class JSONLoader implements ILoader {
 
         if (roomData.items) {
             roomData.items.forEach(item => {
-                room.items.push(this.LoadItem(item));
+                room.items.push(this.config.items[item]);
             });
         }
 
         if (roomData.npcs) {
             roomData.npcs.forEach(npc => {
-                room.items.push(this.LoadNPC(npc));
+                room.items.push(this.config.npcs[npc]);
             });
         }
 
         if (roomData.basic_items) {
             roomData.basic_items.forEach(name => {
                 let item = new Item();
+                item.name = name;
                 item.keywords = [ name ];
                 room.items.push(item);
             });
@@ -140,21 +193,13 @@ export class JSONLoader implements ILoader {
         item.descriptionForRoom = itemData.description_for_room;
         item.canTake = itemData.can_take;
         item.canOpen = itemData.can_open;
-        if (item.canOpen && itemData.contains_items) {
-            itemData.contains_items.forEach(contentId => {
-                item.contents.push(this.LoadItem(contentId));
-            });
-        }
+
         if (itemData.basic_items) {
             itemData.basic_items.forEach(name => {
                 let subItem = new Item();
+                subItem.name = name;
                 subItem.keywords = [ name ];
                 item.subItems.push(subItem);
-            });
-        }
-        if (itemData.items) {
-            itemData.items.forEach(subItemId => {
-                item.subItems.push(this.LoadItem(subItemId));
             });
         }
     }
@@ -167,7 +212,7 @@ export class JSONLoader implements ILoader {
                     let treeData = this.data.dialog_trees[dialogTreeId];
                     tree.id = dialogTreeId;
                     treeData.forEach(optionData => {
-                        tree.options.push(this.LoadDialogOption(this.config, optionData));
+                        tree.options.push(this.LoadDialogOption(optionData));
                     });
                     this.config.dialogTrees[tree.id] = tree;
                 }
@@ -175,24 +220,28 @@ export class JSONLoader implements ILoader {
         }
     }
 
-    private LoadDialogOption(config: Config, optionData: any) : DialogOption {
+    private LoadDialogOption(optionData: any) : DialogOption {
         let option = new DialogOption();
         option.choice = optionData.choice;
         option.response = optionData.response;
         if (optionData.effects) {
             optionData.effects.forEach(effectData => {
-                option.effects.push(this.LoadEffect(config, effectData));
+                option.effects.push(this.LoadEffect(effectData));
             });
         }
         return option;
     }
 
-    private LoadEffect(config: Config, effectData: any): Effect {
+    private LoadEffect(effectData: any): Effect {
         switch (effectData.type) {
             case "add_dialog_option":
-                let effect = new Effects.AddDialogOptionEffect(config, effectData.target_tree,
-                    this.LoadDialogOption(config, effectData.dialog_option));
-                return effect;
+                return new Effects.AddDialogOptionEffect(this.config, effectData.target_tree,
+                    this.LoadDialogOption(effectData.dialog_option));
+            case "change_name":
+                return new Effects.ChangeNameEffect(this.config, effectData.target_item, effectData.name);
+            case "change_description_for_room":
+                return new Effects.ChangeDescriptionForRoomEffect(this.config, effectData.target_item,
+                    effectData.description_for_room);
         }
         return null;
     }
