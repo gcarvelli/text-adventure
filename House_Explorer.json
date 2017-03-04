@@ -10,8 +10,8 @@
         "  north/south/east/west  Move in that direction.",
         "  inventory              List the items in your inventory.",
         "  take/drop <object>     Add or remove an item to your inventory.",
-        "  open/close <object>    Open or close an object",
-        "  "
+        "  open/close <object>    Open or close an object.",
+        "  talk to <person>       Attempt conversation with an NPC."
     ],
     "player": {
         "items": [ "LOCKPICK" ]
