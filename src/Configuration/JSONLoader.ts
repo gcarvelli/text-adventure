@@ -187,7 +187,7 @@ export class JSONLoader implements ILoader {
     }
 
     private LoadItemInto(item: Item, itemData: any): void {
-        item.keywords = itemData.keywords ? itemData.keywords.split(',') : [ item.id.toLowerCase() ];
+        item.keywords = itemData.keywords ? itemData.keywords : [ item.id.toLowerCase() ];
         item.name = itemData.name ? itemData.name : item.keywords[0];
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
