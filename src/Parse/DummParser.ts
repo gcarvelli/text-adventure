@@ -4,7 +4,7 @@ import { Mode } from "../Engine/Engine";
 export class DummParser implements IParser {
     Parse(commandString: string): Command {
         let com = new Command();
-        com.command = commandString.toLowerCase();
+        com.command = commandString.toLowerCase().trim();
         let tokens = com.command.split(/\s+/);
 
         if (tokens.length == 0) {
