@@ -110,3 +110,25 @@ export class AddItemToInventoryEffect extends Effect {
         }
     }
 }
+
+export class AddKeywordToItemEffect extends Effect {
+    itemId: string;
+    keywords: string[];
+
+    constructor(config: Config, itemId: string, keywords: string[]) {
+        super(config);
+        this.itemId = itemId;
+        this.keywords = keywords;
+    }
+
+    public Execute() {
+        let item = this.config.GetItem(this.itemId);
+        if (item) {
+            this.keywords.forEach(keyword => {
+                if (item.keywords.indexOf(keyword) == -1) {
+                    item.keywords.push(keyword);
+                }
+            });
+        }
+    }
+}

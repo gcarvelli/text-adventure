@@ -158,6 +158,11 @@
                         "description_for_room": "Fred the Tyromancer is here, leaning against a tree."
                     },
                     {
+                        "type": "add_keywords_to_item",
+                        "target_item": "FRED_THE_TYROMANCER",
+                        "keywords": [ "fred", "fred the tyromancer" ]
+                    },
+                    {
                         "type": "add_dialog_option",
                         "target_tree": "FRED1",
                         "dialog_option": {

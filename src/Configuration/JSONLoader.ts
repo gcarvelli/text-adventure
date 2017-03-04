@@ -248,7 +248,9 @@ export class JSONLoader implements ILoader {
                     effectData.description_for_room);
             case "add_item_to_inventory":
                 return new Effects.AddItemToInventoryEffect(this.config, effectData.item);
+            case "add_keywords_to_item":
+                return new Effects.AddKeywordToItemEffect(this.config, effectData.target_item, effectData.keywords);
         }
-        return null;
+        throw new TypeError("Effect type " + effectData.type + " not found!");
     }
 }
