@@ -8,10 +8,17 @@ import { JSONLoader } from "./Configuration/JSONLoader";
 // Hook up terminal and engine
 let engine = new Engine();
 
+let return_false = function() { return false; };
 let terminal = $('#term').terminal(function(commandString) {
     engine.Execute(commandString);
 }, {
-    clear: false
+    clear: false,
+    exceptionHandler: return_false,
+    keymap: {
+        "CTRL+R": return_false,
+        "CTRL+P": return_false,
+        "CTRL+D": return_false
+    }
 });
 
 let out = {
