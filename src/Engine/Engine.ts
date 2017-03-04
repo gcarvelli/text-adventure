@@ -323,7 +323,8 @@ export class Engine {
         this.out.Print(" ");
 
         for (let i = 0; i < tree.options.length; i++) {
-            this.out.Print((i + 1) + " -> " + tree.options[i].choice);
+            this.out.Print((i + 1) + (tree.options[i].hasBeenChosen ? "" : "*")
+                + " -> " + tree.options[i].choice);
         }
         this.out.Print((tree.options.length + 1) + " -> leave");
     }

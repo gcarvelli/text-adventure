@@ -222,6 +222,7 @@ export class JSONLoader implements ILoader {
 
     private LoadDialogOption(optionData: any) : DialogOption {
         let option = new DialogOption();
+        option.id = optionData.id;
         option.choice = optionData.choice;
         option.response = optionData.response;
         if (optionData.effects) {
@@ -236,12 +237,17 @@ export class JSONLoader implements ILoader {
         switch (effectData.type) {
             case "add_dialog_option":
                 return new Effects.AddDialogOptionEffect(this.config, effectData.target_tree,
-                    this.LoadDialogOption(effectData.dialog_option));
+                    this.LoadDialogOption(effectData.dialog_option), effectData.afterId);
+            case "remove_dialog_option":
+                return new Effects.RemoveDialogOptionEffect(this.config, effectData.target_tree,
+                    effectData.dialog_option);
             case "change_name":
                 return new Effects.ChangeNameEffect(this.config, effectData.target_item, effectData.name);
             case "change_description_for_room":
                 return new Effects.ChangeDescriptionForRoomEffect(this.config, effectData.target_item,
                     effectData.description_for_room);
+            case "add_item_to_inventory":
+                return new Effects.AddItemToInventoryEffect(this.config, effectData.item);
         }
         return null;
     }

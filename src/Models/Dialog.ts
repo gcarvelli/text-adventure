@@ -15,6 +15,7 @@ export class DialogTree {
 }
 
 export class DialogOption {
+    id: string;
     choice: string;
     response: string;
     effects: Effect[];

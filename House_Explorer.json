@@ -115,6 +115,10 @@
         "FRED_GOUDA": {
             "keywords": "gouda,cheese",
             "description": "The slice of aged cheese gives off a soft, tangy aroma and appears to be half-eaten."
+        },
+        "PLAYER_GOUDA": {
+            "keywords": "gouda,cheese",
+            "description": "This piece of Gouda from Fred smells delicious."
         }
     },
     "npcs": {
@@ -127,15 +131,16 @@
             "items": [ "FRED_GOUDA" ],
             "dialog": {
                 "greeting": "The wizard looks towards you but says nothing.",
-                "start_tree": "FRED_1"
+                "start_tree": "FRED1"
             }
         }
     },
     "dialog_trees": {
-        "FRED_1": [
+        "FRED1": [
             {
+                "id": "FRED1_NAME",
                 "choice": "What is your name?",
-                "response": "I am a man of many names, but most recently I've been going by Fred.",
+                "response": "I am a man of many names, but there are those who call me Fred.",
                 "effects": [
                     {
                         "type": "change_name",
@@ -146,19 +151,58 @@
                         "type": "change_description_for_room",
                         "target_item": "FRED_THE_TYROMANCER",
                         "description_for_room": "Fred the Tyromancer is here, leaning against a tree."
-                    }
-                ]
-            },
-            {
-                "choice": "Can you teach me some spells?",
-                "response": "Alas, I cannot. I am a tyromancer, a wizard gifted with skills of divination through coagulated dairy products.",
-                "effects": [
+                    },
                     {
                         "type": "add_dialog_option",
-                        "target_tree": "FRED_1",
+                        "target_tree": "FRED1",
                         "dialog_option": {
-                            "choice": "Wait, so you do magic with cheese?",
-                            "response": "Well that's a gross over-simpification... but pretty much, yeah."
+                            "id": "FRED1_SPELLS",
+                            "choice": "Can you teach me some spells?",
+                            "response": "Alas, I cannot. I am a tyromancer, a wizard gifted with skills of divination through coagulated dairy products.",
+                            "effects": [
+                                {
+                                    "type": "add_dialog_option",
+                                    "target_tree": "FRED1",
+                                    "afterId": "FRED1_SPELLS",
+                                    "dialog_option": {
+                                        "id": "FRED1_CHEESE_MAGIC",
+                                        "choice": "Wait, so you do magic with cheese?",
+                                        "response": "Your question betrays your own ignorance, but that description is not altogether unfitting."
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "add_dialog_option",
+                        "target_tree": "FRED1",
+                        "dialog_option": {
+                            "id": "FRED1_ASK_FOR_CHEESE",
+                            "choice": "Can I have that piece of cheese?",
+                            "response": "This is a wedge of my prized Gouda, so I'm afraid not.",
+                            "effects": [
+                                {
+                                    "type": "add_dialog_option",
+                                    "target_tree": "FRED1",
+                                    "afterId": "FRED1_ASK_FOR_CHEESE",
+                                    "dialog_option": {
+                                        "id": "FRED_GIVE_CHEESE",
+                                        "choice": "Come on, please? It looks delicious...",
+                                        "response": "My, you are persistent. I shall give you a piece but that shall be the only one.",
+                                        "effects": [
+                                            {
+                                                "type": "add_item_to_inventory",
+                                                "item": "PLAYER_GOUDA"
+                                            },
+                                            {
+                                                "type": "remove_dialog_option",
+                                                "target_tree": "FRED1",
+                                                "dialog_option": "FRED_GIVE_CHEESE"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
                         }
                     }
                 ]
