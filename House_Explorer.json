@@ -51,7 +51,7 @@
                 "name": "The Forest",
                 "description": "The trees around you are tall and thick. The ground is dry and covered in fallen leaves and branches. The air is cool and calm. The street is to your north, and the forest continues to the south.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
-                "items": [ "FOREST_TREES" ],
+                "items": [ "FOREST_TREE", "FOREST_TREES" ],
                 "moves": {
                     "north": "STREET_1",
                     "south": "FOREST_2"
@@ -61,7 +61,7 @@
                 "name": "The Forest",
                 "description": "The canopy grows thicker, blocking out more sunlight. The forest continues to the north and there is a clearing further to the south.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
-                "items": [ "FOREST_TREES" ],
+                "items": [ "FOREST_TREE", "FOREST_TREES" ],
                 "moves": {
                     "north": "FOREST_1",
                     "south": "CLEARING"
@@ -71,6 +71,7 @@
                 "name": "A Clearing",
                 "description": "You enter a small clearing in the forest. Shadows from the trees around you dance on the grass.",
                 "basic_items": [ "sky" ],
+                "items": [ "FOREST_TREE" ],
                 "npcs": [ "FRED_THE_TYROMANCER" ],
                 "moves": {
                     "north": "FOREST_2"
@@ -107,6 +108,10 @@
         "HOUSE_NEAR": {
             "keywords": "house,white house",
             "description": "Several windows are boarded up, the rest are covered in grime. The bushes around the house are overgrown."
+        },
+        "FOREST_TREE": {
+            "keywords": "tree",
+            "description": "There are a lot of those around."
         },
         "FOREST_TREES": {
             "keywords": "trees",
