@@ -210,8 +210,8 @@ export class Engine {
             case CommandType.TalkTo:
                 if (command.args.length > 0) {
                     let npc = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
-                    if (npc != null && npc.dialog) {
-                        if (npc.dialog) {
+                    if (npc != null && npc.npc.dialog) {
+                        if (npc.npc.dialog) {
                             this.mode = Mode.Dialog;
                             this.talkingTo = npc;
 
@@ -256,7 +256,7 @@ export class Engine {
             case CommandType.DialogOption:
                 if (command.args.length != 0) {
                     let choice = parseInt(command.args[0]);
-                    let tree = this.config.dialogTrees[this.talkingTo.dialog.startTree];
+                    let tree = this.config.dialogTrees[this.talkingTo.npc.dialog.startTree];
                     if (choice != NaN && choice > 0 && choice <= tree.options.length + 1) {
                         if (choice == tree.options.length + 1) {
                             // leave
@@ -307,7 +307,7 @@ export class Engine {
     }
 
     private PrintDialogTree(npc: Item, response?: string) {
-        let tree = this.config.dialogTrees[npc.dialog.startTree];
+        let tree = this.config.dialogTrees[npc.npc.dialog.startTree];
 
         this.out.Clear();
         this.PrintHeader();
@@ -317,7 +317,7 @@ export class Engine {
         if (response) {
             this.out.Print(response);
         } else {
-            this.out.Print(npc.dialog.greeting);
+            this.out.Print(npc.npc.dialog.greeting);
         }
 
         this.out.Print(" ");

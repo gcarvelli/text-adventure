@@ -39,7 +39,7 @@ export class Room {
                         desc.push("    " + element.GetName());
                     });
                 }
-            } else if (item.dialog) {
+            } else if (item.npc.dialog) {
                 desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
                 "There is a " + item.GetName() + " here."));
             } else if (!item.take.canTake && item.descriptionForRoom) {
@@ -66,14 +66,14 @@ export class Item {
     take: TakeModule;
     open: OpenModule;
     weapon: WeaponModule;
-
-    dialog: NPCDialog;
+    npc: NPCModule;
 
     constructor() {
         this.subItems = new Array<Item>();
         this.take = new TakeModule();
         this.open = new OpenModule();
         this.weapon = new WeaponModule();
+        this.npc = new NPCModule();
     }
 
     public HasKeyword(name: string): boolean {
@@ -108,6 +108,10 @@ export class WeaponModule {
     isWeapon: boolean;
     baseDamage: number;
     damageSpread: number;
+}
+
+export class NPCModule {
+    dialog: NPCDialog;
 }
 
 export interface RoomMap {

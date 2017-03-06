@@ -162,10 +162,12 @@ export class JSONLoader implements ILoader {
             item.weapon.baseDamage = itemData.weapon.baseDamage;
             item.weapon.damageSpread = itemData.weapon.damage_spread;
         }
-        if (itemData.dialog) {
-            item.dialog = new NPCDialog();
-            item.dialog.greeting = itemData.dialog.greeting;
-            item.dialog.startTree = itemData.dialog.start_tree;
+        if (itemData.npc) {
+            if (itemData.npc.dialog) {
+                item.npc.dialog = new NPCDialog();
+                item.npc.dialog.greeting = itemData.npc.dialog.greeting;
+                item.npc.dialog.startTree = itemData.npc.dialog.start_tree;
+            }
         }
 
         if (itemData.basic_items) {

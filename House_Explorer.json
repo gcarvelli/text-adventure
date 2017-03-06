@@ -177,9 +177,11 @@
             "description_for_room": "A wizard is here. He pays no attention to your arrival.",
             "basic_items": [ "robe" ],
             "items": [ "FRED_GOUDA" ],
-            "dialog": {
-                "greeting": "The wizard looks towards you but says nothing.",
-                "start_tree": "FRED1"
+            "npc": {
+                "dialog": {
+                    "greeting": "The wizard looks towards you but says nothing.",
+                    "start_tree": "FRED1"
+                }
             }
         }
     },
