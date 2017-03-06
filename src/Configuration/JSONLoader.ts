@@ -74,8 +74,8 @@ export class JSONLoader implements ILoader {
 
             // Make connections for items inside other items
             if (this.config.items.hasOwnProperty(itemId)) {
-                if (item.canOpen && itemData.contains_items) {
-                    itemData.contains_items.forEach(contentId => {
+                if (item.canOpen && itemData.open.contains_items) {
+                    itemData.open.contains_items.forEach(contentId => {
                         item.contents.push(this.config.items[contentId]);
                     });
                 }
@@ -103,8 +103,8 @@ export class JSONLoader implements ILoader {
 
             // Make connections for items inside other items
             if (this.config.npcs.hasOwnProperty(npcId)) {
-                if (npc.canOpen && npcData.contains_items) {
-                    npcData.contains_items.forEach(contentId => {
+                if (npc.canOpen && npcData.open.contains_items) {
+                    npcData.open.contains_items.forEach(contentId => {
                         npc.contents.push(this.config.items[contentId]);
                     });
                 }
@@ -191,8 +191,13 @@ export class JSONLoader implements ILoader {
         item.name = itemData.name ? itemData.name : item.keywords[0];
         item.description = itemData.description;
         item.descriptionForRoom = itemData.description_for_room;
-        item.canTake = itemData.can_take;
-        item.canOpen = itemData.can_open;
+
+        if (itemData.take) {
+            item.canTake = itemData.take.can_take;
+        }
+        if (itemData.open) {
+            item.canOpen = itemData.open.can_open;
+        }
 
         if (itemData.basic_items) {
             itemData.basic_items.forEach(name => {

@@ -92,7 +92,9 @@
     "items": {
         "LOCKPICK": {
             "description": "This is a standard lockpick.",
-            "can_take": true
+            "take": {
+                "can_take": true
+            }
         },
         "HOUSE_FAR": {
             "keywords": [ "house", "white house" ],
@@ -103,17 +105,23 @@
         },
         "MAILBOX": {
             "description": "This is a standard mailbox sitting on a wooden post.",
-            "can_open": true,
-            "contains_items": [ "LEAFLET" ]
+            "open": {
+                "can_open": true,
+                "contains_items": [ "LEAFLET" ]
+            }
         },
         "LEAFLET": {
             "description": "Welcome to House Explorer! This is a small tech demo built on the text-adventure game engine.",
-            "can_take": true
+            "take": {
+                "can_take": true
+            }
         },
         "BASKETBALL": {
             "description": "It is round and orange with bumps all over.",
             "description_for_room": "A basketball sits dejectedly on the side of the driveway.",
-            "can_take": true
+            "take": {
+                "can_take": true
+            }
         },
         "HOUSE_NEAR": {
             "keywords": [ "house", "white house" ],
