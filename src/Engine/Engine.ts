@@ -69,9 +69,9 @@ export class Engine {
                     }
 
                     if (item != null) {
-                        if (item.canOpen) {
+                        if (item.open.canOpen) {
                             this.out.Print(item.description + " The " + item.GetName() + " is " +
-                                (item.isOpen ? "open." : "closed."));
+                                (item.open.isOpen ? "open." : "closed."));
                         } else {
                             this.out.Print(item.description ? item.description : "There's nothing special about the " + item.GetName() + ".");
                         }
@@ -105,7 +105,7 @@ export class Engine {
                 if (command.args.length > 0) {
                     // Try the room
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
-                    if (item != null && item.canTake) {
+                    if (item != null && item.take.canTake) {
                         this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
                         this.config.player.inventory.push(item);
                         this.out.Print("Took the " + item.GetName() + ".");
@@ -119,8 +119,8 @@ export class Engine {
                     let parentItem: Item = null;
                     for (let i = 0; i < this.config.player.location.items.length; i++) {
                         let roomItem = this.config.player.location.items[i];
-                        if (roomItem.isOpen && roomItem.contents) {
-                            let possibleMatch = Utilities.FindItemByName(roomItem.contents, command.args[0]);
+                        if (roomItem.open.isOpen && roomItem.open.contents) {
+                            let possibleMatch = Utilities.FindItemByName(roomItem.open.contents, command.args[0]);
                             if (possibleMatch != null) {
                                 parentItem = roomItem;
                                 item = possibleMatch;
@@ -128,8 +128,8 @@ export class Engine {
                             }
                         }
                     }
-                    if (item != null && item.canTake) {
-                        parentItem.contents.splice(parentItem.contents.indexOf(item), 1);
+                    if (item != null && item.take.canTake) {
+                        parentItem.open.contents.splice(parentItem.open.contents.indexOf(item), 1);
                         this.config.player.inventory.push(item);
                         this.out.Print("Took the " + item.GetName() + ".");
                         break;
@@ -150,7 +150,7 @@ export class Engine {
                     if (item != null) {
                         this.config.player.inventory.splice(this.config.player.inventory.indexOf(item), 1);
                         this.config.player.location.items.push(item);
-                        item.wasDropped = true;
+                        item.take.wasDropped = true;
                         this.out.Print("Dropped the " + item.GetName() + ".");
                     } else {
                         this.out.Print("You don't have one of those.");
@@ -164,17 +164,17 @@ export class Engine {
                 if (command.args.length > 0) {
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
                     if (item != null) {
-                        if (item.canOpen && !item.isOpen) {
-                            item.isOpen = true;
-                            if (item.contents.length > 0) {
+                        if (item.open.canOpen && !item.open.isOpen) {
+                            item.open.isOpen = true;
+                            if (item.open.contents.length > 0) {
                                 this.out.Print("You open the " + item.GetName() + ", revealing:");
-                                item.contents.forEach(element => {
+                                item.open.contents.forEach(element => {
                                     this.out.Print("  " + element.GetName());
                                 });
                             } else {
                                 this.out.Print("You open the " + item.GetName() + ".");
                             }
-                        } else if (item.canOpen && item.isOpen) {
+                        } else if (item.open.canOpen && item.open.isOpen) {
                             this.out.Print("It's already open.");
                         } else {
                             this.out.Print("That can't be opened.");
@@ -191,10 +191,10 @@ export class Engine {
                 if (command.args.length > 0) {
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
                     if (item != null) {
-                        if (item.canOpen && item.isOpen) {
-                            item.isOpen = false;
+                        if (item.open.canOpen && item.open.isOpen) {
+                            item.open.isOpen = false;
                             this.out.Print("You close the " + item.GetName() + ".");
-                        } else if (item.canOpen && !item.isOpen) {
+                        } else if (item.open.canOpen && !item.open.isOpen) {
                             this.out.Print("It's already closed.");
                         } else {
                             this.out.Print("That can't be closed.")

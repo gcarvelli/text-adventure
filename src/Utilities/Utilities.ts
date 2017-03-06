@@ -12,8 +12,8 @@ export class Utilities {
 
         // Look at contents of items in list
         items.forEach(item => {
-            if (item.contents && item.isOpen && item.contents.length > 0) {
-                matches.push.apply(matches, item.contents.filter(con => {
+            if (item.open.contents && item.open.isOpen && item.open.contents.length > 0) {
+                matches.push.apply(matches, item.open.contents.filter(con => {
                     return con.HasKeyword(name);
                 }));
             }

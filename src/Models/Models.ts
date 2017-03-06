@@ -15,41 +15,6 @@ export class Player {
     }
 }
 
-export class Item {
-    id: string;
-    name: string;
-    keywords: string[];
-    description: string;
-    descriptionForRoom: string;
-    subItems: Item[];
-
-    canTake: boolean;
-    wasDropped: boolean;
-
-    canOpen: boolean;
-    isOpen: boolean;
-    contents: Item[];
-
-    dialog: NPCDialog;
-
-    constructor() {
-        this.subItems = new Array<Item>();
-        this.contents = new Array<Item>();
-    }
-
-    public HasKeyword(name: string): boolean {
-        let match = false;
-        this.keywords.forEach(val => {
-            if (val == name) match = true;
-        });
-        return match;
-    }
-
-    public GetName(): string {
-        return this.name;
-    }
-}
-
 export class Room {
     id: string;
     name: string;
@@ -66,27 +31,75 @@ export class Room {
         let desc = new Array<string>();
         desc.push(this.description);
         this.items.forEach(item => {
-            if (item.canOpen) {
+            if (item.open.canOpen) {
                 desc.push("  There is a " + item.GetName() + " here.");
-                if (item.isOpen && item.contents && item.contents.length > 0) {
+                if (item.open.isOpen && item.open.contents && item.open.contents.length > 0) {
                     desc.push("  The " + item.GetName() + " contains:");
-                    item.contents.forEach(element => {
+                    item.open.contents.forEach(element => {
                         desc.push("    " + element.GetName());
                     });
                 }
             } else if (item.dialog) {
                 desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
                 "There is a " + item.GetName() + " here."));
-            } else if (!item.canTake && item.descriptionForRoom) {
+            } else if (!item.take.canTake && item.descriptionForRoom) {
                 desc[0] += " " + item.descriptionForRoom;
-            } else if (item.wasDropped) {
+            } else if (item.take.canTake && item.take.wasDropped) {
                 desc.push("  There is a " + item.GetName() + " here.");
-            } else if (item.canTake) {
+            } else if (item.take.canTake) {
                 desc.push("  " + item.descriptionForRoom);
             }
         });
 
         return desc;
+    }
+}
+
+export class Item {
+    id: string;
+    name: string;
+    keywords: string[];
+    description: string;
+    descriptionForRoom: string;
+    subItems: Item[];
+
+    take: TakeModule;
+
+    open: OpenModule;
+
+    dialog: NPCDialog;
+
+    constructor() {
+        this.subItems = new Array<Item>();
+        this.take = new TakeModule();
+        this.open = new OpenModule();
+    }
+
+    public HasKeyword(name: string): boolean {
+        let match = false;
+        this.keywords.forEach(val => {
+            if (val == name) match = true;
+        });
+        return match;
+    }
+
+    public GetName(): string {
+        return this.name;
+    }
+}
+
+export class TakeModule {
+    canTake: boolean;
+    wasDropped: boolean;
+}
+
+export class OpenModule {
+    canOpen: boolean;
+    isOpen: boolean;
+    contents: Item[];
+
+    constructor() {
+        this.contents = new Array<Item>();
     }
 }
 
