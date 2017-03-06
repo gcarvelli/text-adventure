@@ -35,7 +35,17 @@
                 "basic_items": [ "driveway", "basketball hoop" ],
                 "items": [ "MAILBOX", "BASKETBALL", "HOUSE_NEAR" ],
                 "moves": {
+                    "north": "BACKYARD",
                     "south": "BOTTOM_OF_DRIVEWAY"
+                }
+            },
+            "BACKYARD": {
+                "name": "The Backyard",
+                "description": "The grass in the backyard is patchy and worn. There is a patio in back of the house but the cement is cracked and overrun with weeds. Patio furniture is stacked by the back door.",
+                "basic_items": [ "yard", "ground", "grass", "cement", "patio", "weeds" ],
+                "items": [ "HOUSE_BACK", "PATIO_FURNITURE", "HOUSE_BACK_ENTRANCE" ],
+                "moves": {
+                    "south": "TOP_OF_DRIVEWAY"
                 }
             },
             "STREET_1": {
@@ -124,6 +134,18 @@
         "PLAYER_GOUDA": {
             "keywords": [ "gouda", "cheese" ],
             "description": "This piece of Gouda from Fred smells delicious."
+        },
+        "HOUSE_BACK": {
+            "keywords": [ "house", "white house" ],
+            "description": "There are a few windows on the back of the house, each hastily boarded up. It's clear the house has been abandoned for some time."
+        },
+        "PATIO_FURNITURE": {
+            "keywords": [ "furniture", "patio furniture", "chairs" ],
+            "description": "The metal chairs sit in a neat stack. Rust has begun to set in."
+        },
+        "HOUSE_BACK_ENTRANCE": {
+            "keywords": [ "door", "back door", "entrance", "back entrance" ],
+            "description": "The door is shut and locked tight."
         }
     },
     "npcs": {
