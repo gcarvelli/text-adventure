@@ -1,4 +1,4 @@
-import { Player, Room, RoomMap, Item, NPC } from "../Models/Models";
+import { Player, Room, RoomMap, Item } from "../Models/Models";
 import { Command, CommandType, IParser } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { ILoader } from "../Configuration/ILoader";
@@ -20,7 +20,7 @@ export class Engine {
     config: Config;
     parser: IParser;
     mode: Mode;
-    talkingTo: NPC;
+    talkingTo: Item;
 
     private PrintHeader() {
         this.out.Print(this.config.game.name);
@@ -210,7 +210,7 @@ export class Engine {
             case CommandType.TalkTo:
                 if (command.args.length > 0) {
                     let npc = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
-                    if (npc != null && npc instanceof NPC) {
+                    if (npc != null && npc.dialog) {
                         if (npc.dialog) {
                             this.mode = Mode.Dialog;
                             this.talkingTo = npc;
@@ -306,7 +306,7 @@ export class Engine {
         this.out.PrintLines(this.config.player.location.GetDescription());
     }
 
-    private PrintDialogTree(npc: NPC, response?: string) {
+    private PrintDialogTree(npc: Item, response?: string) {
         let tree = this.config.dialogTrees[npc.dialog.startTree];
 
         this.out.Clear();

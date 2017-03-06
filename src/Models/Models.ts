@@ -21,6 +21,7 @@ export class Item {
     keywords: string[];
     description: string;
     descriptionForRoom: string;
+    subItems: Item[];
 
     canTake: boolean;
     wasDropped: boolean;
@@ -28,11 +29,12 @@ export class Item {
     canOpen: boolean;
     isOpen: boolean;
     contents: Item[];
-    subItems: Item[]
+
+    dialog: NPCDialog;
 
     constructor() {
-        this.contents = new Array<Item>();
         this.subItems = new Array<Item>();
+        this.contents = new Array<Item>();
     }
 
     public HasKeyword(name: string): boolean {
@@ -72,7 +74,7 @@ export class Room {
                         desc.push("    " + element.GetName());
                     });
                 }
-            } else if (item instanceof NPC) {
+            } else if (item.dialog) {
                 desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
                 "There is a " + item.GetName() + " here."));
             } else if (!item.canTake && item.descriptionForRoom) {
@@ -88,10 +90,6 @@ export class Room {
     }
 }
 
-export class NPC extends Item {
-    dialog: NPCDialog;
-}
-
 export interface RoomMap {
     [id: string]: Room;
 }
@@ -102,8 +100,4 @@ export interface MoveMap {
 
 export interface ItemMap {
     [id: string]: Item
-}
-
-export interface NPCMap {
-    [id: string]: NPC
 }

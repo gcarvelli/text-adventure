@@ -1,6 +1,6 @@
 import { ILoader } from "./ILoader";
 import { Config } from "./Config";
-import { Game, Item, Player, Room, RoomMap, NPC } from "../Models/Models";
+import { Game, Item, Player, Room, RoomMap } from "../Models/Models";
 import { DialogTreeMap, DialogTree, DialogOption, NPCDialog } from "../Models/Dialog";
 import { Effect } from "../Models/Effects";
 import * as Effects from "../Models/Effects";
@@ -20,7 +20,6 @@ export class JSONLoader implements ILoader {
 
         this.LoadGame();
         this.LoadItems();
-        this.LoadNPCs();
         this.LoadPlayer();
         this.LoadRooms();
         this.LoadDialogTrees();
@@ -64,13 +63,19 @@ export class JSONLoader implements ILoader {
         // Load in all the items
         for (let itemId in this.data.items) {
             if (this.data.items.hasOwnProperty(itemId)) {
-                this.config.items[itemId] = this.LoadItem(itemId);
+                this.config.items[itemId] = this.LoadItem(itemId, this.data.items[itemId]);
+            }
+        }
+        // Load in all the npcs
+        for (let npcId in this.data.npcs) {
+            if (this.data.npcs.hasOwnProperty(npcId)) {
+                this.config.items[npcId] = this.LoadItem(npcId, this.data.npcs[npcId]);
             }
         }
 
         for (let itemId in this.config.items) {
             let item = this.config.items[itemId];
-            let itemData = this.data.items[itemId];
+            let itemData = this.data.items[itemId] ? this.data.items[itemId] : this.data.npcs[itemId];
 
             // Make connections for items inside other items
             if (this.config.items.hasOwnProperty(itemId)) {
@@ -85,35 +90,6 @@ export class JSONLoader implements ILoader {
             if (itemData.items) {
                 itemData.items.forEach(subItemId => {
                     item.subItems.push(this.config.items[subItemId]);
-                });
-            }
-        }
-    }
-
-    private LoadNPCs() {
-        for (let npcId in this.data.npcs) {
-            if (this.data.npcs.hasOwnProperty(npcId)) {
-                this.config.npcs[npcId] = this.LoadNPC(npcId);
-            }
-        }
-
-        for (let npcId in this.config.npcs) {
-            let npc = this.config.npcs[npcId];
-            let npcData = this.data.npcs[npcId];
-
-            // Make connections for items inside other items
-            if (this.config.npcs.hasOwnProperty(npcId)) {
-                if (npc.canOpen && npcData.open.contains_items) {
-                    npcData.open.contains_items.forEach(contentId => {
-                        npc.contents.push(this.config.items[contentId]);
-                    });
-                }
-            }
-
-            // Make connections for subItems
-            if (npcData.items) {
-                npcData.items.forEach(subItemId => {
-                    npc.subItems.push(this.config.items[subItemId]);
                 });
             }
         }
@@ -135,7 +111,7 @@ export class JSONLoader implements ILoader {
 
         if (roomData.npcs) {
             roomData.npcs.forEach(npc => {
-                room.items.push(this.config.npcs[npc]);
+                room.items.push(this.config.items[npc]);
             });
         }
 
@@ -160,30 +136,13 @@ export class JSONLoader implements ILoader {
         return room;
     }
 
-    private LoadItem(id: string): Item {
+    private LoadItem(id: string, itemData: any): Item {
         let item = new Item();
-        let itemData = this.data.items[id];
 
         item.id = id;
         this.LoadItemInto(item, itemData);
 
         return item;
-    }
-
-    private LoadNPC(id: string): NPC {
-        let npc = new NPC();
-        let npcData = this.data.npcs[id];
-
-        npc.id = id;
-        this.LoadItemInto(npc, npcData);
-
-        if (npcData.dialog) {
-            npc.dialog = new NPCDialog();
-            npc.dialog.greeting = npcData.dialog.greeting;
-            npc.dialog.startTree = npcData.dialog.start_tree;
-        }
-
-        return npc;
     }
 
     private LoadItemInto(item: Item, itemData: any): void {
@@ -197,6 +156,11 @@ export class JSONLoader implements ILoader {
         }
         if (itemData.open) {
             item.canOpen = itemData.open.can_open;
+        }
+        if (itemData.dialog) {
+            item.dialog = new NPCDialog();
+            item.dialog.greeting = itemData.dialog.greeting;
+            item.dialog.startTree = itemData.dialog.start_tree;
         }
 
         if (itemData.basic_items) {
