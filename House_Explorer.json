@@ -43,7 +43,7 @@
                 "name": "The Backyard",
                 "description": "The grass in the backyard is patchy and worn. There is a patio in back of the house but the cement is cracked and overrun with weeds. Patio furniture is stacked by the back door.",
                 "basic_items": [ "yard", "ground", "grass", "cement", "patio", "weeds" ],
-                "items": [ "HOUSE_BACK", "PATIO_FURNITURE", "HOUSE_BACK_ENTRANCE" ],
+                "items": [ "HOUSE_BACK", "PATIO_FURNITURE", "HOUSE_BACK_ENTRANCE", "BASEBALL_BAT" ],
                 "moves": {
                     "south": "TOP_OF_DRIVEWAY"
                 }
@@ -154,6 +154,19 @@
         "HOUSE_BACK_ENTRANCE": {
             "keywords": [ "door", "back door", "entrance", "back entrance" ],
             "description": "The door is shut and locked tight."
+        },
+        "BASEBALL_BAT": {
+            "keywords": [ "bat", "baseball bat" ],
+            "description": "The bat is metal, painted red with a black grip.",
+            "description_for_room": "A baseball bat is leaned up against the house.",
+            "take": {
+                "can_take": true
+            },
+            "weapon": {
+                "is_weapon": false,
+                "base_damage": 5,
+                "damage_spread": 2
+            }
         }
     },
     "npcs": {

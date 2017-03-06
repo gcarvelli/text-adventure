@@ -64,8 +64,8 @@ export class Item {
     subItems: Item[];
 
     take: TakeModule;
-
     open: OpenModule;
+    weapon: WeaponModule;
 
     dialog: NPCDialog;
 
@@ -73,6 +73,7 @@ export class Item {
         this.subItems = new Array<Item>();
         this.take = new TakeModule();
         this.open = new OpenModule();
+        this.weapon = new WeaponModule();
     }
 
     public HasKeyword(name: string): boolean {
@@ -101,6 +102,12 @@ export class OpenModule {
     constructor() {
         this.contents = new Array<Item>();
     }
+}
+
+export class WeaponModule {
+    isWeapon: boolean;
+    baseDamage: number;
+    damageSpread: number;
 }
 
 export interface RoomMap {

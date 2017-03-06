@@ -157,6 +157,11 @@ export class JSONLoader implements ILoader {
         if (itemData.open) {
             item.open.canOpen = itemData.open.can_open;
         }
+        if (itemData.weapon) {
+            item.weapon.isWeapon = itemData.weapon.is_weapon;
+            item.weapon.baseDamage = itemData.weapon.baseDamage;
+            item.weapon.damageSpread = itemData.weapon.damage_spread;
+        }
         if (itemData.dialog) {
             item.dialog = new NPCDialog();
             item.dialog.greeting = itemData.dialog.greeting;
