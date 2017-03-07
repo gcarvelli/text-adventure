@@ -44,16 +44,14 @@ export class Room {
                 "There is a " + item.GetName() + " here."));
             } else if (item.door.isDoor) {
                 desc.push("  The " + item.GetName() + " is " + (item.door.isOpen ? "open." : "closed."));
-            }else if (item.descriptionForRoom) {
-                if (item.take.canTake) {
-                    if (item.take.wasDropped) {
-                        desc.push("  There is a " + item.GetName() + " here.");
-                    } else {
-                        desc.push("  " + item.descriptionForRoom);
-                    }
+            } else if (item.take.canTake) {
+                if (item.take.wasDropped || !item.descriptionForRoom) {
+                    desc.push("  There is a " + item.GetName() + " here.");
                 } else {
-                    desc[0] += " " + item.descriptionForRoom;
+                    desc.push("  " + item.descriptionForRoom);
                 }
+            } else if (item.descriptionForRoom) {
+                desc[0] += " " + item.descriptionForRoom;
             }
         });
 
