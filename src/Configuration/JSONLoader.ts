@@ -169,6 +169,10 @@ export class JSONLoader implements ILoader {
                 item.npc.dialog.startTree = itemData.npc.dialog.start_tree;
             }
         }
+        if (itemData.door) {
+            item.door.isDoor = itemData.door.is_door;
+            item.door.movement = itemData.door.moves;
+        }
 
         if (itemData.basic_items) {
             itemData.basic_items.forEach(name => {

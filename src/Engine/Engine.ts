@@ -72,6 +72,8 @@ export class Engine {
                         if (item.open.canOpen) {
                             this.out.Print(item.description + " The " + item.GetName() + " is " +
                                 (item.open.isOpen ? "open." : "closed."));
+                        } else if (item.door.isDoor) {
+                            this.out.Print("The " + item.GetName() + " is " + (item.door.isOpen ? "open." : "closed."));
                         } else {
                             this.out.Print(item.description ? item.description : "There's nothing special about the " + item.GetName() + ".");
                         }
@@ -93,12 +95,21 @@ export class Engine {
                 break;
 
             case CommandType.Move:
-                if (this.config.player.location.moves[command.args[0]]) {
-                    this.MoveTo(command.args[0]);
+                if (this.config.player.location.moves.hasOwnProperty(command.args[0])) {
+                    this.MoveTo(this.config.player.location.moves[command.args[0]]);
                     this.LookAround();
-                } else {
-                    this.out.Print("You can't go that way right now.");
+                    break;
                 }
+
+                let door = this.config.player.location.items.filter(i => i.door.isDoor && i.door.isOpen &&
+                    i.door.movement.hasOwnProperty(command.args[0]));
+                if (door.length > 0) {
+                    this.MoveTo(door[0].door.movement[command.args[0]]);
+                    this.LookAround();
+                    break;
+                }
+
+                this.out.Print("You can't go that way right now.");
                 break;
 
             case CommandType.TakeItem:
@@ -164,18 +175,33 @@ export class Engine {
                 if (command.args.length > 0) {
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
                     if (item != null) {
-                        if (item.open.canOpen && !item.open.isOpen) {
-                            item.open.isOpen = true;
-                            if (item.open.contents.length > 0) {
-                                this.out.Print("You open the " + item.GetName() + ", revealing:");
-                                item.open.contents.forEach(element => {
-                                    this.out.Print("  " + element.GetName());
-                                });
+                        if (item.open.canOpen) {
+                            // The item can be opened
+                            if (!item.open.isOpen) {
+                                // The item isn't open
+                                item.open.isOpen = true;
+                                if (item.open.contents.length > 0) {
+                                    this.out.Print("You open the " + item.GetName() + ", revealing:");
+                                    item.open.contents.forEach(element => {
+                                        this.out.Print("  " + element.GetName());
+                                    });
+                                } else {
+                                    this.out.Print("You open the " + item.GetName() + ".");
+                                }
                             } else {
-                                this.out.Print("You open the " + item.GetName() + ".");
+                                // The item is already open
+                                this.out.Print("It's already open.");
                             }
-                        } else if (item.open.canOpen && item.open.isOpen) {
-                            this.out.Print("It's already open.");
+                        } else if (item.door.isDoor) {
+                            // The item is a door
+                            if (!item.door.isOpen) {
+                                // The door isn't open
+                                item.door.isOpen = true;
+                                this.out.Print("You open the " + item.GetName() + ".");
+                            } else {
+                                // The item is already open
+                                this.out.Print("It's already open.");
+                            }
                         } else {
                             this.out.Print("That can't be opened.");
                         }
@@ -191,13 +217,22 @@ export class Engine {
                 if (command.args.length > 0) {
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
                     if (item != null) {
-                        if (item.open.canOpen && item.open.isOpen) {
-                            item.open.isOpen = false;
-                            this.out.Print("You close the " + item.GetName() + ".");
-                        } else if (item.open.canOpen && !item.open.isOpen) {
-                            this.out.Print("It's already closed.");
+                        if (item.open.canOpen) {
+                            if (item.open.isOpen) {
+                                item.open.isOpen = false;
+                                this.out.Print("You close the " + item.GetName() + ".");
+                            } else {
+                                this.out.Print("It's already closed.");
+                            }
+                        } else if (item.door.isDoor) {
+                            if (item.door.isOpen) {
+                                item.door.isOpen = false;
+                                this.out.Print("You close the " + item.GetName() + ".");
+                            } else {
+                                this.out.Print("It's already closed.");
+                            }
                         } else {
-                            this.out.Print("That can't be closed.")
+                            this.out.Print("That can't be closed.");
                         }
                     } else {
                         this.out.Print("Doesn't look like there's one of those around.");
@@ -236,8 +271,8 @@ export class Engine {
             case CommandType.Custom:
                 if (command.args.length > 0) {
                     // Might be a move
-                    if (command.args[0] in this.config.player.location.moves) {
-                        this.MoveTo(command.args[0]);
+                    if (this.config.player.location.moves.hasOwnProperty(command.args[0])) {
+                        this.MoveTo(this.config.player.location.moves[command.args[0]]);
                         this.LookAround();
                         break;
                     }
@@ -292,9 +327,8 @@ export class Engine {
         }
     }
 
-    private MoveTo(move: string) {
-        let newLocationID = this.config.player.location.moves[move];
-        this.config.player.location = this.config.rooms[newLocationID];
+    private MoveTo(location: string) {
+        this.config.player.location = this.config.rooms[location];
     }
 
     private LookAround() {

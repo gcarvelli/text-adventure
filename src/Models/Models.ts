@@ -42,12 +42,18 @@ export class Room {
             } else if (item.npc.dialog) {
                 desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
                 "There is a " + item.GetName() + " here."));
-            } else if (!item.take.canTake && item.descriptionForRoom) {
-                desc[0] += " " + item.descriptionForRoom;
-            } else if (item.take.canTake && item.take.wasDropped) {
-                desc.push("  There is a " + item.GetName() + " here.");
-            } else if (item.take.canTake) {
-                desc.push("  " + item.descriptionForRoom);
+            } else if (item.door.isDoor) {
+                desc.push("  The " + item.GetName() + " is " + (item.door.isOpen ? "open." : "closed."));
+            }else if (item.descriptionForRoom) {
+                if (item.take.canTake) {
+                    if (item.take.wasDropped) {
+                        desc.push("  There is a " + item.GetName() + " here.");
+                    } else {
+                        desc.push("  " + item.descriptionForRoom);
+                    }
+                } else {
+                    desc[0] += " " + item.descriptionForRoom;
+                }
             }
         });
 
@@ -67,6 +73,7 @@ export class Item {
     open: OpenModule;
     weapon: WeaponModule;
     npc: NPCModule;
+    door: DoorModule;
 
     constructor() {
         this.subItems = new Array<Item>();
@@ -74,6 +81,7 @@ export class Item {
         this.open = new OpenModule();
         this.weapon = new WeaponModule();
         this.npc = new NPCModule();
+        this.door = new DoorModule();
     }
 
     public HasKeyword(name: string): boolean {
@@ -112,6 +120,16 @@ export class WeaponModule {
 
 export class NPCModule {
     dialog: NPCDialog;
+}
+
+export class DoorModule {
+    isDoor: boolean;
+    isOpen: boolean;
+    movement: MoveMap;
+
+    constructor() {
+        this.movement = { };
+    }
 }
 
 export interface RoomMap {
