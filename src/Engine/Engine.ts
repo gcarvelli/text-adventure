@@ -115,7 +115,7 @@ export class Engine {
             case CommandType.TakeItem:
                 if (command.args.length > 0) {
                     // Try the room
-                    let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
+                    let item = Utilities.FindItemInList(this.config.player.location.items, command.args[0])
                     if (item != null && item.take.canTake) {
                         this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
                         this.config.player.inventory.push(item);
