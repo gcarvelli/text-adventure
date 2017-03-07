@@ -41,15 +41,18 @@ export class Engine {
     }
 
     public Execute(commandString: string) {
+        let command = this.parser.Parse(commandString);
         switch (this.mode) {
             case Mode.Explore:
-                this.ApplyExploreCommand(this.parser.Parse(commandString));
+                this.ApplyExploreCommand(command);
                 break;
             case Mode.Dialog:
-                this.ApplyDialogCommand(this.parser.Parse(commandString));
+                this.ApplyDialogCommand(command);
                 break;
         }
-        this.out.Print(" ");
+        if (command.commandType != CommandType.Empty) {
+            this.out.Print(" ");
+        }
     }
 
     private ApplyExploreCommand(command: Command) {
@@ -278,6 +281,9 @@ export class Engine {
                     }
                 }
                 this.out.Print("Sorry, I didn't understand that.");
+                break;
+
+            case CommandType.Empty:
                 break;
 
             default:

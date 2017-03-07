@@ -5,6 +5,7 @@ export interface IParser {
 }
 
 export enum CommandType {
+    Empty,
     Help,
     Custom,
     Move,

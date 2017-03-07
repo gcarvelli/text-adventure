@@ -7,8 +7,8 @@ export class DummParser implements IParser {
         com.command = commandString.toLowerCase().trim();
         let tokens = com.command.split(/\s+/);
 
-        if (tokens.length == 0) {
-            return null;
+        if (tokens.length == 0 || (tokens.length == 1 && tokens[0] == "")) {
+            com.commandType = CommandType.Empty;
         } else if (this.StartsWith(tokens, "look", "at")) {
             com.commandType = CommandType.LookAt;
             if (tokens.length >= 3) {
