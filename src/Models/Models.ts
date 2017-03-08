@@ -32,21 +32,21 @@ export class Room {
         desc.push(this.description);
         this.items.forEach(item => {
             if (item.open.canOpen) {
-                desc.push("  There is a " + item.GetName() + " here.");
+                desc.push("  There is a " + item.name + " here.");
                 if (item.open.isOpen && item.open.contents && item.open.contents.length > 0) {
-                    desc.push("  The " + item.GetName() + " contains:");
+                    desc.push("  The " + item.name + " contains:");
                     item.open.contents.forEach(element => {
-                        desc.push("    " + element.GetName());
+                        desc.push("    " + element.name);
                     });
                 }
             } else if (item.npc.dialog) {
                 desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
-                "There is a " + item.GetName() + " here."));
+                "There is a " + item.name + " here."));
             } else if (item.door.isDoor) {
-                desc.push("  The " + item.GetName() + " is " + (item.door.isOpen ? "open." : "closed."));
+                desc.push("  The " + item.name + " is " + (item.door.isOpen ? "open." : "closed."));
             } else if (item.take.canTake) {
                 if (item.take.wasDropped || !item.descriptionForRoom) {
-                    desc.push("  There is a " + item.GetName() + " here.");
+                    desc.push("  There is a " + item.name + " here.");
                 } else {
                     desc.push("  " + item.descriptionForRoom);
                 }
@@ -88,10 +88,6 @@ export class Item {
             if (val == name) match = true;
         });
         return match;
-    }
-
-    public GetName(): string {
-        return this.name;
     }
 }
 
