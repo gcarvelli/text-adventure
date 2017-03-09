@@ -31,28 +31,10 @@ export class Room {
         let desc = new Array<string>();
         desc.push(this.description);
         this.items.forEach(item => {
-            if (item.open.canOpen) {
-                desc.push("  There is a " + item.name + " here.");
-                if (item.open.isOpen && item.open.contents && item.open.contents.length > 0) {
-                    desc.push("  The " + item.name + " contains:");
-                    item.open.contents.forEach(element => {
-                        desc.push("    " + element.name);
-                    });
-                }
-            } else if (item.npc.dialog) {
-                desc.push("  " + (item.descriptionForRoom ? item.descriptionForRoom :
-                "There is a " + item.name + " here."));
-            } else if (item.door.isDoor) {
-                desc.push("  The " + item.name + " is " + (item.door.isOpen ? "open." : "closed."));
-            } else if (item.take.canTake) {
-                if (item.take.wasDropped || !item.descriptionForRoom) {
-                    desc.push("  There is a " + item.name + " here.");
-                } else {
-                    desc.push("  " + item.descriptionForRoom);
-                }
-            } else if (item.descriptionForRoom) {
-                desc[0] += " " + item.descriptionForRoom;
-            }
+            desc[0] += item.GetDescriptionAddition();
+            item.GetDescriptionAdditionLines().forEach((line) => {
+                desc.push(line);
+            });
         });
 
         return desc;
@@ -88,6 +70,39 @@ export class Item {
             if (val == name) match = true;
         });
         return match;
+    }
+
+    public GetDescriptionAdditionLines(): string[] {
+        let lines = new Array<string>();
+        if (this.open.canOpen) {
+            lines.push("  There is a " + this.name + " here.");
+            if (this.open.isOpen && this.open.contents && this.open.contents.length > 0) {
+                lines.push("  The " + this.name + " contains:");
+                this.open.contents.forEach(element => {
+                    lines.push("    " + element.name);
+                });
+            }
+        } else if (this.npc.dialog) {
+            lines.push("  " + (this.descriptionForRoom ? this.descriptionForRoom :
+            "There is a " + this.name + " here."));
+        } else if (this.door.isDoor) {
+            lines.push("  The " + this.name + " is " + (this.door.isOpen ? "open." : "closed."));
+        } else if (this.take.canTake) {
+            if (this.take.wasDropped || !this.descriptionForRoom) {
+                lines.push("  There is a " + this.name + " here.");
+            } else {
+                lines.push("  " + this.descriptionForRoom);
+            }
+        }
+        return lines;
+    }
+
+    public GetDescriptionAddition(): string {
+        if (!this.open.canOpen && !this.npc.dialog && !this.door.isDoor &&
+            !this.take.canTake && this.descriptionForRoom) {
+            return this.descriptionForRoom;
+        }
+        return "";
     }
 }
 
