@@ -36,10 +36,6 @@ describe("DummParser", () => {
         parser = new DummParser();
     });
 
-    describe("Item parsing", () => {
-        
-    });
-
     describe("CommandType.Empty", () => {
         registerCommandTests(["", "   "], CommandType.Empty);
     });
