@@ -120,10 +120,14 @@ export class Engine {
                     // Try the room
                     let item = Utilities.FindItemInList(this.config.player.location.items, command.args[0])
                     if (item != null && item.take.canTake) {
-                        this.config.player.location.items.splice(this.config.player.location.items.indexOf(item), 1);
-                        this.config.player.inventory.push(item);
-                        this.out.Print("Took the " + item.name + ".");
-                        break;
+                        let itemIndex = this.config.player.location.items.indexOf(item);
+                        //ensure the room contains this item
+                        if (itemIndex > -1){
+                            this.config.player.location.items.splice(itemIndex, 1);
+                            this.config.player.inventory.push(item);
+                            this.out.Print("Took the " + item.name + ".");
+                            break;
+                        }
                     } else if (item != null) {
                         this.out.Print("That can't be taken.");
                         break;
