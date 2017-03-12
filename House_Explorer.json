@@ -22,7 +22,7 @@
             "BOTTOM_OF_DRIVEWAY": {
                 "name": "Bottom of Driveway",
                 "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north with a large front yard with some trees and bushes.",
-                "basic_items": [ "driveway" ],
+                "basic_items": [ "driveway", "tree", "trees", "bushes", "bush" ],
                 "items": [ "HOUSE_FAR", "HOUSE_YARD" ],
                 "moves": {
                     "north": "TOP_OF_DRIVEWAY",
