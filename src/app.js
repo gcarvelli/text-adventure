@@ -42,3 +42,5 @@ let out = {
 let loader = new JSONLoader();
 loader.Initialize(data);
 engine.Initialize(loader, out, new DummParser());
+
+document.title = engine.config.game.name;
