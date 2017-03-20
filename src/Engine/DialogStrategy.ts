@@ -34,8 +34,10 @@ export class DialogStrategy {
                             PrintUtilities.LookAround(this.config, this.out);
                         } else {
                             let option = tree.options[choice - 1];
-                            option.hasBeenChosen = true;
-                            option.RunEffects();
+                            if (!option.hasBeenChosen) {
+                                option.hasBeenChosen = true;
+                                option.RunEffects();
+                            }
                             PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, option.response);
                             this.out.Print(" ");
                         }
