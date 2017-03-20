@@ -227,7 +227,7 @@ export class JSONLoader implements ILoader {
                     let treeData = this.data.dialog_trees[dialogTreeId];
                     tree.id = dialogTreeId;
                     treeData.forEach(optionData => {
-                        tree.options.push(this.LoadDialogOption(optionData));
+                        tree.options.push(this.config.dialogOptions[optionData]);
                     });
                     this.config.dialogTrees[tree.id] = tree;
                 }
