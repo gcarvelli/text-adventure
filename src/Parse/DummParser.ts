@@ -1,5 +1,5 @@
 import { IParser, Command, CommandType } from "./IParser";
-import { Mode } from "../Engine/Engine";
+import { EngineMode } from "../Engine/Engine";
 
 export class DummParser implements IParser {
     Parse(commandString: string): Command {
