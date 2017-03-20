@@ -73,8 +73,17 @@ export class Engine {
 
                     if (item != null) {
                         if (item.open.canOpen) {
-                            this.out.Print(item.description + " The " + item.name + " is " +
-                                (item.open.isOpen ? "open." : "closed."));
+                            let status: string;
+                            if (item.open.isOpen) {
+                                status = "open";
+                            } else {
+                                if (item.open.lock && item.open.lock.isLocked) {
+                                    status = "locked";
+                                } else {
+                                    status = "closed";
+                                }
+                            }
+                            this.out.Print(item.description + " The " + item.name + " is " + status + ".");
                         } else if (item.door.isDoor) {
                             this.out.Print("The " + item.name + " is " + (item.door.isOpen ? "open." : "closed."));
                         } else {
@@ -186,14 +195,27 @@ export class Engine {
                             // The item can be opened
                             if (!item.open.isOpen) {
                                 // The item isn't open
-                                item.open.isOpen = true;
-                                if (item.open.contents.length > 0) {
-                                    this.out.Print("You open the " + item.name + ", revealing:");
-                                    item.open.contents.forEach(element => {
-                                        this.out.Print("  " + element.name);
-                                    });
-                                } else {
-                                    this.out.Print("You open the " + item.name + ".");
+                                if (item.open.lock && item.open.lock.isLocked) {
+                                    // Unlock it if possible
+                                    let matches = this.config.player.inventory.filter((i) => i.id == item.open.lock.keyId);
+                                    if (matches.length > 0) {
+                                        this.out.Print("The " + item.name + " is unlocked with the " + matches[0].name + "!");
+                                        item.open.lock.isLocked = false;
+                                    } else {
+                                        this.out.Print("The " + item.name + " is locked.");
+                                    }
+                                }
+
+                                if (!item.open.lock || !item.open.lock.isLocked) {
+                                    item.open.isOpen = true;
+                                    if (item.open.contents.length > 0) {
+                                        this.out.Print("You open the " + item.name + ", revealing:");
+                                        item.open.contents.forEach(element => {
+                                            this.out.Print("  " + element.name);
+                                        });
+                                    } else {
+                                        this.out.Print("You open the " + item.name + ".");
+                                    }
                                 }
                             } else {
                                 // The item is already open

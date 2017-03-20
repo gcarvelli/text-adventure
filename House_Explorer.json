@@ -51,8 +51,8 @@
             "INSIDE_HOUSE": {
                 "name": "The Kitchen",
                 "description": "The kitchen is spick and span. A wood counter snakes along the perimeter of the room, interrupted by a refridgerator, stove, and oven.",
-                "basic_items": [ "refridgerator", "" ],
-                "items": [],
+                "basic_items": [ "refridgerator", "stove", "oven" ],
+                "items": [ "FOREST_CHEST_KEY" ],
                 "moves": {
                     "north": "BACKYARD"
                 }
@@ -80,7 +80,7 @@
                 "name": "The Forest",
                 "description": "The canopy grows thicker, blocking out more sunlight. The forest continues to the north and there is a clearing further to the south.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
-                "items": [ "FOREST_TREE", "FOREST_TREES" ],
+                "items": [ "FOREST_TREE", "FOREST_TREES", "FOREST_CHEST" ],
                 "moves": {
                     "north": "FOREST_1",
                     "south": "CLEARING"
@@ -181,6 +181,27 @@
                 "is_weapon": false,
                 "base_damage": 5,
                 "damage_spread": 2
+            }
+        },
+        "FOREST_CHEST_KEY": {
+            "keywords": [ "rusty key", "key" ],
+            "description": "This rusty bronze key appears to be very old. It has a small circle inscribed on the handle.",
+            "description_for_room": "A rusty key sits on the counter.",
+            "take": {
+                "can_take": true
+            }
+        },
+        "FOREST_CHEST": {
+            "keywords": [ "chest", "wooden chest", "large chest" ],
+            "description": "The wood planks making up the sides of the chest are faded and worn. The top of the chest is engraved with a circle.",
+            "description_for_room": "A large wooden chest sits by the base of a tree.",
+            "open": {
+                "can_open": true,
+                "lock": {
+                    "can_lock": true,
+                    "key_id": "FOREST_CHEST_KEY"
+                },
+                "contains_items": [ "LEAFLET" ]
             }
         }
     },

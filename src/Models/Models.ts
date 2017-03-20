@@ -75,7 +75,11 @@ export class Item {
     public GetDescriptionAdditionLines(): string[] {
         let lines = new Array<string>();
         if (this.open.canOpen) {
-            lines.push("  There is a " + this.name + " here.");
+            if (this.descriptionForRoom) {
+                lines.push ("  " + this.descriptionForRoom);
+            } else {
+                lines.push("  There is a " + this.name + " here.");
+            }
             if (this.open.isOpen && this.open.contents && this.open.contents.length > 0) {
                 lines.push("  The " + this.name + " contains:");
                 this.open.contents.forEach(element => {
@@ -115,9 +119,11 @@ export class OpenModule {
     canOpen: boolean;
     isOpen: boolean;
     contents: Item[];
+    lock: LockModule;
 
     constructor() {
         this.contents = new Array<Item>();
+        this.lock = new LockModule();
     }
 }
 
@@ -135,10 +141,18 @@ export class DoorModule {
     isDoor: boolean;
     isOpen: boolean;
     movement: MoveMap;
+    lock: LockModule;
 
     constructor() {
         this.movement = { };
+        this.lock = new LockModule();
     }
+}
+
+export class LockModule {
+    canLock: boolean;
+    isLocked: boolean;
+    keyId: string;
 }
 
 export interface RoomMap {

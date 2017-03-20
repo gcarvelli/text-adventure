@@ -157,6 +157,11 @@ export class JSONLoader implements ILoader {
         }
         if (itemData.open) {
             item.open.canOpen = itemData.open.can_open;
+            if (itemData.open.lock) {
+                item.open.lock.canLock = itemData.open.lock.can_lock;
+                item.open.lock.keyId = itemData.open.lock.key_id;
+                item.open.lock.isLocked = true;
+            }
         }
         if (itemData.weapon) {
             item.weapon.isWeapon = itemData.weapon.is_weapon;
@@ -173,6 +178,11 @@ export class JSONLoader implements ILoader {
         if (itemData.door) {
             item.door.isDoor = itemData.door.is_door;
             item.door.movement = itemData.door.moves;
+            if (itemData.door.lock) {
+                item.door.lock.canLock = itemData.door.lock.can_lock;
+                item.door.lock.keyId = itemData.door.lock.key_id;
+                item.door.lock.isLocked = true;
+            }
         }
 
         if (itemData.basic_items) {
