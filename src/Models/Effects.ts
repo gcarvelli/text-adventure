@@ -14,20 +14,20 @@ export abstract class Effect {
 
 export class AddDialogOptionEffect extends Effect {
     targetTree: string;
-    dialogOption: DialogOption;
+    dialogOptionId: string;
     afterId: string;
 
-    constructor(config: Config, targetTree: string, dialogOption: DialogOption, afterId: string) {
+    constructor(config: Config, targetTree: string, dialogOptionId: string, afterId: string) {
         super(config);
         this.targetTree = targetTree;
-        this.dialogOption = dialogOption;
+        this.dialogOptionId = dialogOptionId;
         this.afterId = afterId;
     }
 
     public Execute() {
         let tree = this.config.dialogTrees[this.targetTree];
         let matches = tree.options.filter(option => {
-            return option.id == this.dialogOption.id
+            return option.id == this.dialogOptionId
         });
 
         if (matches.length == 0) {
@@ -35,9 +35,9 @@ export class AddDialogOptionEffect extends Effect {
                 let afterMatches = tree.options.filter(option => {
                     return option.id == this.afterId
                 });
-                tree.options.splice(tree.options.indexOf(afterMatches[0]) + 1, 0, this.dialogOption);
+                tree.options.splice(tree.options.indexOf(afterMatches[0]) + 1, 0, this.config.dialogOptions[this.dialogOptionId]);
             } else {
-                tree.options.push(this.dialogOption);
+                tree.options.push(this.config.dialogOptions[this.dialogOptionId]);
             }
         }
     }

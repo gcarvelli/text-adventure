@@ -27,7 +27,8 @@ describe("Effects", () => {
             beforeEach(() => {
                 dialogOption = new DialogOption();
                 dialogOption.id = "DIALOG_OPTION";
-                effect = new Effect.AddDialogOptionEffect(config, dialogTree.id, dialogOption, null);
+                config.dialogOptions[dialogOption.id] = dialogOption;
+                effect = new Effect.AddDialogOptionEffect(config, dialogTree.id, dialogOption.id, null);
             });
             
             it("add a dialog option", () => {

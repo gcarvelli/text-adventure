@@ -22,6 +22,7 @@ export class JSONLoader implements ILoader {
         this.LoadItems();
         this.LoadPlayer();
         this.LoadRooms();
+        this.LoadDialogOptions();
         this.LoadDialogTrees();
         this.LoadHelp();
 
@@ -31,13 +32,13 @@ export class JSONLoader implements ILoader {
         return this.config;
     }
 
-    public LoadGame() {
+    private LoadGame() {
         this.config.game = new Game();
         this.config.game.name = this.data.game.name;
         this.config.game.version = this.data.game.version;
     }
 
-    public LoadPlayer() {
+    private LoadPlayer() {
         this.config.player = new Player();
         if (this.data.player.items) {
             this.data.player.items.forEach(itemId => {
@@ -46,7 +47,7 @@ export class JSONLoader implements ILoader {
         }
     }
 
-    public LoadRooms() {
+    private LoadRooms() {
         for (let roomId in this.data.rooms.roomlist) {
             if (this.data.rooms.roomlist.hasOwnProperty(roomId)) {
                 let room = this.LoadRoom(roomId);
@@ -184,17 +185,12 @@ export class JSONLoader implements ILoader {
         }
     }
 
-    public LoadDialogTrees() {
-        if (this.data.dialog_trees) {
-            for (let dialogTreeId in this.data.dialog_trees) {
-                if (this.data.dialog_trees.hasOwnProperty(dialogTreeId)) {
-                    let tree = new DialogTree();
-                    let treeData = this.data.dialog_trees[dialogTreeId];
-                    tree.id = dialogTreeId;
-                    treeData.forEach(optionData => {
-                        tree.options.push(this.LoadDialogOption(optionData));
-                    });
-                    this.config.dialogTrees[tree.id] = tree;
+    private LoadDialogOptions() {
+        if (this.data.dialog_options) {
+            // Load in all the dialog options
+            for (let dialogOptionId in this.data.dialog_options) {
+                if (this.data.dialog_options.hasOwnProperty(dialogOptionId)) {
+                    this.config.dialogOptions[dialogOptionId] = this.LoadDialogOption(this.data.dialog_options[dialogOptionId]);
                 }
             }
         }
@@ -213,11 +209,27 @@ export class JSONLoader implements ILoader {
         return option;
     }
 
+    private LoadDialogTrees() {
+        if (this.data.dialog_trees) {
+            for (let dialogTreeId in this.data.dialog_trees) {
+                if (this.data.dialog_trees.hasOwnProperty(dialogTreeId)) {
+                    let tree = new DialogTree();
+                    let treeData = this.data.dialog_trees[dialogTreeId];
+                    tree.id = dialogTreeId;
+                    treeData.forEach(optionData => {
+                        tree.options.push(this.LoadDialogOption(optionData));
+                    });
+                    this.config.dialogTrees[tree.id] = tree;
+                }
+            }
+        }
+    }
+
     private LoadEffect(effectData: any): Effect {
         switch (effectData.type) {
             case "add_dialog_option":
                 return new Effects.AddDialogOptionEffect(this.config, effectData.target_tree,
-                    this.LoadDialogOption(effectData.dialog_option), effectData.afterId);
+                    effectData.dialog_option, effectData.afterId);
             case "remove_dialog_option":
                 return new Effects.RemoveDialogOptionEffect(this.config, effectData.target_tree,
                     effectData.dialog_option);
