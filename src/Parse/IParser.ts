@@ -17,7 +17,7 @@ export enum CommandType {
     Open,
     Close,
     TalkTo,
-    DialogOption
+    Number
 }
 
 export class Command {

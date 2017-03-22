@@ -6,7 +6,7 @@ import { ILoader } from "../Configuration/ILoader";
 import { Utilities } from "../Utilities/Utilities";
 import { DialogStrategy } from "./DialogStrategy";
 import { ExploreStrategy } from "./ExploreStrategy";
-import { IExecutionStrategy } from "./IExecutionStrategy";
+import { ExecutionStrategy } from "./ExecutionStrategy";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 
 export interface Output {
@@ -17,7 +17,8 @@ export interface Output {
 
 export enum EngineMode {
     Explore,
-    Dialog
+    Dialog,
+    Combat
 }
 
 export class Engine {
@@ -27,7 +28,7 @@ export class Engine {
     mode: EngineMode;
     state: GameState;
 
-    currentStrategy: IExecutionStrategy;
+    currentStrategy: ExecutionStrategy;
     dialogStrategy: DialogStrategy;
     exploreStrategy: ExploreStrategy;
 

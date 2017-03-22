@@ -56,7 +56,7 @@ export class DummParser implements IParser {
                 com.args.push(this.GetThing(tokens.slice(2, tokens.length)));
             }
         } else if (!isNaN(parseInt(tokens[0]))) {
-            com.commandType = CommandType.DialogOption;
+            com.commandType = CommandType.Number;
             com.args = tokens;
         } else if (this.StartsWith(tokens, "help")) {
             com.commandType = CommandType.Help;

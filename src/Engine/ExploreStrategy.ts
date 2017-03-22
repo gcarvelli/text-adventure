@@ -1,4 +1,4 @@
-import { IExecutionStrategy } from "./IExecutionStrategy";
+import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { Output, EngineMode } from "./Engine";
@@ -7,15 +7,13 @@ import { GameState } from "../Models/GameState";
 import { Utilities } from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 
-export class ExploreStrategy implements IExecutionStrategy {
+export class ExploreStrategy extends ExecutionStrategy {
     config: Config;
     out: Output;
     state: GameState;
 
     constructor(config: Config, state: GameState, out: Output) {
-        this.config = config;
-        this.state = state;
-        this.out = out;
+        super(config, state, out);
     }
 
     public Execute(command: Command): EngineMode {

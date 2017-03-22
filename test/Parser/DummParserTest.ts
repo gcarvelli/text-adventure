@@ -90,7 +90,7 @@ describe("DummParser", () => {
     });
 
     describe("CommandType.DialogOption", () => {
-        registerCommandTests(["1", "2", "123", "  1  "], CommandType.DialogOption);
+        registerCommandTests(["1", "2", "123", "  1  "], CommandType.Number);
     });
 
     describe("CommandType.Help", () => {

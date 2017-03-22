@@ -1,4 +1,4 @@
-import { IExecutionStrategy } from "./IExecutionStrategy";
+import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { Output, EngineMode } from "./Engine";
@@ -7,22 +7,16 @@ import { GameState } from "../Models/GameState";
 import { Utilities } from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 
-export class DialogStrategy {
-    config: Config;
-    out: Output;
-    state: GameState;
-
+export class DialogStrategy extends ExecutionStrategy {
     constructor(config: Config, state: GameState, out: Output) {
-        this.config = config;
-        this.state = state;
-        this.out = out;
+        super(config, state, out);
     }
 
     public Execute(command: Command): EngineMode {
         let mode = EngineMode.Dialog;
 
         switch (command.commandType) {
-            case CommandType.DialogOption:
+            case CommandType.Number:
                 if (command.args.length != 0) {
                     let choice = parseInt(command.args[0]);
                     let tree = this.config.dialogTrees[this.state.talkingTo.npc.dialog.startTree];
