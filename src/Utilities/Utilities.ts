@@ -1,4 +1,4 @@
-import { Item } from "../Models/Models";
+import { Item } from "../Models/Item";
 
 export class Utilities {
     public static FindItemInList(items: Item[], name: string) {

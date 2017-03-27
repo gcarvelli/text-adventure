@@ -1,4 +1,4 @@
-import { Item } from "../src/Models/Models";
+import { Item } from "../src/Models/Item";
 
 export class Generator {
     public static NewItem() {

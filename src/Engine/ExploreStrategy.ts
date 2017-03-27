@@ -2,8 +2,8 @@ import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { Output, EngineMode } from "./Engine";
-import { Item } from "../Models/Models";
-import { GameState } from "../Models/GameState";
+import { Item } from "../Models/Item";
+import { GameState } from "../Models/Simple";
 import { Utilities } from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 
@@ -260,14 +260,6 @@ export class ExploreStrategy extends ExecutionStrategy {
                 break;
 
             case CommandType.Custom:
-                if (command.args.length > 0) {
-                    // Might be a move
-                    if (this.config.player.location.moves.hasOwnProperty(command.args[0])) {
-                        this.MoveTo(this.config.player.location.moves[command.args[0]]);
-                        PrintUtilities.LookAround(this.config, this.out);
-                        break;
-                    }
-                }
                 this.out.Print("Sorry, I didn't understand that.");
                 break;
 

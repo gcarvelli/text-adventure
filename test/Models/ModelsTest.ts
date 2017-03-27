@@ -1,7 +1,8 @@
 import "mocha";
 import { assert } from "chai";
 
-import { Room, Item } from "../../src/Models/Models";
+import { Room } from "../../src/Models/Room";
+import { Item } from "../../src/Models/Item";
 import { NPCDialog } from "../../src/Models/Dialog";
 
 describe("Room", () => {

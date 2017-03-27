@@ -2,8 +2,8 @@ import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { Output, EngineMode } from "./Engine";
-import { Item } from "../Models/Models";
-import { GameState } from "../Models/GameState";
+import { Item } from "../Models/Item";
+import { GameState } from "../Models/Simple";
 import { Utilities } from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 

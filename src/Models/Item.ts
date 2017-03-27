@@ -1,45 +1,5 @@
 import { NPCDialog } from "./Dialog";
-
-export class Game {
-    name: string;
-    version: string;
-}
-
-export class Player {
-    name: string;
-    inventory: Item[];
-    location: Room;
-
-    constructor() {
-        this.inventory = new Array<Item>();
-    }
-}
-
-export class Room {
-    id: string;
-    name: string;
-    description: string;
-    moves: MoveMap;
-    items: Item[];
-
-    constructor() {
-        this.moves = { };
-        this.items = new Array<Item>();
-    }
-
-    public GetDescription(): string[] {
-        let desc = new Array<string>();
-        desc.push(this.description);
-        this.items.forEach(item => {
-            desc[0] += item.GetDescriptionAddition();
-            item.GetDescriptionAdditionLines().forEach((line) => {
-                desc.push(line);
-            });
-        });
-
-        return desc;
-    }
-}
+import { MoveMap } from "./Maps";
 
 export class Item {
     id: string;
@@ -153,16 +113,4 @@ export class LockModule {
     canLock: boolean;
     isLocked: boolean;
     keyId: string;
-}
-
-export interface RoomMap {
-    [id: string]: Room;
-}
-
-export interface MoveMap {
-    [id: string]: string;
-}
-
-export interface ItemMap {
-    [id: string]: Item
 }

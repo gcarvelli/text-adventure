@@ -1,6 +1,6 @@
 import { Config } from "../Configuration/Config";
 import { Output } from "../Engine/Engine";
-import { Item } from "../Models/Models";
+import { Item } from "../Models/Item";
 
 export class PrintUtilities {
     public static PrintHeader(config: Config, out: Output) {

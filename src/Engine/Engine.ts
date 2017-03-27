@@ -1,5 +1,4 @@
-import { Player, Room, RoomMap, Item } from "../Models/Models";
-import { GameState } from "../Models/GameState";
+import { GameState } from "../Models/Simple";
 import { Command, CommandType, IParser } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { ILoader } from "../Configuration/ILoader";

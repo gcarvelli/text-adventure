@@ -1,6 +1,6 @@
 import { DialogOption } from "./Dialog"
 import { Config } from "../Configuration/Config";
-import { Item } from "./Models";
+import { Item } from "./Item";
 
 export abstract class Effect {
     config: Config;

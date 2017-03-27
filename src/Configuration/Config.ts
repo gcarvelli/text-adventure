@@ -1,4 +1,5 @@
-import { Game, Player, RoomMap, ItemMap } from "../Models/Models";
+import { Game, Player } from "../Models/Simple";
+import { ItemMap, RoomMap } from '../Models/Maps';
 import { DialogTreeMap, DialogOptionMap } from "../Models/Dialog";
 
 export class Config {

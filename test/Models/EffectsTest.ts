@@ -4,7 +4,7 @@ import { assert } from "chai";
 import { Generator } from "../Generator";
 import * as Effect from "../../src/Models/Effects";
 import { DialogTree, DialogOption } from "../../src/Models/Dialog";
-import { Item } from "../../src/Models/Models";
+import { Item } from "../../src/Models/Item";
 import { Config } from "../../src/Configuration/Config";
 
 describe("Effects", () => {
