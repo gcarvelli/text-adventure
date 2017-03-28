@@ -51,6 +51,9 @@ export class DialogStrategy extends ExecutionStrategy {
                 this.out.Print("Choose what to say by entering in the corresponding number.");
                 break;
 
+            case CommandType.Empty:
+                break;
+
             default:
                 this.out.Print("You can't do that right now.");
                 break;
