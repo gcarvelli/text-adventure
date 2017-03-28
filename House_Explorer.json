@@ -21,7 +21,7 @@
         "roomlist": {
             "BOTTOM_OF_DRIVEWAY": {
                 "name": "Bottom of Driveway",
-                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the north with a large front yard with some trees and bushes.",
+                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the North with a large front yard with some trees and bushes. A street is to your South.",
                 "basic_items": [ "driveway", "tree", "trees", "bushes", "bush" ],
                 "items": [ "HOUSE_FAR", "HOUSE_YARD" ],
                 "moves": {
@@ -31,7 +31,7 @@
             },
             "TOP_OF_DRIVEWAY": {
                 "name": "Top of Driveway",
-                "description": "You are now directly in front of the house. The driveway is full of cracks and the house looks abandoned. There is a path to the backyard to the north, as well as a mailbox next to the front door. A basketball hoop is mounted on the house.",
+                "description": "You are now directly in front of the house. The driveway is full of cracks and the house looks abandoned. A basketball hoop is mounted on the house. There is a path to the backyard to the North and the bottom of the driveway is to the South.",
                 "basic_items": [ "driveway", "basketball hoop" ],
                 "items": [ "MAILBOX", "BASKETBALL", "HOUSE_NEAR" ],
                 "moves": {
@@ -41,7 +41,7 @@
             },
             "BACKYARD": {
                 "name": "The Backyard",
-                "description": "The grass in the backyard is patchy and worn. There is a patio in back of the house but the cement is cracked and overrun with weeds. Patio furniture is stacked by the back door. The driveway is to the west and the house is to the south.",
+                "description": "The grass in the backyard is patchy and worn. There is a patio in back of the house but the cement is cracked and overrun with weeds. Patio furniture is stacked by the back door. The driveway is to the West and the house is to the South.",
                 "basic_items": [ "yard", "ground", "grass", "cement", "patio", "weeds" ],
                 "items": [ "HOUSE_BACK", "PATIO_FURNITURE", "HOUSE_BACK_ENTRANCE", "BASEBALL_BAT" ],
                 "moves": {
@@ -50,7 +50,7 @@
             },
             "INSIDE_HOUSE": {
                 "name": "The Kitchen",
-                "description": "The kitchen is spick and span. A wood counter snakes along the perimeter of the room, interrupted by a refridgerator, stove, and oven.",
+                "description": "The kitchen is spick and span. A wood counter snakes along the perimeter of the room, interrupted by a refridgerator, stove, and oven. The door to the backyard is to the North.",
                 "basic_items": [ "refridgerator", "stove", "oven" ],
                 "items": [ "FOREST_CHEST_KEY" ],
                 "moves": {
@@ -59,7 +59,7 @@
             },
             "STREET_1": {
                 "name": "Street in Front of House",
-                "description": "You are standing in the middle of the street. A white house is to the north. Forest lines the south side of the street as far as you can see.",
+                "description": "You are standing in the middle of the street. A white house is to the North. Forest lines the South side of the street as far as you can see.",
                 "basic_items": [ "street", "forest" ],
                 "moves": {
                     "north": "BOTTOM_OF_DRIVEWAY",
@@ -68,7 +68,7 @@
             },
             "FOREST_1": {
                 "name": "The Forest",
-                "description": "The trees around you are tall and thick. The ground is dry and covered in fallen leaves and branches. The air is cool and calm. The street is to your north, and the forest continues to the south.",
+                "description": "The trees around you are tall and thick. The ground is dry and covered in fallen leaves and branches. The air is cool and calm. The street is to your North, and the forest continues to the South.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
                 "items": [ "FOREST_TREE", "FOREST_TREES" ],
                 "moves": {
@@ -78,7 +78,7 @@
             },
             "FOREST_2": {
                 "name": "The Forest",
-                "description": "The canopy grows thicker, blocking out more sunlight. The forest continues to the north and there is a clearing further to the south.",
+                "description": "The canopy grows thicker, blocking out more sunlight. The forest continues to the North and there is a clearing further to the South.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
                 "items": [ "FOREST_TREE", "FOREST_TREES", "FOREST_CHEST" ],
                 "moves": {
@@ -88,7 +88,7 @@
             },
             "CLEARING": {
                 "name": "A Clearing",
-                "description": "You enter a small clearing in the forest. Shadows from the trees around you dance on the grass.",
+                "description": "You enter a small clearing in the forest. Shadows from the trees around you dance on the grass. The forest continues to the North.",
                 "basic_items": [ "sky" ],
                 "items": [ "FOREST_TREE" ],
                 "npcs": [ "FRED_THE_TYROMANCER" ],
