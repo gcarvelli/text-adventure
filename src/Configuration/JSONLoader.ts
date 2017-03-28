@@ -201,15 +201,15 @@ export class JSONLoader implements ILoader {
             // Load in all the dialog options
             for (let dialogOptionId in this.data.dialog_options) {
                 if (this.data.dialog_options.hasOwnProperty(dialogOptionId)) {
-                    this.config.dialogOptions[dialogOptionId] = this.LoadDialogOption(this.data.dialog_options[dialogOptionId]);
+                    this.config.dialogOptions[dialogOptionId] = this.LoadDialogOption(dialogOptionId, this.data.dialog_options[dialogOptionId]);
                 }
             }
         }
     }
 
-    private LoadDialogOption(optionData: any) : DialogOption {
+    private LoadDialogOption(id: string, optionData: any) : DialogOption {
         let option = new DialogOption();
-        option.id = optionData.id;
+        option.id = id;
         option.choice = optionData.choice;
         option.response = optionData.response;
         if (optionData.effects) {

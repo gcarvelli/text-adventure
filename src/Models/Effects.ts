@@ -27,15 +27,19 @@ export class AddDialogOptionEffect extends Effect {
     public Execute() {
         let tree = this.config.dialogTrees[this.targetTree];
         let matches = tree.options.filter(option => {
-            return option.id == this.dialogOptionId
+            return option.id == this.dialogOptionId;
         });
 
         if (matches.length == 0) {
             if (this.afterId) {
                 let afterMatches = tree.options.filter(option => {
-                    return option.id == this.afterId
+                    return option.id == this.afterId;
                 });
-                tree.options.splice(tree.options.indexOf(afterMatches[0]) + 1, 0, this.config.dialogOptions[this.dialogOptionId]);
+                if (afterMatches.length != 0) {
+                    tree.options.splice(tree.options.indexOf(afterMatches[0]) + 1, 0, this.config.dialogOptions[this.dialogOptionId]);
+                } else {
+                    throw new Error("Afterid " + this.afterId + " not found in tree " + tree.id);
+                }
             } else {
                 tree.options.push(this.config.dialogOptions[this.dialogOptionId]);
             }

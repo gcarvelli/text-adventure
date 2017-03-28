@@ -149,6 +149,7 @@
             "description": "The slice of aged cheese gives off a soft, tangy aroma and appears to be half-eaten."
         },
         "PLAYER_GOUDA": {
+            "name": "piece of Fred's prized Gouda cheese",
             "keywords": [ "gouda", "cheese" ],
             "description": "This piece of Gouda from Fred smells delicious."
         },
@@ -264,7 +265,7 @@
                     "type": "add_dialog_option",
                     "target_tree": "FRED1",
                     "afterId": "FRED1_SPELLS",
-                    "dialog_option": "FRED_CHEESE_MAGIC"
+                    "dialog_option": "FRED1_CHEESE_MAGIC"
                 }
             ]
         },
