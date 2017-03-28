@@ -36,13 +36,11 @@ export class JSONLoader implements ILoader {
     }
 
     private LoadGame() {
-        this.config.game = new Game();
         this.config.game.name = this.data.game.name;
         this.config.game.version = this.data.game.version;
     }
 
     private LoadPlayer() {
-        this.config.player = new Player();
         if (this.data.player.items) {
             this.data.player.items.forEach(itemId => {
                 this.config.player.inventory.push(this.config.items[itemId]);

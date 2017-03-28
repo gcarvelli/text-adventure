@@ -12,6 +12,8 @@ export class Config {
     items: ItemMap;
 
     constructor() {
+        this.game = new Game();
+        this.player = new Player();
         this.rooms = { };
         this.dialogTrees = { };
         this.dialogOptions = { };

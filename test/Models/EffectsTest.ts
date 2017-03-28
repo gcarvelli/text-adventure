@@ -10,11 +10,14 @@ import { Config } from "../../src/Configuration/Config";
 describe("Effects", () => {
     let config: Config;
 
+    beforeEach(() => {
+        config = new Config();
+    });
+
     describe("DialogOptionEffects", () => {
         let dialogTree: DialogTree;
 
         beforeEach(() => {
-            config = new Config();
             dialogTree = new DialogTree();
             dialogTree.id = "MAIN";
             config.dialogTrees["MAIN"] = dialogTree;
@@ -99,6 +102,51 @@ describe("Effects", () => {
                 effect.Execute();
                 assert.notEqual(oldName, item.name);
                 assert.equal(effect.newName, item.name);
+            });
+        });
+
+        describe("ChangeDescriptionForRoomEffect", () => {
+            let effect: Effect.ChangeDescriptionForRoomEffect;
+
+            beforeEach(() => {
+                effect = new Effect.ChangeDescriptionForRoomEffect(config, item.id, item.descriptionForRoom + "extra");
+            });
+
+            it("change description for room", () => {
+                let oldDesc = item.description;
+                effect.Execute();
+                assert.notEqual(oldDesc, item.descriptionForRoom);
+                assert.equal(effect.newDescription, item.descriptionForRoom);
+            });
+        });
+
+        describe("AddItemToInventoryEffect", () => {
+            let effect: Effect.AddItemToInventoryEffect;
+
+            beforeEach(() => {
+                effect = new Effect.AddItemToInventoryEffect(config, item.id);
+            });
+
+            it("add item to inventory", () => {
+                assert.equal(-1, config.player.inventory.indexOf(config.items[item.id]));
+                effect.Execute();
+                assert.notEqual(-1, config.player.inventory.indexOf(config.items[item.id]));
+            });
+        });
+
+        describe("AddKeywordToItemEffect", () => {
+            let effect: Effect.AddKeywordToItemEffect;
+
+            beforeEach(() => {
+                effect = new Effect.AddKeywordToItemEffect(config, item.id, [ "new keyword 1", "new keyword 2" ]);
+            });
+
+            it("add keyword to item", () => {
+                assert.equal(-1, item.keywords.indexOf(effect.keywords[0]));
+                assert.equal(-1, item.keywords.indexOf(effect.keywords[1]));
+                effect.Execute();
+                assert.notEqual(-1, item.keywords.indexOf(effect.keywords[0]));
+                assert.notEqual(-1, item.keywords.indexOf(effect.keywords[1]));
             });
         });
     });
