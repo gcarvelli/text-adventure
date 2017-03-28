@@ -1,5 +1,5 @@
 import { Command } from "../Parse/IParser";
-import { EngineMode, Output } from "./Engine";
+import { Output, EngineMode } from "./Engine";
 import { Config } from "../Configuration/Config";
 import { GameState } from "../Models/Simple";
 

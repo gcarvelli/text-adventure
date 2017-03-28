@@ -1,8 +1,7 @@
 import { GameState } from "../Models/Simple";
-import { Command, CommandType, IParser } from "../Parse/IParser";
+import { IParser } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { ILoader } from "../Configuration/ILoader";
-import { Utilities } from "../Utilities/Utilities";
 import { DialogStrategy } from "./DialogStrategy";
 import { ExploreStrategy } from "./ExploreStrategy";
 import { ExecutionStrategy } from "./ExecutionStrategy";
