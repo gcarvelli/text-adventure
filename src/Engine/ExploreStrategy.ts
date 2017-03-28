@@ -65,7 +65,7 @@ export class ExploreStrategy extends ExecutionStrategy {
                         this.out.Print("\t" + item.name);
                     });
                 } else {
-                    this.out.Print("There doesn't seem to be anything here.");
+                    this.out.Print("\tThere doesn't seem to be anything here.");
                 }
                 break;
 
