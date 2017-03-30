@@ -233,7 +233,7 @@
                 {
                     "type": "change_name",
                     "target_item": "FRED_THE_TYROMANCER",
-                    "name": "Fred"
+                    "name": "Fred the Tyromancer"
                 },
                 {
                     "type": "change_description_for_room",
@@ -282,6 +282,11 @@
                     "target_tree": "FRED1",
                     "afterId": "FRED1_ASK_FOR_CHEESE",
                     "dialog_option": "FRED_GIVE_CHEESE"
+                },
+                {
+                    "type": "remove_dialog_option",
+                    "target_tree": "FRED1",
+                    "dialog_option": "FRED1_ASK_FOR_CHEESE"
                 }
             ]
         },

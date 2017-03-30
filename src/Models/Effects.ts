@@ -64,7 +64,7 @@ export class RemoveDialogOptionEffect extends Effect {
         });
 
         if (matches.length != 0) {
-            tree.options.splice(tree.options.indexOf(matches[0], 1));
+            tree.options.splice(tree.options.indexOf(matches[0]), 1);
         }
     }
 }

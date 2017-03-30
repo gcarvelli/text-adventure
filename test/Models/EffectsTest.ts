@@ -71,13 +71,29 @@ describe("Effects", () => {
             beforeEach(() => {
                 dialogOption = new DialogOption();
                 dialogOption.id = "ID";
-                dialogTree.options.push(dialogOption);
                 effect = new Effect.RemoveDialogOptionEffect(config, dialogTree.id, dialogOption.id);
             });
 
             it("remove dialog option", () => {
+                dialogTree.options.push(dialogOption);
                 effect.Execute();
                 assert.equal(0, dialogTree.options.length);
+            });
+
+            it("remove only one dialog option", () => {
+                let option1 = new DialogOption();
+                option1.id = "id1";
+                let option2 = new DialogOption();
+                option2.id =  "id2";
+
+                dialogTree.options.push(option1);
+                dialogTree.options.push(dialogOption);
+                dialogTree.options.push(option2);
+
+                effect.Execute();
+                assert.equal(2, dialogTree.options.length);
+                assert.equal(option1.id, dialogTree.options[0].id);
+                assert.equal(option2.id, dialogTree.options[1].id);
             });
         });
     });
