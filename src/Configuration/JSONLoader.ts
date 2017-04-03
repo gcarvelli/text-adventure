@@ -166,7 +166,7 @@ export class JSONLoader implements ILoader {
         }
         if (itemData.weapon) {
             item.weapon.isWeapon = itemData.weapon.is_weapon;
-            item.weapon.baseDamage = itemData.weapon.baseDamage;
+            item.weapon.baseDamage = itemData.weapon.base_damage;
             item.weapon.damageSpread = itemData.weapon.damage_spread;
         }
         if (itemData.npc) {

@@ -139,5 +139,24 @@ describe("JSONLoader", () => {
             assert.isTrue(item.open.lock.canLock);
             assert.equal(item.open.lock.keyId, itemData.open.lock.key_id);
         });
+
+        it("loads item with weapon", () => {
+            let itemData = Generator.NewItemData();
+            itemData.weapon = {
+                "is_weapon": true,
+                "base_damage": 5,
+                "damage_spread": 2
+            }
+            data.items[itemData.id] = itemData;
+
+            Load();
+
+            let item = config.items[itemData.id];
+            assert.isNotNull(item);
+            assert.isNotNull(item.weapon);
+            assert.isTrue(item.weapon.isWeapon);
+            assert.equal(item.weapon.baseDamage, itemData.weapon["base_damage"]);
+            assert.equal(item.weapon.damageSpread, itemData.weapon["damage_spread"]);
+        });
     });
 });
