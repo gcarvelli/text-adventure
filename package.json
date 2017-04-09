@@ -6,10 +6,11 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "typings install",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --inline --no-info --port 8000 --content-base ./build",
+    "build": "node_modules/.bin/webpack",
+    "watch": "node_modules/.bin/webpack --watch",
+    "start": "node_modules/.bin/webpack-dev-server --inline --no-info --port 8000 --content-base ./build",
     "php": "php -S localhost:8000 -t build/",
-    "test": "mocha -r ts-node/register test/**/*Test.ts",
+    "test": "node_modules/.bin/mocha -r ts-node/register test/**/*Test.ts",
     "sync": "bash bin/sync.sh"
   },
   "keywords": [],
@@ -29,6 +30,7 @@
     "tsc": "^1.20150623.0",
     "typescript": "^2.2.0",
     "typings": "^2.1.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }
