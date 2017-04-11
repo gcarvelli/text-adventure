@@ -58,7 +58,7 @@ export class JSONLoader implements ILoader {
     }
 
     private LoadHelp() {
-        if (this.data.help.intro) {
+        if (this.data.help && this.data.help.intro) {
             this.config.help.push(this.data.help.intro);
         }
         this.config.help.push("  look                   Show the description of the current location.");
@@ -68,7 +68,7 @@ export class JSONLoader implements ILoader {
         this.config.help.push("  take/drop <object>     Add or remove an item to your inventory.");
         this.config.help.push("  open/close <object>    Open or close an object.");
         this.config.help.push("  talk to <person>       Attempt conversation with an NPC.");
-        if (this.data.help.extra_lines) {
+        if (this.data.help && this.data.help.extra_lines) {
             this.data.help.extra_lines.forEach((line) => {
                 this.config.help.push(line);
             });

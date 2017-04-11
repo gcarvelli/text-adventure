@@ -43,14 +43,17 @@ describe("JSONLoader", () => {
 
     describe("Help", () => {
         it("loads help", () => {
-            data.help = [ "line 1", "line 2" ];
+            data.help = {
+                "intro": "intro line",
+                "extra_lines" : [
+                    "extra line"
+                ]
+            };
 
             Load();
 
-            assert.equal(config.help.length, data.help.length);
-            for (let i = 0; i < config.help.length; i++) {
-                assert.equal(config.help[i], data.help[i]);
-            }
+            assert.equal(config.help[0], data.help.intro);
+            assert.equal(config.help[config.help.length - 1], data.help.extra_lines[0]);
         });
 
         it("loads missing help", () => {
