@@ -3,16 +3,12 @@
         "name": "House Explorer",
         "version": "0.3.0"
     },
-    "help": [
-        "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
-        "  look                   Show the description of the current location.",
-        "  look at <object>       Show the description of the <thing>.",
-        "  north/south/east/west  Move in that direction.",
-        "  inventory              List the items in your inventory.",
-        "  take/drop <object>     Add or remove an item to your inventory.",
-        "  open/close <object>    Open or close an object.",
-        "  talk to <person>       Attempt conversation with an NPC."
-    ],
+    "help": {
+        "intro": "Welcome to House Explorer! This game is a work in progress. Try these commands to interact with your environment:",
+        "extra_lines" : [
+            "Have fun!"
+        ]
+    },
     "player": {
         "items": [ "LOCKPICK" ]
     },

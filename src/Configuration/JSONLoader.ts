@@ -58,7 +58,21 @@ export class JSONLoader implements ILoader {
     }
 
     private LoadHelp() {
-        this.config.help = this.data.help;
+        if (this.data.help.intro) {
+            this.config.help.push(this.data.help.intro);
+        }
+        this.config.help.push("  look                   Show the description of the current location.");
+        this.config.help.push("  look at <object>       Show the description of the <thing>.");
+        this.config.help.push("  north/south/east/west  Move in that direction.");
+        this.config.help.push("  inventory              List the items in your inventory.");
+        this.config.help.push("  take/drop <object>     Add or remove an item to your inventory.");
+        this.config.help.push("  open/close <object>    Open or close an object.");
+        this.config.help.push("  talk to <person>       Attempt conversation with an NPC.");
+        if (this.data.help.extra_lines) {
+            this.data.help.extra_lines.forEach((line) => {
+                this.config.help.push(line);
+            });
+        }
     }
 
     private LoadItems() {
