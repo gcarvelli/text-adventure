@@ -21,12 +21,12 @@
         "roomlist": {
             "BOTTOM_OF_DRIVEWAY": {
                 "name": "Bottom of Driveway",
-                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the North with a large front yard with some trees and bushes. A street is to your South.",
+                "description": "You are standing at the bottom of a driveway. There is a mid-sized ranch house to the North with a large front yard with some trees and bushes. A large forest is to the South.",
                 "basic_items": [ "driveway", "tree", "trees", "bushes", "bush" ],
                 "items": [ "HOUSE_FAR", "HOUSE_YARD" ],
                 "moves": {
                     "north": "TOP_OF_DRIVEWAY",
-                    "south": "STREET_1"
+                    "south": "FOREST_1"
                 }
             },
             "TOP_OF_DRIVEWAY": {
@@ -57,22 +57,13 @@
                     "north": "BACKYARD"
                 }
             },
-            "STREET_1": {
-                "name": "Street in Front of House",
-                "description": "You are standing in the middle of the street. A white house is to the North. Forest lines the South side of the street as far as you can see.",
-                "basic_items": [ "street", "forest" ],
-                "moves": {
-                    "north": "BOTTOM_OF_DRIVEWAY",
-                    "south": "FOREST_1"
-                }
-            },
             "FOREST_1": {
                 "name": "The Forest",
-                "description": "The trees around you are tall and thick. The ground is dry and covered in fallen leaves and branches. The air is cool and calm. The street is to your North, and the forest continues to the South.",
+                "description": "The trees around you are tall and thick. The ground is dry and covered in fallen leaves and branches. The air is cool and calm. The house is to your North, and the forest continues to the South.",
                 "basic_items": [ "leaves", "branches", "air", "ground" ],
                 "items": [ "FOREST_TREE", "FOREST_TREES" ],
                 "moves": {
-                    "north": "STREET_1",
+                    "north": "BOTTOM_OF_DRIVEWAY",
                     "south": "FOREST_2"
                 }
             },
@@ -150,7 +141,7 @@
         },
         "PLAYER_GOUDA": {
             "name": "piece of Fred's prized Gouda cheese",
-            "keywords": [ "gouda", "cheese" ],
+            "keywords": [ "gouda", "cheese", "piece of cheese", "piece of fred's prized gouda cheese" ],
             "description": "This piece of Gouda from Fred smells delicious."
         },
         "HOUSE_BACK": {
