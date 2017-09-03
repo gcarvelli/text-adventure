@@ -5,12 +5,11 @@
   "repository": "https://github.com/gcarvelli/text-adventure",
   "main": "index.js",
   "scripts": {
-    "prepublish": "typings install",
     "build": "node_modules/.bin/webpack",
     "watch": "node_modules/.bin/webpack --watch",
     "start": "node_modules/.bin/webpack-dev-server --inline --no-info --port 8000 --content-base ./build",
     "php": "php -S localhost:8000 -t build/",
-    "test": "node_modules/.bin/mocha -r ts-node/register test/**/*Test.ts",
+    "test": "node_modules/.bin/mocha --compilers ts:ts-node/register test/**/*Test.ts",
     "sync": "bash bin/sync.sh"
   },
   "keywords": [],
@@ -26,10 +25,8 @@
     "mocha": "^3.2.0",
     "source-map-loader": "^0.1.6",
     "ts-loader": "^2.0.0",
-    "ts-node": "^2.1.0",
-    "tsc": "^1.20150623.0",
+    "ts-node": "^3.3.0",
     "typescript": "^2.2.0",
-    "typings": "^2.1.0",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.2"
   }
