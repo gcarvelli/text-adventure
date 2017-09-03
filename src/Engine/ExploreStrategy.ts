@@ -35,23 +35,7 @@ export class ExploreStrategy extends ExecutionStrategy {
                     }
 
                     if (item != null) {
-                        if (item.open.canOpen) {
-                            let status: string;
-                            if (item.open.isOpen) {
-                                status = "open";
-                            } else {
-                                if (item.open.lock && item.open.lock.isLocked) {
-                                    status = "locked";
-                                } else {
-                                    status = "closed";
-                                }
-                            }
-                            this.out.Print(item.description + " The " + item.name + " is " + status + ".");
-                        } else if (item.door.isDoor) {
-                            this.out.Print("The " + item.name + " is " + (item.door.isOpen ? "open." : "closed."));
-                        } else {
-                            this.out.Print(item.description ? item.description : "There's nothing special about the " + item.name + ".");
-                        }
+                        this.out.Print(item.GetLookAtDescription());
                     } else {
                         this.out.Print("Doesn't look like there's one of those around.");
                     }

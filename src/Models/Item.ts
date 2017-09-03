@@ -68,6 +68,26 @@ export class Item {
         }
         return "";
     }
+
+    public GetLookAtDescription(): string {
+        if (this.open.canOpen) {
+            let status: string;
+            if (this.open.isOpen) {
+                status = "open";
+            } else {
+                if (this.open.lock && this.open.lock.isLocked) {
+                    status = "locked";
+                } else {
+                    status = "closed";
+                }
+            }
+            return this.description + " The " + this.name + " is " + status + ".";
+        } else if (this.door.isDoor) {
+            return "The " + this.name + " is " + (this.door.isOpen ? "open." : "closed.");
+        } else {
+            return this.description ? this.description : "There's nothing special about the " + this.name + ".";
+        }
+    }
 }
 
 export class TakeModule {
