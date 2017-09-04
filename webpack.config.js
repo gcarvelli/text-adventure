@@ -1,5 +1,6 @@
 var path = require('path');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 
 module.exports = {
     entry: './src/app.js',
@@ -9,7 +10,10 @@ module.exports = {
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: ['*', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        extensions: ['*', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'],
+        plugins: [
+            new TsConfigPathsPlugin(/* { tsconfig, compiler } */)
+        ]
     },
     module: {
         rules: [
