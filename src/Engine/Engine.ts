@@ -1,4 +1,4 @@
-import { GameState } from "../Models/Simple";
+import { GameState } from "../Models/Models";
 import { IParser } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { ILoader } from "../Configuration/ILoader";

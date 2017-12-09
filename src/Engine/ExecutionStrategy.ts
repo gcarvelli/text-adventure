@@ -1,7 +1,7 @@
 import { Command } from "../Parse/IParser";
 import { Output, EngineMode } from "./Engine";
 import { Config } from "../Configuration/Config";
-import { GameState } from "../Models/Simple";
+import { GameState } from "../Models/Models";
 
 export abstract class ExecutionStrategy {
     config: Config;

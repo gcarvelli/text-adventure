@@ -1,4 +1,4 @@
-import { Item } from "../src/Models/Item";
+import { Item } from "../src/Models/Models";
 
 export class Generator {
     public static RandomString(): string {

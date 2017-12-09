@@ -2,9 +2,8 @@ import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { Output, EngineMode } from "./Engine";
-import { Item } from "../Models/Item";
-import { GameState } from "../Models/Simple";
-import { Utilities } from "../Utilities/Utilities";
+import { Item, GameState } from "../Models/Models";
+import * as Utilities from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 
 export class DialogStrategy extends ExecutionStrategy {

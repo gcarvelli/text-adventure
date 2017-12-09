@@ -1,5 +1,5 @@
 import { NPCDialog } from "./Dialog";
-import { MoveMap } from "./Maps";
+import { IMap } from "../Utilities/Utilities";
 
 export class Item {
     id: string;
@@ -11,7 +11,6 @@ export class Item {
 
     take: TakeModule;
     open: OpenModule;
-    weapon: WeaponModule;
     npc: NPCModule;
     door: DoorModule;
 
@@ -19,7 +18,6 @@ export class Item {
         this.subItems = new Array<Item>();
         this.take = new TakeModule();
         this.open = new OpenModule();
-        this.weapon = new WeaponModule();
         this.npc = new NPCModule();
         this.door = new DoorModule();
     }
@@ -107,12 +105,6 @@ export class OpenModule {
     }
 }
 
-export class WeaponModule {
-    isWeapon: boolean;
-    baseDamage: number;
-    damageSpread: number;
-}
-
 export class NPCModule {
     dialog: NPCDialog;
 }
@@ -120,7 +112,7 @@ export class NPCModule {
 export class DoorModule {
     isDoor: boolean;
     isOpen: boolean;
-    movement: MoveMap;
+    movement: IMap<string>;
     lock: LockModule;
 
     constructor() {

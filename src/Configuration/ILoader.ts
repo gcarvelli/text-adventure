@@ -1,8 +1,5 @@
 import { Config } from "./Config";
-import { Game, Player } from "../Models/Simple";
-import { RoomMap } from "../Models/Maps";
-import { Item } from "../Models/Item";
-import { DialogTreeMap } from "../Models/Dialog";
+import { Game, Player, Item } from "../Models/Models";
 
 export interface ILoader {
     Initialize(data: any);

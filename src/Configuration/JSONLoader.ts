@@ -1,10 +1,7 @@
 import { ILoader } from "./ILoader";
 import { Config } from "./Config";
-import { Game, Player } from "../Models/Simple";
-import { RoomMap } from "../Models/Maps";
-import { Item } from "../Models/Item";
-import { Room } from "../Models/Room";
-import { NPCDialog, DialogOption, DialogTree } from "../Models/Dialog";
+import { Game, Player, Item, Room, NPCDialog } from "../Models/Models";
+import { DialogOption, DialogTree } from "../Models/Dialog";
 import { Effect } from "../Models/Effects";
 import * as Effects from "../Models/Effects";
 
@@ -177,11 +174,6 @@ export class JSONLoader implements ILoader {
                 item.open.lock.keyId = itemData.open.lock.key_id;
                 item.open.lock.isLocked = true;
             }
-        }
-        if (itemData.weapon) {
-            item.weapon.isWeapon = itemData.weapon.is_weapon;
-            item.weapon.baseDamage = itemData.weapon.base_damage;
-            item.weapon.damageSpread = itemData.weapon.damage_spread;
         }
         if (itemData.npc) {
             if (itemData.npc.dialog) {

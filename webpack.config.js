@@ -1,6 +1,6 @@
-var path = require('path');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 
 module.exports = {
     entry: './src/app.js',
@@ -21,7 +21,10 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
-                exclude: '/node_modules/'
+                exclude: [
+                    path.resolve(__dirname, './test/'),
+                    path.resolve(__dirname, './node_modules/')
+                ]
             }
         ]
     },

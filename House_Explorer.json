@@ -164,11 +164,6 @@
             "description_for_room": "A baseball bat is leaned up against the house.",
             "take": {
                 "can_take": true
-            },
-            "weapon": {
-                "is_weapon": false,
-                "base_damage": 5,
-                "damage_spread": 2
             }
         },
         "FOREST_CHEST_KEY": {

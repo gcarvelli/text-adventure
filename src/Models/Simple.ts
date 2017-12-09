@@ -1,5 +1,4 @@
-import { Item } from "./Item";
-import { Room } from "./Room";
+import { Item, Room } from "./Models";
 
 export class Game {
     name: string;
