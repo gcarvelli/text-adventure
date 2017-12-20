@@ -32,11 +32,3 @@ export class DialogOption {
         });
     }
 }
-
-export interface DialogTreeMap {
-    [id: string]: DialogTree;
-}
-
-export interface DialogOptionMap {
-    [id: string]: DialogOption;
-}

@@ -1,15 +1,15 @@
-import { Game, Player } from "../Models/Simple";
-import { ItemMap, RoomMap } from '../Models/Maps';
-import { DialogTreeMap, DialogOptionMap } from "../Models/Dialog";
+import { Game, Player, Room, Item } from "../Models/Models";
+import { DialogOption, DialogTree } from "../Models/Dialog";
+import { IMap } from "../Utilities/Utilities";
 
 export class Config {
     game: Game;
     player: Player;
-    rooms: RoomMap;
-    dialogTrees: DialogTreeMap;
-    dialogOptions: DialogOptionMap;
+    rooms: IMap<Room>;
+    dialogTrees: IMap<DialogTree>;
+    dialogOptions: IMap<DialogOption>;
     help: string[];
-    items: ItemMap;
+    items: IMap<Item>;
 
     constructor() {
         this.game = new Game();

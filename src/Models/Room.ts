@@ -1,11 +1,11 @@
-import { Item } from "./Item";
-import { MoveMap } from "./Maps";
+import { Item } from "./Models";
+import { IMap } from "../Utilities/Utilities";
 
 export class Room {
     id: string;
     name: string;
     description: string;
-    moves: MoveMap;
+    moves: IMap<string>;
     items: Item[];
 
     constructor() {
