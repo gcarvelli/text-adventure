@@ -39,8 +39,3 @@ export function FindItemByName(items: Item[], name: string) {
 
     return null;
 }
-
-export interface IMap<T> {
-    [index: string]: T;
-    [index: number]: T;
-} 

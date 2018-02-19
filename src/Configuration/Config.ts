@@ -1,26 +1,25 @@
 import { Game, Player, Room, Item } from "../Models/Models";
 import { DialogOption, DialogTree } from "../Models/Dialog";
-import { IMap } from "../Utilities/Utilities";
 import { State } from "../Models/State";
 
 export class Config {
     game: Game;
     player: Player;
-    rooms: IMap<Room>;
-    dialogTrees: IMap<DialogTree>;
-    dialogOptions: IMap<DialogOption>;
+    rooms: Map<string, Room>;
+    dialogTrees: Map<string, DialogTree>;
+    dialogOptions: Map<string, DialogOption>;
     help: string[];
-    items: IMap<Item>;
+    items: Map<string, Item>;
     state: State;
 
     constructor() {
         this.game = new Game();
         this.player = new Player();
-        this.rooms = { };
-        this.dialogTrees = { };
-        this.dialogOptions = { };
+        this.rooms = new Map<string, Room>();
+        this.dialogTrees = new Map<string, DialogTree>();
+        this.dialogOptions = new Map<string, DialogOption>();
         this.help = new Array<string>();
-        this.items = { };
+        this.items = new Map<string, Item>();
         this.state = new State();
     }
 

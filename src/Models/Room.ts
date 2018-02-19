@@ -1,15 +1,14 @@
 import { Item } from "./Models";
-import { IMap } from "../Utilities/Utilities";
 
 export class Room {
     id: string;
     name: string;
     description: string;
-    moves: IMap<string>;
+    moves: Map<string, string>;
     items: Item[];
 
     constructor() {
-        this.moves = { };
+        this.moves = new Map<string, string>();
         this.items = new Array<Item>();
     }
 

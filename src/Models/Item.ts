@@ -1,5 +1,4 @@
 import { NPCDialog } from "./Dialog";
-import { IMap } from "../Utilities/Utilities";
 import { IEventful } from "../Events/IEventful";
 import { Event, EventType } from "../Events/Event";
 
@@ -127,11 +126,11 @@ export class NPCModule {
 export class DoorModule {
     isDoor: boolean;
     isOpen: boolean;
-    movement: IMap<string>;
+    movement: Map<string, string>;
     lock: LockModule;
 
     constructor() {
-        this.movement = { };
+        this.movement = new Map<string, string>();
         this.lock = new LockModule();
     }
 }

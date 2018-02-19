@@ -16,8 +16,6 @@ export class JSONLoader implements ILoader {
     public LoadConfig(): Config {
         this.config = new Config();
 
-        this.config.rooms = { };
-
         this.LoadGame();
         this.LoadItems();
         this.LoadPlayer();
@@ -145,7 +143,7 @@ export class JSONLoader implements ILoader {
                 }
             }
         }
-    
+
         return room;
     }
 
