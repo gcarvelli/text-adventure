@@ -29,7 +29,6 @@ export class DialogStrategy extends ExecutionStrategy {
                             let option = tree.options[choice - 1];
                             if (!option.hasBeenChosen) {
                                 option.hasBeenChosen = true;
-                                option.RunEffects();
                             }
                             PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, option.response);
                             this.out.Print(" ");

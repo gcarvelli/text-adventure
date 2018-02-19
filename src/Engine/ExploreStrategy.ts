@@ -6,14 +6,18 @@ import { Item } from "../Models/Models";
 import { GameState } from "../Models/Simple";
 import * as Utilities from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
+import { ConditionChecker } from "../Events/ConditionChecker";
+import { EventType } from "../Events/Event";
 
 export class ExploreStrategy extends ExecutionStrategy {
     config: Config;
     out: Output;
     state: GameState;
+    checker: ConditionChecker;
 
     constructor(config: Config, state: GameState, out: Output) {
         super(config, state, out);
+        this.checker = new ConditionChecker(config, out);
     }
 
     public Execute(command: Command): EngineMode {
@@ -73,46 +77,46 @@ export class ExploreStrategy extends ExecutionStrategy {
 
             case CommandType.TakeItem:
                 if (command.args.length > 0) {
+                    let item:Item;
+                    let container:Item[];
+
                     // Try the room
-                    let item = Utilities.FindItemInList(this.config.player.location.items, command.args[0])
-                    if (item != null && item.take.canTake) {
-                        let itemIndex = this.config.player.location.items.indexOf(item);
-                        //ensure the room contains this item
-                        if (itemIndex > -1){
-                            this.config.player.location.items.splice(itemIndex, 1);
-                            this.config.player.inventory.push(item);
-                            this.out.Print("Took the " + item.name + ".");
-                            break;
-                        }
-                    } else if (item != null) {
-                        this.out.Print("That can't be taken.");
-                        break;
+                    item = Utilities.FindItemInList(this.config.player.location.items, command.args[0])
+                    if (item != null) {
+                        container = this.config.player.location.items;
                     }
 
                     // Try the contents of items in the room
-                    let parentItem: Item = null;
-                    for (let i = 0; i < this.config.player.location.items.length; i++) {
-                        let roomItem = this.config.player.location.items[i];
-                        if (roomItem.open.isOpen && roomItem.open.contents) {
-                            let possibleMatch = Utilities.FindItemByName(roomItem.open.contents, command.args[0]);
-                            if (possibleMatch != null) {
-                                parentItem = roomItem;
-                                item = possibleMatch;
-                                break;
+                    if (item == null && container == null) {
+                        for (let i = 0; i < this.config.player.location.items.length; i++) {
+                            let roomItem = this.config.player.location.items[i];
+                            if (roomItem.open.isOpen && roomItem.open.contents) {
+                                let possibleMatch = Utilities.FindItemByName(roomItem.open.contents, command.args[0]);
+                                if (possibleMatch != null) {
+                                    container = roomItem.open.contents;
+                                    item = possibleMatch;
+                                    break;
+                                }
                             }
                         }
                     }
-                    if (item != null && item.take.canTake) {
-                        parentItem.open.contents.splice(parentItem.open.contents.indexOf(item), 1);
-                        this.config.player.inventory.push(item);
-                        this.out.Print("Took the " + item.name + ".");
-                        break;
-                    } else if (item != null) {
-                        this.out.Print("That can't be taken.");
-                        break;
-                    }
 
-                    this.out.Print("Doesn't look like there's one of those around.");
+                    // Remove the item
+                    if (item != null) {
+                        if (item.take.canTake) {
+                            // Check custom rules
+                            let event = item.GetEvent(EventType.Take);
+                            if (event == null || this.checker.CheckAll(event.GetConditions())) {
+                                container.splice(container.indexOf(item), 1);
+                                this.config.player.inventory.push(item);
+                                this.out.Print("Took the " + item.name + ".");
+                            }
+                        } else {
+                            this.out.Print("That can't be taken.")
+                        }
+                    } else {
+                        this.out.Print("Doesn't look like there's one of those around.");
+                    }
                 } else {
                     this.out.Print("Take what?");
                 }

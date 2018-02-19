@@ -1,13 +1,16 @@
 import { NPCDialog } from "./Dialog";
 import { IMap } from "../Utilities/Utilities";
+import { IEventful } from "../Events/IEventful";
+import { Event, EventType } from "../Events/Event";
 
-export class Item {
+export class Item implements IEventful {
     id: string;
     name: string;
     keywords: string[];
     description: string;
     descriptionForRoom: string;
     subItems: Item[];
+    events: Map<EventType, Event>;
 
     take: TakeModule;
     open: OpenModule;
@@ -20,6 +23,7 @@ export class Item {
         this.open = new OpenModule();
         this.npc = new NPCModule();
         this.door = new DoorModule();
+        this.events = new Map<EventType, Event>();
     }
 
     public HasKeyword(name: string): boolean {
@@ -85,6 +89,17 @@ export class Item {
         } else {
             return this.description ? this.description : "There's nothing special about the " + this.name + ".";
         }
+    }
+
+    public GetEvent(id: EventType): Event {
+        if (this.events) {
+            return this.events[id];
+        }
+        return null;
+    }
+
+    public SetEvent(id: EventType, event: Event) {
+        this.events[id] = event;
     }
 }
 

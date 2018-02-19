@@ -2,8 +2,8 @@ import { ILoader } from "./ILoader";
 import { Config } from "./Config";
 import { Game, Player, Item, Room, NPCDialog } from "../Models/Models";
 import { DialogOption, DialogTree } from "../Models/Dialog";
-import { Effect } from "../Models/Effects";
-import * as Effects from "../Models/Effects";
+import { Effect } from "../Events/Effects";
+import * as Effects from "../Events/Effects";
 
 export class JSONLoader implements ILoader {
     data: any;
@@ -218,11 +218,6 @@ export class JSONLoader implements ILoader {
         option.id = id;
         option.choice = optionData.choice;
         option.response = optionData.response;
-        if (optionData.effects) {
-            optionData.effects.forEach(effectData => {
-                option.effects.push(this.LoadEffect(effectData));
-            });
-        }
         return option;
     }
 
@@ -244,12 +239,6 @@ export class JSONLoader implements ILoader {
 
     private LoadEffect(effectData: any): Effect {
         switch (effectData.type) {
-            case "add_dialog_option":
-                return new Effects.AddDialogOptionEffect(this.config, effectData.target_tree,
-                    effectData.dialog_option, effectData.afterId);
-            case "remove_dialog_option":
-                return new Effects.RemoveDialogOptionEffect(this.config, effectData.target_tree,
-                    effectData.dialog_option);
             case "change_name":
                 return new Effects.ChangeNameEffect(this.config, effectData.target_item, effectData.name);
             case "change_description_for_room":

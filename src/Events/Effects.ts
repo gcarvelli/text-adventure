@@ -1,6 +1,5 @@
-import { DialogOption } from "./Dialog"
 import { Config } from "../Configuration/Config";
-import { Item } from "./Models";
+import { Item } from "../Models/Models";
 
 export abstract class Effect {
     config: Config;
@@ -10,63 +9,6 @@ export abstract class Effect {
     }
 
     public abstract Execute();
-}
-
-export class AddDialogOptionEffect extends Effect {
-    targetTree: string;
-    dialogOptionId: string;
-    afterId: string;
-
-    constructor(config: Config, targetTree: string, dialogOptionId: string, afterId: string) {
-        super(config);
-        this.targetTree = targetTree;
-        this.dialogOptionId = dialogOptionId;
-        this.afterId = afterId;
-    }
-
-    public Execute() {
-        let tree = this.config.dialogTrees[this.targetTree];
-        let matches = tree.options.filter(option => {
-            return option.id == this.dialogOptionId;
-        });
-
-        if (matches.length == 0) {
-            if (this.afterId) {
-                let afterMatches = tree.options.filter(option => {
-                    return option.id == this.afterId;
-                });
-                if (afterMatches.length != 0) {
-                    tree.options.splice(tree.options.indexOf(afterMatches[0]) + 1, 0, this.config.dialogOptions[this.dialogOptionId]);
-                } else {
-                    throw new Error("Afterid " + this.afterId + " not found in tree " + tree.id);
-                }
-            } else {
-                tree.options.push(this.config.dialogOptions[this.dialogOptionId]);
-            }
-        }
-    }
-}
-
-export class RemoveDialogOptionEffect extends Effect {
-    targetTree: string;
-    optionId: string;
-
-    constructor(config: Config, targetTree: string, optionId: string) {
-        super(config);
-        this.targetTree = targetTree;
-        this.optionId = optionId;
-    }
-
-    public Execute() {
-        let tree = this.config.dialogTrees[this.targetTree];
-        let matches = tree.options.filter(option => {
-            return option.id == this.optionId;
-        });
-
-        if (matches.length != 0) {
-            tree.options.splice(tree.options.indexOf(matches[0]), 1);
-        }
-    }
 }
 
 export class ChangeNameEffect extends Effect {

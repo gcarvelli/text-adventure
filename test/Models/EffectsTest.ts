@@ -2,7 +2,7 @@ import "mocha";
 import { assert } from "chai";
 
 import { Generator } from "../Generator";
-import * as Effect from "../../src/Models/Effects";
+import * as Effect from "../../src/Events/Effects";
 import { DialogTree, DialogOption } from "../../src/Models/Dialog";
 import { Item } from "../../src/Models/Models";
 import { Config } from "../../src/Configuration/Config";
@@ -12,90 +12,6 @@ describe("Effects", () => {
 
     beforeEach(() => {
         config = new Config();
-    });
-
-    describe("DialogOptionEffects", () => {
-        let dialogTree: DialogTree;
-
-        beforeEach(() => {
-            dialogTree = new DialogTree();
-            dialogTree.id = "MAIN";
-            config.dialogTrees["MAIN"] = dialogTree;
-        });
-
-        describe("AddDialogOptionEffect", () => {
-            let effect: Effect.AddDialogOptionEffect;
-            let dialogOption: DialogOption;
-
-            beforeEach(() => {
-                dialogOption = new DialogOption();
-                dialogOption.id = "DIALOG_OPTION";
-                config.dialogOptions[dialogOption.id] = dialogOption;
-                effect = new Effect.AddDialogOptionEffect(config, dialogTree.id, dialogOption.id, null);
-            });
-            
-            it("add a dialog option", () => {
-                effect.Execute();
-                assert.equal(1, dialogTree.options.length);
-                assert.equal(dialogOption.id, dialogTree.options[0].id);
-            });
-
-            it("don't re-add an existing dialog option", () => {
-                dialogTree.options.push(dialogOption);
-                effect.Execute();
-                assert.equal(1, dialogTree.options.length);
-                assert.equal(dialogOption.id, dialogTree.options[0].id);
-            });
-
-            it("add after an existing dialog option", () => {
-                let dialogOption1 = new DialogOption();
-                dialogOption1.id = "ID1";
-                dialogTree.options.push(dialogOption1);
-                let dialogOption2 = new DialogOption();
-                dialogOption2.id = "ID2";
-                dialogTree.options.push(dialogOption2);
-                effect.afterId = dialogOption1.id;
-
-                effect.Execute();
-                assert.equal(3, dialogTree.options.length);
-                assert.equal(dialogOption1.id, dialogTree.options[0].id);
-                assert.equal(dialogOption.id, dialogTree.options[1].id);
-                assert.equal(dialogOption2.id, dialogTree.options[2].id);
-            });
-        });
-
-        describe("RemoveDialogOptionEffect", () => {
-            let effect: Effect.RemoveDialogOptionEffect;
-            let dialogOption: DialogOption;
-
-            beforeEach(() => {
-                dialogOption = new DialogOption();
-                dialogOption.id = "ID";
-                effect = new Effect.RemoveDialogOptionEffect(config, dialogTree.id, dialogOption.id);
-            });
-
-            it("remove dialog option", () => {
-                dialogTree.options.push(dialogOption);
-                effect.Execute();
-                assert.equal(0, dialogTree.options.length);
-            });
-
-            it("remove only one dialog option", () => {
-                let option1 = new DialogOption();
-                option1.id = "id1";
-                let option2 = new DialogOption();
-                option2.id =  "id2";
-
-                dialogTree.options.push(option1);
-                dialogTree.options.push(dialogOption);
-                dialogTree.options.push(option2);
-
-                effect.Execute();
-                assert.equal(2, dialogTree.options.length);
-                assert.equal(option1.id, dialogTree.options[0].id);
-                assert.equal(option2.id, dialogTree.options[1].id);
-            });
-        });
     });
 
     describe("ItemChangeEffects", () => {
