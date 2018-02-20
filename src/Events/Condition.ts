@@ -42,7 +42,7 @@ export class ItemInCurrentRoomCondition extends Condition {
     }
 }
 
-export class PlayerAtLocation extends Condition {
+export class PlayerAtLocationCondition extends Condition {
     constructor(private roomId: string) {
         super();
     }
@@ -83,5 +83,33 @@ export class ItemIsUnlockedCondition extends Condition {
 
     public GetFailMessage(config: Config): string {
         return "It's locked.";
+    }
+}
+
+export class ToggleIsTrueCondition extends Condition {
+    constructor(private toggleId: string) {
+        super();
+    }
+
+    public IsMet(config: Config): boolean {
+        return config.state.toggles[this.toggleId];
+    }
+
+    public GetFailMessage(config: Config) {
+        return "This should probably be a custom message";
+    }
+}
+
+export class ToggleIsFalseCondition extends Condition {
+    constructor(private toggleId: string) {
+        super();
+    }
+
+    public IsMet(config: Config): boolean {
+        return !config.state.toggles[this.toggleId];
+    }
+
+    public GetFailMessage(config: Config) {
+        return "This should probably be a custom message";
     }
 }

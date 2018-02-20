@@ -12,6 +12,14 @@
     "player": {
         "items": [ "LOCKPICK" ]
     },
+    "state": {
+        "toggles": {
+            "FRED_INTRODUCED": false,
+            "FRED_ASKED_ABOUT_SPELLS": false,
+            "FRED_ASKED_FOR_CHEESE": false,
+            "FRED_GIVEN_CHEESE": false
+        }
+    },
     "rooms": {
         "startroom": "BOTTOM_OF_DRIVEWAY",
         "roomlist": {
@@ -205,87 +213,143 @@
         }
     },
     "dialog_trees": {
-        "FRED1": [ "FRED1_NAME" ]
+        "FRED1": [
+            "FRED1_NAME",
+            "FRED1_SPELLS",
+            "FRED1_CHEESE_MAGIC",
+            "FRED1_ASK_FOR_CHEESE",
+            "FRED1_GIVE_CHEESE"
+        ]
     },
     "dialog_options": {
         "FRED1_NAME": {
             "choice": "What is your name?",
             "response": "I am a man of many names, but there are those who call me Fred.",
-            "effects": [
-                {
-                    "type": "change_name",
-                    "target_item": "FRED_THE_TYROMANCER",
-                    "name": "Fred the Tyromancer"
+            "events": {
+                "show_dialog_option": {
+                    "conditions": [
+                        {
+                            "type": "toggle_is_false",
+                            "toggleId": "FRED_INTRODUCED"
+                        }
+                    ]
                 },
-                {
-                    "type": "change_description_for_room",
-                    "target_item": "FRED_THE_TYROMANCER",
-                    "description_for_room": "Fred the Tyromancer is here, leaning against a tree."
-                },
-                {
-                    "type": "add_keywords_to_item",
-                    "target_item": "FRED_THE_TYROMANCER",
-                    "keywords": [ "fred", "fred the tyromancer" ]
-                },
-                {
-                    "type": "add_dialog_option",
-                    "target_tree": "FRED1",
-                    "dialog_option": "FRED1_SPELLS"
-                },
-                {
-                    "type": "add_dialog_option",
-                    "target_tree": "FRED1",
-                    "dialog_option": "FRED1_ASK_FOR_CHEESE"
+                "choose_dialog_option": {
+                    "effects": [
+                        {
+                            "type": "set_toggle_to_true",
+                            "toggleId": "FRED_INTRODUCED"
+                        },
+                        {
+                            "type": "change_name",
+                            "itemId": "FRED_THE_TYROMANCER",
+                            "name": "Fred the Tyromancer"
+                        },
+                        {
+                            "type": "change_description_for_room",
+                            "itemId": "FRED_THE_TYROMANCER",
+                            "description_for_room": "Fred the Tyromancer is here, leaning against a tree."
+                        },
+                        {
+                            "type": "add_keywords_to_item",
+                            "itemId": "FRED_THE_TYROMANCER",
+                            "keywords": [ "fred", "fred the tyromancer" ]
+                        }
+                    ]
                 }
-            ]
+            }
         },
         "FRED1_SPELLS": {
             "choice": "Can you teach me some spells?",
             "response": "Alas, I cannot. I am a tyromancer, a wizard gifted with skills of divination through coagulated dairy products.",
-            "effects": [
-                {
-                    "type": "add_dialog_option",
-                    "target_tree": "FRED1",
-                    "afterId": "FRED1_SPELLS",
-                    "dialog_option": "FRED1_CHEESE_MAGIC"
+            "events": {
+                "show_dialog_option": {
+                    "conditions": [
+                        {
+                            "type": "toggle_is_true",
+                            "toggleId": "FRED_INTRODUCED"
+                        }
+                    ]
+                },
+                "choose_dialog_option": {
+                    "effects": [
+                        {
+                            "type": "set_toggle_to_true",
+                            "toggleId": "FRED_ASKED_ABOUT_SPELLS"
+                        }
+                    ]
                 }
-            ]
+            }
         },
         "FRED1_CHEESE_MAGIC": {
             "choice": "Wait, so you do magic with cheese?",
-            "response": "Your question betrays your own ignorance, but that description is not altogether unfitting."
+            "response": "Your question betrays your own ignorance, but that description is not altogether unfitting.",
+            "events": {
+                "show_dialog_option": {
+                    "conditions": [
+                        {
+                            "type": "toggle_is_true",
+                            "toggleId": "FRED_ASKED_ABOUT_SPELLS"
+                        }
+                    ]
+                }
+            }
         },
         "FRED1_ASK_FOR_CHEESE": {
             "choice": "Can I have that piece of cheese?",
             "response": "This is a wedge of my prized Gouda, so I'm afraid not.",
-            "effects": [
-                {
-                    "type": "add_dialog_option",
-                    "target_tree": "FRED1",
-                    "afterId": "FRED1_ASK_FOR_CHEESE",
-                    "dialog_option": "FRED_GIVE_CHEESE"
+            "events": {
+                "show_dialog_option": {
+                    "conditions": [
+                        {
+                            "type": "toggle_is_true",
+                            "toggleId": "FRED_INTRODUCED"
+                        },
+                        {
+                            "type": "toggle_is_false",
+                            "toggleId": "FRED_ASKED_ABOUT_CHEESE"
+                        }
+                    ]
                 },
-                {
-                    "type": "remove_dialog_option",
-                    "target_tree": "FRED1",
-                    "dialog_option": "FRED1_ASK_FOR_CHEESE"
+                "choose_dialog_option": {
+                    "effects": [
+                        {
+                            "type": "set_toggle_to_true",
+                            "toggleId": "FRED_ASKED_ABOUT_CHEESE"
+                        }
+                    ]
                 }
-            ]
+            }
         },
-        "FRED_GIVE_CHEESE": {
+        "FRED1_GIVE_CHEESE": {
             "choice": "Come on, please? It looks delicious...",
             "response": "My, you are persistent. I shall give you a piece but that shall be the only one.",
-            "effects": [
-                {
-                    "type": "add_item_to_inventory",
-                    "item": "PLAYER_GOUDA"
+            "events": {
+                "show_dialog_option": {
+                    "conditions": [
+                        {
+                            "type": "toggle_is_true",
+                            "toggleId": "FRED_ASKED_ABOUT_CHEESE"
+                        },
+                        {
+                            "type": "toggle_is_false",
+                            "toggleId": "FRED_GIVEN_CHEESE"
+                        }
+                    ]
                 },
-                {
-                    "type": "remove_dialog_option",
-                    "target_tree": "FRED1",
-                    "dialog_option": "FRED_GIVE_CHEESE"
+                "choose_dialog_option": {
+                    "effects": [
+                        {
+                            "type": "set_toggle_to_true",
+                            "toggleId": "FRED_GIVEN_CHEESE"
+                        },
+                        {
+                            "type": "add_item_to_inventory",
+                            "itemId": "PLAYER_GOUDA"
+                        }
+                    ]
                 }
-            ]
+            }
         }
     }
 }

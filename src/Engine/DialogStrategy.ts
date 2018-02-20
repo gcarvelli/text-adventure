@@ -2,13 +2,18 @@ import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { Output, EngineMode } from "./Engine";
-import { Item, GameState } from "../Models/Models";
+import { Item, GameState, DialogTree } from "../Models/Models";
 import * as Utilities from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
+import { EventType } from "../Events/Event";
+import * as Effects from "../Events/Effect";
+import { ConditionChecker } from "../Events/ConditionChecker";
 
 export class DialogStrategy extends ExecutionStrategy {
+    checker: ConditionChecker;
     constructor(config: Config, state: GameState, out: Output) {
         super(config, state, out);
+        this.checker = new ConditionChecker(config, out);
     }
 
     public Execute(command: Command): EngineMode {
@@ -18,7 +23,7 @@ export class DialogStrategy extends ExecutionStrategy {
             case CommandType.Number:
                 if (command.args.length != 0) {
                     let choice = parseInt(command.args[0]);
-                    let tree = this.config.dialogTrees[this.state.talkingTo.npc.dialog.startTree];
+                    let tree: DialogTree = this.config.dialogTrees[this.state.talkingTo.npc.dialog.startTree];
                     if (choice != NaN && choice > 0 && choice <= tree.options.length + 1) {
                         if (choice == tree.options.length + 1) {
                             // leave
@@ -27,10 +32,17 @@ export class DialogStrategy extends ExecutionStrategy {
                             PrintUtilities.LookAround(this.config, this.out);
                         } else {
                             let option = tree.options[choice - 1];
+                            // Run effects
+                            let event = option.GetEvent(EventType.ChooseDialogOption)
+                            if (event != null && event.GetEffects() != null) {
+                                event.GetEffects().forEach((effect) => {
+                                    effect.Execute(this.config);
+                                });
+                            }
                             if (!option.hasBeenChosen) {
                                 option.hasBeenChosen = true;
                             }
-                            PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, option.response);
+                            PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, this.checker, option.response);
                             this.out.Print(" ");
                         }
                     } else {

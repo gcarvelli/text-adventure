@@ -100,6 +100,10 @@ export class Item implements IEventful {
     public SetEvent(id: EventType, event: Event) {
         this.events[id] = event;
     }
+
+    public SetEvents(eventMap: Map<EventType, Event>) {
+        this.events = eventMap;
+    }
 }
 
 export class TakeModule {

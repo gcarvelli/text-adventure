@@ -1,6 +1,8 @@
 import { Config } from "../Configuration/Config";
 import { Output } from "../Engine/Engine";
 import { Item } from "../Models/Models";
+import { EventType } from "../Events/Event";
+import { ConditionChecker } from "../Events/ConditionChecker";
 
 export class PrintUtilities {
     public static PrintHeader(config: Config, out: Output) {
@@ -18,7 +20,7 @@ export class PrintUtilities {
         out.PrintLines(config.player.location.GetDescription());
     }
 
-    public static PrintDialogTree(config: Config, out: Output, npc: Item, response?: string) {
+    public static PrintDialogTree(config: Config, out: Output, npc: Item, checker: ConditionChecker, response?: string) {
         let tree = config.dialogTrees[npc.npc.dialog.startTree];
 
         out.Clear();
@@ -35,8 +37,18 @@ export class PrintUtilities {
         out.Print(" ");
 
         for (let i = 0; i < tree.options.length; i++) {
-            out.Print((i + 1) + (tree.options[i].hasBeenChosen ? "" : "*")
+            let showEvent = tree.options[i].GetEvent(EventType.ShowDialogOption);
+            let showOption = true;
+            if (showEvent != null) {
+                tree.options[i].GetEvent(EventType.ShowDialogOption).GetConditions().forEach((condition) => {
+                    showOption = showOption && condition.IsMet(config);
+                });
+            }
+            if (showOption) {
+                out.Print((i + 1) + (tree.options[i].hasBeenChosen ? "" : "*")
                 + " -> " + tree.options[i].choice);
+            }
+            // TODO run ShowOptions effects
         }
         out.Print((tree.options.length + 1) + " -> leave");
     }

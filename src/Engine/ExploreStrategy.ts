@@ -229,7 +229,7 @@ export class ExploreStrategy extends ExecutionStrategy {
                         if (npc.npc.dialog) {
                             mode = EngineMode.Dialog;
                             this.state.talkingTo = npc;
-                            PrintUtilities.PrintDialogTree(this.config, this.out, npc);
+                            PrintUtilities.PrintDialogTree(this.config, this.out, npc, this.checker);
                         } else {
                             this.out.Print("They don't seem like the talking type.");
                         }
