@@ -24,6 +24,7 @@ export class Engine {
     config: Config;
     parser: IParser;
     mode: EngineMode;
+    prevMode: EngineMode;
     state: GameState;
 
     currentStrategy: ExecutionStrategy;
@@ -34,6 +35,7 @@ export class Engine {
         this.out = out;
         this.parser = parser;
         this.mode = EngineMode.Explore;
+        this.prevMode = null;
 
         // Load in all rooms
         this.config = loader.LoadConfig();
@@ -43,8 +45,7 @@ export class Engine {
         this.exploreStrategy = new ExploreStrategy(this.config, this.state, this.out);
         this.currentStrategy = this.exploreStrategy;
 
-        PrintUtilities.LookAround(this.config, this.out);
-        this.out.Print(" ");
+        this.currentStrategy.Start();
     }
 
     public Execute(commandString: string) {
@@ -57,5 +58,11 @@ export class Engine {
                 this.currentStrategy = this.dialogStrategy;
                 break;
         }
+        if (this.prevMode != this.mode) {
+            // Switching strategies, so initialize the new one
+            console.log('switching to new strategy');
+            this.currentStrategy.Start();
+        }
+        this.prevMode = this.mode;
     }
 }

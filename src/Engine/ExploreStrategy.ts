@@ -229,7 +229,6 @@ export class ExploreStrategy extends ExecutionStrategy {
                         if (npc.npc.dialog) {
                             mode = EngineMode.Dialog;
                             this.state.talkingTo = npc;
-                            PrintUtilities.PrintDialogTree(this.config, this.out, npc, this.checker);
                         } else {
                             this.out.Print("They don't seem like the talking type.");
                         }
@@ -262,6 +261,11 @@ export class ExploreStrategy extends ExecutionStrategy {
             this.out.Print(" ");
         }
         return mode;
+    }
+
+    public Start() {
+        PrintUtilities.LookAround(this.config, this.out);
+        this.out.Print(' ');
     }
 
     private MoveTo(location: string) {

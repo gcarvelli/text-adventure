@@ -73,4 +73,9 @@ export class DialogStrategy extends ExecutionStrategy {
         }
         return mode;
     }
+
+    public Start() {
+        PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, this.checker);
+        this.out.Print(" ");
+    }
 }

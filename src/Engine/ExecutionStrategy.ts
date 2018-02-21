@@ -15,4 +15,6 @@ export abstract class ExecutionStrategy {
     }
 
     abstract Execute(command: Command): EngineMode;
+
+    abstract Start();
 }
