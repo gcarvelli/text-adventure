@@ -7,7 +7,8 @@
   "scripts": {
     "build": "node_modules/.bin/webpack",
     "watch": "node_modules/.bin/webpack --watch",
-    "start": "node_modules/.bin/webpack-dev-server --inline --no-info --port 8000 --content-base ./build",
+    "web": "node_modules/.bin/webpack-dev-server --inline --no-info --port 8000 --content-base ./build",
+    "cli": "node build/js/cli.js",
     "php": "php -S localhost:8000 -t build/",
     "test": "node_modules/.bin/mocha --compilers ts:ts-node/register test/**/*Test.ts",
     "sync": "bash bin/sync.sh"
