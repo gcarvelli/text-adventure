@@ -29,7 +29,6 @@ export class DialogStrategy extends ExecutionStrategy {
                             // leave
                             mode = EngineMode.Explore;
                             this.state.talkingTo = null;
-                            PrintUtilities.LookAround(this.config, this.out);
                         } else {
                             let option = tree.options[choice - 1];
                             // Run effects
