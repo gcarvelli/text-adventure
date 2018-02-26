@@ -1,3 +1,7 @@
+body {
+    background: black;
+}
+
 #term {
     margin: auto;
     width: 800px;
