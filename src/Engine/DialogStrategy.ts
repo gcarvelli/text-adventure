@@ -31,18 +31,26 @@ export class DialogStrategy extends ExecutionStrategy {
                             this.state.talkingTo = null;
                         } else {
                             let option = tree.options[choice - 1];
-                            // Run effects
-                            let event = option.GetEvent(EventType.ChooseDialogOption)
-                            if (event != null && event.GetEffects() != null) {
-                                event.GetEffects().forEach((effect) => {
-                                    effect.Execute(this.config);
-                                });
+                            let optionIsShown = true;
+                            option.GetEvent(EventType.ShowDialogOption).GetConditions().forEach((condition) => {
+                                optionIsShown = optionIsShown && condition.IsMet(this.config);
+                            });
+                            if (optionIsShown) {
+                                // Run effects
+                                let event = option.GetEvent(EventType.ChooseDialogOption)
+                                if (event != null && event.GetEffects() != null) {
+                                    event.GetEffects().forEach((effect) => {
+                                        effect.Execute(this.config);
+                                    });
+                                }
+                                if (!option.hasBeenChosen) {
+                                    option.hasBeenChosen = true;
+                                }
+                                PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, this.checker, option.response);
+                                this.out.Print(" ");
+                            } else {
+                                this.out.Print("You decide to say nothing.");
                             }
-                            if (!option.hasBeenChosen) {
-                                option.hasBeenChosen = true;
-                            }
-                            PrintUtilities.PrintDialogTree(this.config, this.out, this.state.talkingTo, this.checker, option.response);
-                            this.out.Print(" ");
                         }
                     } else {
                         this.out.Print("You decide to say nothing.");
