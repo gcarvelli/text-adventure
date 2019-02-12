@@ -35,7 +35,7 @@ export class Engine {
         this.out = out;
         this.parser = parser;
         this.mode = EngineMode.Explore;
-        this.prevMode = null;
+        this.prevMode = this.mode;
 
         // Load in all rooms
         this.config = loader.LoadConfig();
@@ -60,7 +60,6 @@ export class Engine {
         }
         if (this.prevMode != this.mode) {
             // Switching strategies, so initialize the new one
-            console.log('switching to new strategy');
             this.currentStrategy.Start();
         }
         this.prevMode = this.mode;
