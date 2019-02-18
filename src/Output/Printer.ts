@@ -2,7 +2,7 @@ import { OutputInterface } from "./OutputInterface";
 
 export class Printer {
     readonly PROMPT = '> ';
-    readonly TAB = '    ';
+    readonly TAB = '  ';
 
     output: OutputInterface;
 

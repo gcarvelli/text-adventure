@@ -48,13 +48,13 @@ export class ExploreStrategy extends ExecutionStrategy {
                 break;
 
             case CommandType.Inventory:
-                this.printer.PrintLn("Inventory:");
+                this.printer.PrintLn("Your backpack contains:");
                 if (this.config.player.inventory.length > 0) {
                     this.config.player.inventory.forEach(item => {
                         this.printer.PrintLn(this.printer.TAB + item.name);
                     });
                 } else {
-                    this.printer.PrintLn(this.printer.TAB + "There doesn't seem to be anything here.");
+                    this.printer.PrintLn(this.printer.TAB + "Your backpack is empty.");
                 }
                 break;
 
@@ -163,7 +163,7 @@ export class ExploreStrategy extends ExecutionStrategy {
                                     if (item.open.contents.length > 0) {
                                         this.printer.PrintLn("You open the " + item.name + ", revealing:");
                                         item.open.contents.forEach(element => {
-                                            this.printer.PrintLn("  " + element.name);
+                                            this.printer.PrintLn(this.printer.TAB + element.name);
                                         });
                                     } else {
                                         this.printer.PrintLn("You open the " + item.name + ".");
