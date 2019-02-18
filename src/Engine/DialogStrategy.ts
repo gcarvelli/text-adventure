@@ -77,11 +77,15 @@ export class DialogStrategy extends ExecutionStrategy {
         if (command.commandType != CommandType.Empty) {
             this.printer.PrintLn();
         }
+        if (mode == EngineMode.Dialog) {
+            this.printer.Prompt();
+        }
         return mode;
     }
 
     public Start() {
         PrintUtilities.PrintDialogTree(this.config, this.printer, this.state.talkingTo, this.checker);
         this.printer.PrintLn();
+        this.printer.Prompt();
     }
 }

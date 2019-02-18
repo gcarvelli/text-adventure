@@ -263,7 +263,9 @@ export class ExploreStrategy extends ExecutionStrategy {
         if (command.commandType != CommandType.Empty) {
             this.printer.PrintLn();
         }
-        this.printer.Prompt();
+        if (mode == EngineMode.Explore) {
+            this.printer.Prompt();
+        }
         return mode;
     }
 
