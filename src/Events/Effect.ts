@@ -1,5 +1,4 @@
 import { Config } from "../Configuration/Config";
-import { Item } from "../Models/Models";
 
 export abstract class Effect {
     public abstract Execute(config: Config);

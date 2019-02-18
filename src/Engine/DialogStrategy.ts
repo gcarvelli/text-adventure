@@ -2,7 +2,7 @@ import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
 import { EngineMode } from "./Engine";
-import { Item, GameState, DialogTree } from "../Models/Models";
+import { GameState, DialogTree } from "../Models/Models";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 import { EventType } from "../Events/Event";
 import { ConditionChecker } from "../Events/ConditionChecker";

@@ -1,5 +1,4 @@
 import { IParser, Command, CommandType } from "./IParser";
-import { EngineMode } from "../Engine/Engine";
 
 export class DummParser implements IParser {
     Parse(commandString: string): Command {
@@ -9,7 +8,7 @@ export class DummParser implements IParser {
 
         if (tokens.length == 0 || (tokens.length == 1 && tokens[0] == "")) {
             com.commandType = CommandType.Empty;
-        } else if (this.StartsWith(tokens, "look", "at")) {
+        } else if (this.StartsWith(tokens, "look", "at") || this.StartsWith(tokens, "inspect")) {
             com.commandType = CommandType.LookAt;
             if (tokens.length >= 3) {
                 com.args.push(this.GetThing(tokens.slice(2, tokens.length)));

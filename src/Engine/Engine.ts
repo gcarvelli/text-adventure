@@ -5,7 +5,6 @@ import { ILoader } from "../Configuration/ILoader";
 import { DialogStrategy } from "./DialogStrategy";
 import { ExploreStrategy } from "./ExploreStrategy";
 import { ExecutionStrategy } from "./ExecutionStrategy";
-import { PrintUtilities } from "../Utilities/PrintUtilities";
 import { OutputInterface } from "../Output/OutputInterface";
 import { Printer } from "../Output/Printer";
 

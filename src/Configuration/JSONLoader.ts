@@ -1,6 +1,6 @@
 import { ILoader } from "./ILoader";
 import { Config } from "./Config";
-import { Game, Player, Item, Room, NPCDialog } from "../Models/Models";
+import { Item, Room, NPCDialog } from "../Models/Models";
 import { DialogOption, DialogTree } from "../Models/Dialog";
 import { Event, EventType } from "../Events/Event";
 import * as Effects from "../Events/Effect";

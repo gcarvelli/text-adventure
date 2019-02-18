@@ -1,6 +1,5 @@
 import { Condition } from "./Condition";
 import { Effect } from "./Effect";
-import { Config } from "../Configuration/Config";
 
 export enum EventType {
     Take,

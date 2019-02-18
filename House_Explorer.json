@@ -54,9 +54,9 @@
             },
             "INSIDE_HOUSE": {
                 "name": "The Kitchen",
-                "description": "The kitchen is spick and span. A wood counter snakes along the perimeter of the room, interrupted by a refridgerator, stove, and oven. The door to the backyard is to the North.",
-                "basic_items": [ "refridgerator", "stove", "oven" ],
-                "items": [ "FOREST_CHEST_KEY" ],
+                "description": "The kitchen is spick and span. A wood counter snakes along the perimeter of the room, interrupted by a refrigerator, stove, and oven. The door to the backyard is to the North.",
+                "basic_items": [ "counter", "refrigerator", "stove", "oven" ],
+                "items": [ "FOREST_CHEST_KEY", "HOUSE_BACKYARD_THROUGH_WINDOW" ],
                 "moves": {
                     "north": "BACKYARD"
                 }
@@ -176,6 +176,10 @@
             "take": {
                 "can_take": true
             }
+        },
+        "HOUSE_BACKYARD_THROUGH_WINDOW": {
+            "keywords": [ "backyard", "window", "windows" ],
+            "description": "You see the backyard through a pair of dirty windows. The hinges and locking mechanism appear to be rusted shut."
         },
         "FOREST_CHEST_KEY": {
             "keywords": [ "rusty key", "key" ],
