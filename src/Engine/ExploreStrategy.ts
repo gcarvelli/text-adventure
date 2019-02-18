@@ -1,23 +1,24 @@
 import { ExecutionStrategy } from "./ExecutionStrategy";
 import { Command, CommandType } from "../Parse/IParser";
 import { Config } from "../Configuration/Config";
-import { Output, EngineMode } from "./Engine";
+import { EngineMode } from "./Engine";
 import { Item } from "../Models/Models";
 import { GameState } from "../Models/Simple";
 import * as Utilities from "../Utilities/Utilities";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
 import { ConditionChecker } from "../Events/ConditionChecker";
 import { EventType } from "../Events/Event";
+import { Printer } from "../Output/Printer";
 
 export class ExploreStrategy extends ExecutionStrategy {
     config: Config;
-    out: Output;
+    printer: Printer;
     state: GameState;
     checker: ConditionChecker;
 
-    constructor(config: Config, state: GameState, out: Output) {
-        super(config, state, out);
-        this.checker = new ConditionChecker(config, out);
+    constructor(config: Config, state: GameState, printer: Printer) {
+        super(config, state, printer);
+        this.checker = new ConditionChecker(config, printer);
     }
 
     public Execute(command: Command): EngineMode {
@@ -25,12 +26,12 @@ export class ExploreStrategy extends ExecutionStrategy {
 
         switch (command.commandType) {
             case CommandType.LookAround:
-                PrintUtilities.LookAround(this.config, this.out);
+                PrintUtilities.LookAround(this.config, this.printer);
                 break;
 
             case CommandType.LookAt:
                 if (command.args.length == 0) {
-                    this.out.Print("Look at what?");
+                    this.printer.PrintLn("Look at what?");
                 } else {
                     // Check the room first, then the player's inventory
                     let item = Utilities.FindItemByName(this.config.player.location.items, command.args[0]);
@@ -39,28 +40,28 @@ export class ExploreStrategy extends ExecutionStrategy {
                     }
 
                     if (item != null) {
-                        this.out.Print(item.GetLookAtDescription());
+                        this.printer.PrintLn(item.GetLookAtDescription());
                     } else {
-                        this.out.Print("Doesn't look like there's one of those around.");
+                        this.printer.PrintLn("Doesn't look like there's one of those around.");
                     }
                 }
                 break;
 
             case CommandType.Inventory:
-                this.out.Print("Inventory:");
+                this.printer.PrintLn("Inventory:");
                 if (this.config.player.inventory.length > 0) {
                     this.config.player.inventory.forEach(item => {
-                        this.out.Print("\t" + item.name);
+                        this.printer.PrintLn(this.printer.TAB + item.name);
                     });
                 } else {
-                    this.out.Print("\tThere doesn't seem to be anything here.");
+                    this.printer.PrintLn(this.printer.TAB + "There doesn't seem to be anything here.");
                 }
                 break;
 
             case CommandType.Move:
                 if (this.config.player.location.moves.hasOwnProperty(command.args[0])) {
                     this.MoveTo(this.config.player.location.moves[command.args[0]]);
-                    PrintUtilities.LookAround(this.config, this.out);
+                    PrintUtilities.LookAround(this.config, this.printer);
                     break;
                 }
 
@@ -68,11 +69,11 @@ export class ExploreStrategy extends ExecutionStrategy {
                     i.door.movement.hasOwnProperty(command.args[0]));
                 if (door.length > 0) {
                     this.MoveTo(door[0].door.movement[command.args[0]]);
-                    PrintUtilities.LookAround(this.config, this.out);
+                    PrintUtilities.LookAround(this.config, this.printer);
                     break;
                 }
 
-                this.out.Print("You can't go that way right now.");
+                this.printer.PrintLn("You can't go that way right now.");
                 break;
 
             case CommandType.TakeItem:
@@ -109,16 +110,16 @@ export class ExploreStrategy extends ExecutionStrategy {
                             if (event == null || this.checker.CheckAll(event.GetConditions())) {
                                 container.splice(container.indexOf(item), 1);
                                 this.config.player.inventory.push(item);
-                                this.out.Print("Took the " + item.name + ".");
+                                this.printer.PrintLn("Took the " + item.name + ".");
                             }
                         } else {
-                            this.out.Print("That can't be taken.")
+                            this.printer.PrintLn("That can't be taken.")
                         }
                     } else {
-                        this.out.Print("Doesn't look like there's one of those around.");
+                        this.printer.PrintLn("Doesn't look like there's one of those around.");
                     }
                 } else {
-                    this.out.Print("Take what?");
+                    this.printer.PrintLn("Take what?");
                 }
                 break;
 
@@ -129,12 +130,12 @@ export class ExploreStrategy extends ExecutionStrategy {
                         this.config.player.inventory.splice(this.config.player.inventory.indexOf(item), 1);
                         this.config.player.location.items.push(item);
                         item.take.wasDropped = true;
-                        this.out.Print("Dropped the " + item.name + ".");
+                        this.printer.PrintLn("Dropped the " + item.name + ".");
                     } else {
-                        this.out.Print("You don't have one of those.");
+                        this.printer.PrintLn("You don't have one of those.");
                     }
                 } else {
-                    this.out.Print("Drop what?");
+                    this.printer.PrintLn("Drop what?");
                 }
                 break;
 
@@ -150,46 +151,46 @@ export class ExploreStrategy extends ExecutionStrategy {
                                     // Unlock it if possible
                                     let matches = this.config.player.inventory.filter((i) => i.id == item.open.lock.keyId);
                                     if (matches.length > 0) {
-                                        this.out.Print("The " + item.name + " is unlocked with the " + matches[0].name + "!");
+                                        this.printer.PrintLn("The " + item.name + " is unlocked with the " + matches[0].name + "!");
                                         item.open.lock.isLocked = false;
                                     } else {
-                                        this.out.Print("The " + item.name + " is locked.");
+                                        this.printer.PrintLn("The " + item.name + " is locked.");
                                     }
                                 }
 
                                 if (!item.open.lock || !item.open.lock.isLocked) {
                                     item.open.isOpen = true;
                                     if (item.open.contents.length > 0) {
-                                        this.out.Print("You open the " + item.name + ", revealing:");
+                                        this.printer.PrintLn("You open the " + item.name + ", revealing:");
                                         item.open.contents.forEach(element => {
-                                            this.out.Print("  " + element.name);
+                                            this.printer.PrintLn("  " + element.name);
                                         });
                                     } else {
-                                        this.out.Print("You open the " + item.name + ".");
+                                        this.printer.PrintLn("You open the " + item.name + ".");
                                     }
                                 }
                             } else {
                                 // The item is already open
-                                this.out.Print("It's already open.");
+                                this.printer.PrintLn("It's already open.");
                             }
                         } else if (item.door.isDoor) {
                             // The item is a door
                             if (!item.door.isOpen) {
                                 // The door isn't open
                                 item.door.isOpen = true;
-                                this.out.Print("You open the " + item.name + ".");
+                                this.printer.PrintLn("You open the " + item.name + ".");
                             } else {
                                 // The item is already open
-                                this.out.Print("It's already open.");
+                                this.printer.PrintLn("It's already open.");
                             }
                         } else {
-                            this.out.Print("That can't be opened.");
+                            this.printer.PrintLn("That can't be opened.");
                         }
                     } else {
-                        this.out.Print("Doesn't look like there's one of those around.");
+                        this.printer.PrintLn("Doesn't look like there's one of those around.");
                     }
                 } else {
-                    this.out.Print("Open what?");
+                    this.printer.PrintLn("Open what?");
                 }
                 break;
 
@@ -200,25 +201,25 @@ export class ExploreStrategy extends ExecutionStrategy {
                         if (item.open.canOpen) {
                             if (item.open.isOpen) {
                                 item.open.isOpen = false;
-                                this.out.Print("You close the " + item.name + ".");
+                                this.printer.PrintLn("You close the " + item.name + ".");
                             } else {
-                                this.out.Print("It's already closed.");
+                                this.printer.PrintLn("It's already closed.");
                             }
                         } else if (item.door.isDoor) {
                             if (item.door.isOpen) {
                                 item.door.isOpen = false;
-                                this.out.Print("You close the " + item.name + ".");
+                                this.printer.PrintLn("You close the " + item.name + ".");
                             } else {
-                                this.out.Print("It's already closed.");
+                                this.printer.PrintLn("It's already closed.");
                             }
                         } else {
-                            this.out.Print("That can't be closed.");
+                            this.printer.PrintLn("That can't be closed.");
                         }
                     } else {
-                        this.out.Print("Doesn't look like there's one of those around.");
+                        this.printer.PrintLn("Doesn't look like there's one of those around.");
                     }
                 } else {
-                    this.out.Print("Close what?");
+                    this.printer.PrintLn("Close what?");
                 }
                 break;
 
@@ -230,42 +231,46 @@ export class ExploreStrategy extends ExecutionStrategy {
                             mode = EngineMode.Dialog;
                             this.state.talkingTo = npc;
                         } else {
-                            this.out.Print("They don't seem like the talking type.");
+                            this.printer.PrintLn("They don't seem like the talking type.");
                         }
                     } else if (npc != null) {
-                        this.out.Print("Your attempt at conversation goes unnoticed.");
+                        this.printer.PrintLn("Your attempt at conversation goes unnoticed.");
                     } else {
-                        this.out.Print("Doesn't look like they're here.");
+                        this.printer.PrintLn("Doesn't look like they're here.");
                     }
                 } else {
-                    this.out.Print("Talk to whom?")
+                    this.printer.PrintLn("Talk to whom?")
                 }
                 break;
 
             case CommandType.Help:
-                this.out.PrintLines(this.config.help);
+                this.config.help.forEach((line) => {
+                    this.printer.PrintLn(line);
+                })
                 break;
 
             case CommandType.Custom:
-                this.out.Print("Sorry, I didn't understand that.");
+                this.printer.PrintLn("Sorry, I didn't understand that.");
                 break;
 
             case CommandType.Empty:
                 break;
 
             default:
-                this.out.Print("Well shucks, looks like I can't do that yet.");
+                this.printer.PrintLn("Well shucks, looks like I can't do that yet.");
                 break;
         }
         if (command.commandType != CommandType.Empty) {
-            this.out.Print(" ");
+            this.printer.PrintLn();
         }
+        this.printer.Prompt();
         return mode;
     }
 
     public Start() {
-        PrintUtilities.LookAround(this.config, this.out);
-        this.out.Print(' ');
+        PrintUtilities.LookAround(this.config, this.printer);
+        this.printer.PrintLn();
+        this.printer.Prompt();
     }
 
     private MoveTo(location: string) {

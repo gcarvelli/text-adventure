@@ -6,12 +6,8 @@ import { DialogStrategy } from "./DialogStrategy";
 import { ExploreStrategy } from "./ExploreStrategy";
 import { ExecutionStrategy } from "./ExecutionStrategy";
 import { PrintUtilities } from "../Utilities/PrintUtilities";
-
-export interface Output {
-    Print(output: string);
-    PrintLines(output: string[]);
-    Clear();
-}
+import { OutputInterface } from "../Output/OutputInterface";
+import { Printer } from "../Output/Printer";
 
 export enum EngineMode {
     Explore,
@@ -20,7 +16,7 @@ export enum EngineMode {
 }
 
 export class Engine {
-    out: Output;
+    output: OutputInterface;
     config: Config;
     parser: IParser;
     mode: EngineMode;
@@ -31,8 +27,8 @@ export class Engine {
     dialogStrategy: DialogStrategy;
     exploreStrategy: ExploreStrategy;
 
-    public Initialize(loader: ILoader, out: Output, parser: IParser) {
-        this.out = out;
+    public Initialize(loader: ILoader, output: OutputInterface, parser: IParser) {
+        this.output = output;
         this.parser = parser;
         this.mode = EngineMode.Explore;
         this.prevMode = this.mode;
@@ -41,8 +37,9 @@ export class Engine {
         this.config = loader.LoadConfig();
         this.state = new GameState();
 
-        this.dialogStrategy = new DialogStrategy(this.config, this.state, this.out);
-        this.exploreStrategy = new ExploreStrategy(this.config, this.state, this.out);
+        let printer = new Printer(output);
+        this.dialogStrategy = new DialogStrategy(this.config, this.state, printer);
+        this.exploreStrategy = new ExploreStrategy(this.config, this.state, printer);
         this.currentStrategy = this.exploreStrategy;
 
         this.currentStrategy.Start();

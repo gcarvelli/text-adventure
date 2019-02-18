@@ -1,14 +1,14 @@
 import { Config } from "../Configuration/Config";
 import { Condition } from "./Condition";
-import { Output } from "../Engine/Engine";
+import { Printer } from "../Output/Printer";
 
 export class ConditionChecker {
-    constructor(private config: Config, private out: Output) { }
+    constructor(private config: Config, private printer: Printer) { }
 
     public Check(condition: Condition) {
         let met = condition.IsMet(this.config);
         if (!met) {
-            this.out.Print(condition.GetFailMessage(this.config));
+            this.printer.PrintLn(condition.GetFailMessage(this.config));
         }
         return met;
     }

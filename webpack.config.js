@@ -34,6 +34,7 @@ var webConfig = {
             { from: "*.html" },
             { from: "House_Explorer.json" },
             { from: "css/", to: "css/" },
+            { from: "node_modules/xterm/dist/", to: "xterm" }
         ])
     ],
     // https://github.com/webpack-contrib/css-loader/issues/447
@@ -73,7 +74,7 @@ var cliConfig = {
         new CopyWebpackPlugin([
             { from: "*.html" },
             { from: "House_Explorer.json" },
-            { from: "css/", to: "css/" },
+            { from: "css/", to: "css/" }
         ])
     ],
     // https://github.com/webpack-contrib/css-loader/issues/447

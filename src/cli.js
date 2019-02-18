@@ -1,4 +1,5 @@
 const repl = require('repl');
+const process = require('process');
 
 import * as data from "../House_Explorer.json";
 import { Engine } from "./Engine/Engine";
@@ -13,16 +14,20 @@ repl.start({prompt: '', eval: function(cmd, context, filename, callback) {
 }});
 
 let out = {
-    Print: function(output) {
-        console.log(output);
+    Print: function(str) {
+        process.stdout.write(str)
     },
-    PrintLines: function(lines) {
-        lines.forEach(function(line) {
-            console.log(line);
-        });
+    PrintLn: function(str) {
+        console.log(str);
     },
     Clear: function() {
         console.log('\x1Bc');
+    },
+    GetColumns: function() {
+        return 80; // TODO this could be better
+    },
+    ShouldWritePrompt: function() {
+        return false;
     }
 };
 

@@ -1,40 +1,42 @@
 import { Config } from "../Configuration/Config";
-import { Output } from "../Engine/Engine";
 import { Item } from "../Models/Models";
 import { EventType } from "../Events/Event";
 import { ConditionChecker } from "../Events/ConditionChecker";
+import { Printer } from "../Output/Printer";
 
 export class PrintUtilities {
-    public static PrintHeader(config: Config, out: Output) {
-        out.Print(config.game.name);
-        out.Print(config.game.version);
-        out.Print(" ");
+    public static PrintHeader(config: Config, printer: Printer) {
+        printer.PrintLn(config.game.name);
+        printer.PrintLn(config.game.version);
+        printer.PrintLn();
     }
 
-    public static LookAround(config: Config, out: Output) {
-        out.Clear();
-        this.PrintHeader(config, out);
-        out.Print(" ");
-        out.Print(config.player.location.name);
-        out.Print(" ");
-        out.PrintLines(config.player.location.GetDescription());
+    public static LookAround(config: Config, printer: Printer) {
+        printer.Clear();
+        this.PrintHeader(config, printer);
+        printer.PrintLn();
+        printer.PrintLn(config.player.location.name);
+        printer.PrintLn();
+        config.player.location.GetDescription().forEach((line) => {
+            printer.PrintLn(line);
+        });
     }
 
-    public static PrintDialogTree(config: Config, out: Output, npc: Item, checker: ConditionChecker, response?: string) {
+    public static PrintDialogTree(config: Config, printer: Printer, npc: Item, checker: ConditionChecker, response?: string) {
         let tree = config.dialogTrees[npc.npc.dialog.startTree];
 
-        out.Clear();
-        this.PrintHeader(config, out);
-        out.Print(npc.name);
-        out.Print(" ");
+        printer.Clear();
+        this.PrintHeader(config, printer);
+        printer.PrintLn(npc.name);
+        printer.PrintLn();
 
         if (response) {
-            out.Print(response);
+            printer.PrintLn(response);
         } else {
-            out.Print(npc.npc.dialog.greeting);
+            printer.PrintLn(npc.npc.dialog.greeting);
         }
 
-        out.Print(" ");
+        printer.PrintLn();
 
         for (let i = 0; i < tree.options.length; i++) {
             let showEvent = tree.options[i].GetEvent(EventType.ShowDialogOption);
@@ -45,11 +47,11 @@ export class PrintUtilities {
                 });
             }
             if (showOption) {
-                out.Print((i + 1) + (tree.options[i].hasBeenChosen ? "" : "*")
+                printer.PrintLn((i + 1) + (tree.options[i].hasBeenChosen ? "" : "*")
                 + " -> " + tree.options[i].choice);
             }
             // TODO run ShowOptions effects
         }
-        out.Print((tree.options.length + 1) + " -> leave");
+        printer.PrintLn((tree.options.length + 1) + " -> leave");
     }
 }
