@@ -32,7 +32,7 @@ var webConfig = {
     plugins: [
         new CopyWebpackPlugin([
             { from: "*.html" },
-            { from: "House_Explorer.json" },
+            { from: "House-Explorer.json" },
             { from: "css/", to: "css/" },
             { from: "node_modules/xterm/dist/", to: "xterm" }
         ])
@@ -73,7 +73,7 @@ var cliConfig = {
     plugins: [
         new CopyWebpackPlugin([
             { from: "*.html" },
-            { from: "House_Explorer.json" },
+            { from: "House-Explorer.json" },
             { from: "css/", to: "css/" }
         ])
     ],

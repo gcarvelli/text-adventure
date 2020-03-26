@@ -1,6 +1,6 @@
 require('keyboardevent-key-polyfill').polyfill();
 
-import * as data from "../House_Explorer.json";
+import * as data from "../House-Explorer.json";
 import { Engine } from "./Engine/Engine";
 import { DummParser } from "./Parse/DummParser";
 import { JSONLoader } from "./Configuration/JSONLoader";
